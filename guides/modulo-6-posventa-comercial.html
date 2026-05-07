@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Módulo 6 · Gestión de Posventa Comercial · Integración Aduanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff; --bg-subtle: #f7f7f5; --bg-hover: #f1f1ef;
+  --bg-blue: #eff4fb; --bg-green: #effaf2; --bg-amber: #fdf6e3; --bg-red: #fdf0ed; --bg-purple: #f6f3fb;
+  --text: #1f1f1f; --text-2: #37352f; --text-muted: #6f6f6f; --text-subtle: #9b9a97;
+  --accent: #2c5cdc; --border: #ebebe9; --border-strong: #d3d3cf; --code-bg: #f4f4f3;
+  --green: #2f6f3a; --amber: #8a5a14; --red: #b13b2f; --blue: #2c5cdc;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: var(--bg); color: var(--text-2); line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+.layout { max-width: 1200px; margin: 0 auto; padding: 56px 32px 120px; display: grid; grid-template-columns: 240px 1fr; gap: 60px; }
+.sidebar { position: sticky; top: 32px; align-self: start; font-size: 0.84rem; max-height: calc(100vh - 64px); overflow-y: auto; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 0.84rem; margin-bottom: 24px; }
+.back-link:hover { color: var(--text-2); }
+.toc-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-subtle); margin-bottom: 12px; }
+.toc { list-style: none; }
+.toc a { display: block; padding: 5px 10px 5px 12px; color: var(--text-muted); text-decoration: none; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; margin-left: -2px; font-size: 0.85rem; line-height: 1.4; }
+.toc a:hover { color: var(--text-2); background: var(--bg-subtle); }
+.toc a.indent { padding-left: 26px; font-size: 0.8rem; }
+
+.content { max-width: 720px; min-width: 0; }
+.module-eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.022em; line-height: 1.1; margin-bottom: 18px; color: var(--text); }
+.lede { font-size: 1.12rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 36px; }
+.module-meta { display: flex; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 56px; flex-wrap: wrap; }
+.module-meta strong { color: var(--text-2); font-weight: 600; }
+
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.012em; margin-top: 64px; margin-bottom: 18px; color: var(--text); padding-bottom: 8px; border-bottom: 1px solid var(--border); scroll-margin-top: 24px; }
+h3 { font-size: 1.2rem; font-weight: 700; margin-top: 36px; margin-bottom: 12px; color: var(--text); scroll-margin-top: 24px; }
+h4 { font-size: 1rem; font-weight: 700; margin-top: 24px; margin-bottom: 8px; color: var(--text); }
+p { margin-bottom: 16px; }
+ul, ol { margin-bottom: 18px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--text-2); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(44,92,220,0.3); }
+a:hover { border-bottom-color: var(--accent); }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.86em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+.callout { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px 18px; border-radius: 8px; margin: 20px 0; background: var(--bg-subtle); border: 1px solid var(--border); font-size: 0.96rem; }
+.callout .icon { font-size: 1.1rem; line-height: 1.4; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.blue { background: var(--bg-blue); border-color: rgba(44,92,220,0.18); }
+.callout.green { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.callout.amber { background: var(--bg-amber); border-color: rgba(138,90,20,0.22); }
+.callout.red { background: var(--bg-red); border-color: rgba(177,59,47,0.18); }
+.callout.purple { background: var(--bg-purple); border-color: rgba(120,90,170,0.2); }
+.callout-label { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.callout.blue .callout-label { color: var(--blue); }
+.callout.green .callout-label { color: var(--green); }
+.callout.amber .callout-label { color: var(--amber); }
+.callout.red .callout-label { color: var(--red); }
+.callout.purple .callout-label { color: #6a4ba6; }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.compare-card { padding: 18px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); }
+.compare-card.bad { background: var(--bg-red); border-color: rgba(177,59,47,0.15); }
+.compare-card.good { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.compare-card h4 { margin: 0 0 10px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.compare-card.bad h4 { color: var(--red); }
+.compare-card.good h4 { color: var(--green); }
+.compare-card p { font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
+.compare-card p:last-child { margin-bottom: 0; }
+
+.steps { counter-reset: step; padding-left: 0; list-style: none; margin: 24px 0; }
+.steps > li { counter-increment: step; position: relative; padding: 14px 18px 14px 56px; margin-bottom: 12px; background: var(--bg-subtle); border-radius: 8px; border: 1px solid var(--border); }
+.steps > li::before { content: counter(step); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--text-2); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; }
+.steps strong { display: block; margin-bottom: 4px; }
+
+.checklist { list-style: none; padding-left: 0; margin: 18px 0; }
+.checklist li { padding: 10px 14px 10px 38px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; background: var(--bg); position: relative; font-size: 0.94rem; }
+.checklist li::before { content: "□"; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--text-subtle); }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-weight: 600; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; background: var(--bg-subtle); }
+tbody tr:hover { background: var(--bg-subtle); }
+
+.script { background: var(--bg-subtle); border-left: 3px solid var(--blue); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; font-size: 0.95rem; }
+.script .speaker { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
+.script p { margin-bottom: 0; line-height: 1.55; }
+
+.signal { display: flex; gap: 14px; padding: 14px 18px; border-radius: 8px; border: 1px solid var(--border); margin: 10px 0; background: var(--bg); align-items: flex-start; }
+.signal.green { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.signal.red { background: var(--bg-red); border-color: rgba(177,59,47,0.18); }
+.signal-label { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 4px; flex-shrink: 0; min-width: 78px; text-align: center; }
+.signal.green .signal-label { background: var(--green); color: white; }
+.signal.red .signal-label { background: var(--red); color: white; }
+.signal-body { flex: 1; font-size: 0.93rem; }
+
+.module-footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+.nav-link { display: block; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; max-width: 280px; border-bottom-width: 1px; }
+.nav-link:hover { background: var(--bg-subtle); border-color: var(--border-strong); border-bottom-color: var(--border-strong); }
+.nav-link .nav-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+.nav-link .nav-title { font-weight: 600; color: var(--text-2); font-size: 0.98rem; }
+.nav-link.next { text-align: right; margin-left: auto; }
+
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px 80px; }
+  .sidebar { position: static; max-height: none; overflow: visible; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  h1 { font-size: 2rem; }
+  .compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <a class="back-link" href="../index.html">← Volver al currículo</a>
+  <div class="toc-title">En este módulo</div>
+  <ul class="toc">
+    <li><a href="#objetivo">Objetivo del módulo</a></li>
+    <li><a href="#mentalidad">Mentalidad de posventa comercial</a></li>
+    <li><a href="#handoff">El handoff de ventas a operación</a></li>
+    <li><a href="#90-dias">Los primeros 90 días con un cliente nuevo</a></li>
+    <li><a href="#qbr">El QBR — Quarterly Business Review</a></li>
+    <li><a href="#expansion">Señales de expansión</a></li>
+    <li><a href="#riesgo">Señales de riesgo (cuenta en peligro)</a></li>
+    <li><a href="#renovacion">Conversación de renovación</a></li>
+    <li><a href="#referidos-cliente">Pedir referidos al cliente</a></li>
+    <li><a href="#salvamento">Salvar una cuenta en riesgo</a></li>
+    <li><a href="#metricas">Métricas que importan (NRR, churn)</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#ejercicio">Ejercicio práctico</a></li>
+  </ul>
+</aside>
+
+<article class="content">
+
+<div class="module-eyebrow">Módulo 06 · Programa de Capacitación Comercial</div>
+<h1>Gestión de Posventa Comercial</h1>
+<p class="lede">Cerrar el contrato no termina la venta — la empieza. El cliente que firmó hoy puede renovar, expandir y traerte tres referidos en los próximos 18 meses, o puede dejarte cuando se acabe la primera factura. La diferencia se decide en la posventa, y la posventa es responsabilidad del comercial — no solo del equipo de operaciones.</p>
+
+<div class="module-meta">
+  <span><strong>Duración estimada:</strong> 2 horas</span>
+  <span><strong>Pre-requisito:</strong> Módulos 1-5</span>
+  <span><strong>Resultado:</strong> Plan de gestión de cuenta para tus primeras 5 cuentas firmadas</span>
+</div>
+
+<h2 id="objetivo">Objetivo del módulo</h2>
+
+<p>Al terminar este módulo serás capaz de:</p>
+<ul>
+  <li><strong>Hacer un handoff limpio</strong> de la venta a operaciones sin perder información ni contexto.</li>
+  <li><strong>Estructurar los primeros 90 días</strong> con un cliente nuevo para minimizar churn temprano.</li>
+  <li><strong>Conducir un QBR</strong> (Quarterly Business Review) que aporte valor real al cliente.</li>
+  <li><strong>Identificar señales tempranas</strong> de expansión y de riesgo en la cuenta.</li>
+  <li><strong>Conducir conversaciones de renovación</strong> sin sonar transaccional.</li>
+  <li><strong>Salvar una cuenta en riesgo</strong> con un proceso estructurado de save.</li>
+</ul>
+
+<h2 id="mentalidad">Mentalidad de posventa comercial</h2>
+
+<p>Hay dos formas de ver al cliente firmado:</p>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Mentalidad transaccional</h4>
+    <p>"Ya cerré, lo paso a operaciones, voy por el siguiente." Resultado: el cliente se siente abandonado, opera con incertidumbre los primeros meses, y al primer problema se va.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Mentalidad de account growth</h4>
+    <p>"El cliente firmado vale 3x más que un cliente nuevo. Es más barato retenerlo, expandirlo y obtener referidos. Mi trabajo no acaba — cambia de fase."</p>
+  </div>
+</div>
+
+<p>Algunos números que vas a recordar para siempre:</p>
+
+<ul>
+  <li>Adquirir un cliente nuevo cuesta <strong>5-10x más</strong> que retener uno existente.</li>
+  <li>Un cliente existente tiene <strong>60-70%</strong> de probabilidad de comprarte algo más. Un prospecto frío, 5-20%.</li>
+  <li>El <strong>5% de mejora en retención</strong> aumenta utilidades entre <strong>25% y 95%</strong> según industria.</li>
+  <li>El <strong>80% del crecimiento</strong> de empresas B2B maduras viene de clientes existentes (expansión + retención), no de nuevos.</li>
+</ul>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Idea principal</div>
+    <p>Cerrar fue empezar a cobrar. La oportunidad real está en lo que pasa <em>después</em>. Si tratas la firma como el final, vas a estar siempre prospectando para reemplazar a los que se van. Si la tratas como el principio, construyes una base que te paga por años.</p>
+  </div>
+</div>
+
+<h2 id="handoff">El handoff de ventas a operación</h2>
+
+<p>El primer punto donde se pierden cuentas es en el traspaso. Tú vendiste el sueño — ahora otra persona en operaciones tiene que hacerlo realidad. Si esa persona no tiene toda la información que tú tienes, el cliente vive una experiencia inconsistente desde la primera operación.</p>
+
+<h3>El kickoff interno (24-48 horas después del cierre)</h3>
+
+<p>Antes de cualquier reunión con el cliente, el comercial conduce una sesión interna con el equipo que va a operar la cuenta:</p>
+
+<ul class="checklist">
+  <li>Quién es el cliente (sector, tamaño, productos que importan/exportan).</li>
+  <li>Qué les vendiste (alcance del contrato, qué cubre, qué no).</li>
+  <li>Quiénes son los contactos clave (decisor, gerente operativo, día a día).</li>
+  <li>Cuál fue su dolor principal (lo que los hizo cambiar).</li>
+  <li>Qué expectativas creaste (KPIs prometidos, SLAs, métricas).</li>
+  <li>Riesgos conocidos (objeciones del proceso de venta, dudas pendientes).</li>
+  <li>Información política interna (¿hay un campeón? ¿hay un detractor?).</li>
+</ul>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">Riesgo del handoff incompleto</div>
+    <p>Si tú vendiste con la promesa de "primer pedimento en 48 horas" pero operaciones no sabe que esa fue la promesa, el cliente recibe el primer pedimento en 5 días y empiezan los problemas. <strong>Las promesas de venta no transmitidas son la primera causa de churn temprano.</strong></p>
+  </div>
+</div>
+
+<h3>El kickoff con el cliente (primera semana)</h3>
+
+<p>La primera reunión con el cliente debe ser ritual, no aleatoria. Asisten:</p>
+<ul>
+  <li>El comercial (tú).</li>
+  <li>El gerente operativo asignado a la cuenta.</li>
+  <li>El director del cliente (idealmente).</li>
+  <li>El gerente operativo del cliente (la persona que va a interactuar a diario).</li>
+</ul>
+
+<p>Agenda:</p>
+<ol>
+  <li><strong>Confirmar alcance y expectativas (15 min):</strong> revisar el contrato, validar entendimiento mutuo.</li>
+  <li><strong>Presentar al equipo operativo (10 min):</strong> que el cliente conozca a quien va a hablar todos los días.</li>
+  <li><strong>Definir mecanismos de comunicación (10 min):</strong> canales, horarios, escalación.</li>
+  <li><strong>Definir el plan de los primeros 90 días (15 min):</strong> hitos concretos.</li>
+  <li><strong>Acordar cadencia de seguimiento ejecutivo (10 min):</strong> reuniones de directivo a directivo.</li>
+</ol>
+
+<h2 id="90-dias">Los primeros 90 días con un cliente nuevo</h2>
+
+<p>Los primeros 90 días definen si el cliente se va a quedar 5 años o se va a ir al primer aniversario. Es la fase de mayor riesgo y la fase más reversible. Tu papel como comercial:</p>
+
+<h3>Día 1-30: La fase de validación</h3>
+
+<p>El cliente está validando que cumples lo que prometiste. Cada operación es una prueba.</p>
+
+<ol class="steps">
+  <li><strong>Llamada de check-in semanal con el director.</strong> 10 minutos, lunes a primera hora. "¿Cómo va la primera semana? ¿Algo que ajustar?"</li>
+  <li><strong>Visita presencial entre día 14 y 21.</strong> Ir a su planta, ver al equipo operando, identificar pequeñas mejoras.</li>
+  <li><strong>Resumen de operación al día 30.</strong> Dashboard simple: pedimentos procesados, tiempos promedio, incidencias resueltas, cualquier ahorro identificado.</li>
+</ol>
+
+<h3>Día 31-60: La fase de optimización</h3>
+
+<p>Ya hay datos suficientes para detectar oportunidades:</p>
+<ul>
+  <li>Identificar fracciones donde se podría ahorrar.</li>
+  <li>Detectar patrones de error (¿el cliente nos manda mal documentado? ¿operaciones nuestras hacen algo que no agrega valor?).</li>
+  <li>Proponer ajustes operativos.</li>
+  <li>Empezar a hablar de servicios complementarios (sin venderlos aún).</li>
+</ul>
+
+<h3>Día 61-90: La fase de "cementado"</h3>
+
+<p>Aquí es donde el cliente decide internamente si está contento. Tu trabajo: hacer evidente el valor entregado.</p>
+
+<ol class="steps">
+  <li><strong>Documenta los wins.</strong> "Estos son los ahorros que llevamos detectados", "Estos son los problemas que evitamos."</li>
+  <li><strong>Conduce el primer QBR formal.</strong> Reunión ejecutiva con el director del cliente. Presentación de resultados de 90 días + plan trimestral siguiente.</li>
+  <li><strong>Pide la primera retroalimentación formal.</strong> NPS o CSAT.</li>
+  <li><strong>Si todo va bien, primera conversación de expansión.</strong> ¿Hay otra unidad de negocio que podríamos atender? ¿Hay servicios complementarios que aplican?</li>
+</ol>
+
+<h2 id="qbr">El QBR — Quarterly Business Review</h2>
+
+<p>El QBR es la reunión ejecutiva trimestral donde tú (con el director del cliente) revisan: cómo va la relación, qué resultados se entregaron, qué viene. Es la herramienta más subutilizada en gestión de cuentas. Bien hecha, transforma una relación operativa en una relación estratégica.</p>
+
+<h3>Estructura del QBR (60 minutos)</h3>
+
+<ol>
+  <li><strong>Recap del trimestre (15 min):</strong> qué se entregó, KPIs, incidentes y resoluciones.</li>
+  <li><strong>Resultados cuantificables (10 min):</strong> ahorros, eficiencias, riesgos evitados — todo con números.</li>
+  <li><strong>Voz del cliente (10 min):</strong> ¿qué les ha funcionado? ¿qué les ha frustrado? <em>Tienes que escuchar más que hablar en esta sección.</em></li>
+  <li><strong>Plan del próximo trimestre (15 min):</strong> objetivos del cliente, cómo Integración Aduanal contribuye, hitos.</li>
+  <li><strong>Conversación estratégica (10 min):</strong> ¿qué viene en el negocio del cliente? Nuevas plantas, nuevos productos, nuevos mercados. Ahí están las oportunidades de expansión.</li>
+</ol>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">El QBR no es un reporte — es una conversación</div>
+    <p>El error es convertir el QBR en un PowerPoint corporativo de 40 láminas. Un buen QBR tiene 6-8 láminas máximo, deja 60% del tiempo para que hable el cliente, y siempre termina con próximas oportunidades. La tabla de KPIs importa — la conversación que la rodea, importa más.</p>
+  </div>
+</div>
+
+<h2 id="expansion">Señales de expansión</h2>
+
+<p>Si estás cerca del cliente, vas a detectar señales que indican que es momento de proponer más. Algunas de las más fuertes:</p>
+
+<div class="signal green">
+  <div class="signal-label">Verde</div>
+  <div class="signal-body"><strong>El cliente abrió una nueva unidad de negocio o producto.</strong> Probablemente necesita asesoría sobre fracciones nuevas, NOM nuevas, regímenes nuevos.</div>
+</div>
+
+<div class="signal green">
+  <div class="signal-label">Verde</div>
+  <div class="signal-body"><strong>Anunció una expansión geográfica.</strong> Nueva planta = nueva aduana = posibilidad de extender servicio.</div>
+</div>
+
+<div class="signal green">
+  <div class="signal-label">Verde</div>
+  <div class="signal-body"><strong>Cambió de proveedor en otra área (logística, transporte).</strong> Si dejaron al anterior, están abiertos a evaluar el suyo. Tú estás cerca.</div>
+</div>
+
+<div class="signal green">
+  <div class="signal-label">Verde</div>
+  <div class="signal-body"><strong>NPS ≥ 9 en la última encuesta.</strong> Promotor activo. Pídele referidos y propónle servicios complementarios.</div>
+</div>
+
+<div class="signal green">
+  <div class="signal-label">Verde</div>
+  <div class="signal-body"><strong>El director del cliente te invita a una reunión interna no relacionada con aduanas.</strong> Te ven como asesor, no como proveedor. Momento perfecto para subir la conversación de "qué más podemos hacer".</div>
+</div>
+
+<div class="signal green">
+  <div class="signal-label">Verde</div>
+  <div class="signal-body"><strong>Sus pedimentos mensuales subieron 30%+ en el último trimestre.</strong> Crecimiento real. Pueden necesitar capacidad o servicios premium.</div>
+</div>
+
+<h3>Cómo abordar la conversación de expansión</h3>
+
+<div class="script">
+  <div class="speaker">Tú al cliente</div>
+  <p>"[Cliente], en estos 6 meses de relación hemos identificado dos oportunidades adicionales que vale la pena que platiquemos. La primera es [oportunidad concreta — ejemplo: certificación IVA-IEPS], que estimamos te ahorraría $X al año basándome en tus volúmenes. La segunda es [otra oportunidad]. ¿Tiene sentido agendar 30 min específicos para presentarte cómo trabajaríamos cada una?"</p>
+</div>
+
+<p>Notarás dos cosas:</p>
+<ul>
+  <li>No le presentas un menú genérico de servicios — le presentas <strong>oportunidades específicas</strong> identificadas en su operación.</li>
+  <li>Cuantificas el valor (ahorro estimado).</li>
+  <li>Pides reunión específica, no le mandas una propuesta y rezas.</li>
+</ul>
+
+<h2 id="riesgo">Señales de riesgo (cuenta en peligro)</h2>
+
+<p>Igual de importante: detectar cuándo una cuenta está empezando a alejarse. Los clientes rara vez se van de un día al otro — dan señales.</p>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>Volumen de operaciones cayó 20%+ sin razón explicada.</strong> Puede ser estacionalidad o puede ser que están moviendo trabajo a otro agente. Tienes que averiguar.</div>
+</div>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>Tu contacto principal no contesta correos por más de 5 días hábiles.</strong> Puede estar evitándote intencionalmente.</div>
+</div>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>Cancelaron el último QBR sin reagendar.</strong> Si lo cancelan dos veces seguidas, es señal grave.</div>
+</div>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>Nuevo director / cambio de organigrama.</strong> El nuevo director no tiene relación contigo y puede traer "su" agente.</div>
+</div>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>Quejas operativas más frecuentes que antes.</strong> Aunque cada una se resuelva, el patrón importa.</div>
+</div>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>Pidieron cotización de algo que ya está cubierto en el contrato.</strong> Probablemente están comparando con otro proveedor.</div>
+</div>
+
+<div class="signal red">
+  <div class="signal-label">Roja</div>
+  <div class="signal-body"><strong>NPS bajó 2 puntos o más respecto al trimestre anterior.</strong> Algo cambió en su percepción.</div>
+</div>
+
+<h2 id="renovacion">Conversación de renovación</h2>
+
+<p>La renovación no es papeleo — es la conversación más importante del año con el cliente. Reglas:</p>
+
+<ul>
+  <li><strong>Empieza 90 días antes del vencimiento.</strong> Si llegas al día del vencimiento sin haber hablado, ya perdiste leverage.</li>
+  <li><strong>Trae el caso del valor entregado.</strong> Documento con números: ahorros, problemas resueltos, oportunidades capturadas.</li>
+  <li><strong>Pregunta antes de presentar.</strong> "Antes de que les muestre lo que estamos pensando para el próximo año, ¿cómo evalúan la relación hasta hoy? ¿Qué les ha funcionado, qué les frustró?"</li>
+  <li><strong>No empieces con precio.</strong> Si el cliente pregunta "¿cuánto va a subir?" antes de que termines de presentar el valor, has perdido el marco.</li>
+  <li><strong>Si hay aumento de tarifa, justifícalo.</strong> Inflación + valor agregado adicional + benchmark de mercado.</li>
+</ul>
+
+<h3>Estructura de la propuesta de renovación</h3>
+
+<ol>
+  <li><strong>Resultados del año:</strong> qué se entregó, con cifras.</li>
+  <li><strong>Áreas donde se quedó deuda:</strong> reconocer lo que no salió perfecto. Esto te da credibilidad.</li>
+  <li><strong>Plan del próximo año:</strong> qué vas a hacer mejor + qué vas a agregar.</li>
+  <li><strong>Términos de renovación:</strong> precio, alcance, vigencia, cualquier cambio.</li>
+  <li><strong>Pregunta de cierre:</strong> "¿Qué más necesitan ver para tomar la decisión?"</li>
+</ol>
+
+<h2 id="referidos-cliente">Pedir referidos al cliente (el momento correcto)</h2>
+
+<p>El mejor momento para pedir un referido es cuando el cliente acaba de tener un éxito tuyo en la cabeza:</p>
+
+<ul>
+  <li>Después del primer wins documentado del onboarding (día 60-90).</li>
+  <li>Después de resolver una crisis (revisión SAT que ganaste, demora que evitaste).</li>
+  <li>En el QBR, si los resultados fueron buenos.</li>
+  <li>En la firma de la renovación.</li>
+  <li>Después de un NPS de 9 o 10.</li>
+</ul>
+
+<p>El script ya lo viste en el Módulo 5 — aquí solo agrego: con cliente activo, puedes ser <em>más directo</em> que con prospecto.</p>
+
+<div class="script">
+  <div class="speaker">Tú al cliente activo (post-éxito)</div>
+  <p>"[Cliente], me da gusto haber resuelto la revisión a tiempo. Una pregunta que normalmente no hago, pero contigo me siento cómodo: ¿hay alguien en tu red — colega, ex-compañero, otro gerente que conozcas — que esté pasando por algo parecido a lo que pasó tu empresa hace 6 meses? Me gustaría poder ayudarles antes de que se conviertan en problema."</p>
+</div>
+
+<h2 id="salvamento">Salvar una cuenta en riesgo (el "save")</h2>
+
+<p>Cuando detectas señales rojas, tienes que actuar rápido. No esperes a que el cliente te avise que se va — para entonces ya decidió. Proceso de save:</p>
+
+<ol class="steps">
+  <li><strong>Diagnóstico (24-48 horas).</strong> Habla con tu equipo operativo: ¿hay incidentes recientes? ¿hay quejas? Revisa el CRM completo. Habla con la persona del cliente con la que tengas más confianza.</li>
+  <li><strong>Reunión cara a cara con el director del cliente.</strong> Pídela explícitamente. "Director, quiero tener una conversación honesta de 30 min sobre cómo va nuestra relación. ¿Qué día funciona?"</li>
+  <li><strong>Escucha sin defenderte.</strong> Cuando te diga lo que está mal, no justifiques. No expliques por qué pasó. Solo escucha y toma notas: "Entiendo. Eso debe haber sido frustrante."</li>
+  <li><strong>Reconoce lo que aplique.</strong> "Tienes razón, eso lo manejamos mal. ¿Qué necesitarías ver para que recuperemos tu confianza?"</li>
+  <li><strong>Comprométete con un plan específico.</strong> No prometas cambios genéricos. Específicos, con plazos. "En 30 días vas a ver X."</li>
+  <li><strong>Ejecuta el plan visible.</strong> Reportes semanales al director del cliente con avance del plan de save.</li>
+  <li><strong>Cierra el ciclo formalmente.</strong> A los 60 días: "¿Cómo evaluarías el progreso? ¿Hay algo más que necesites?"</li>
+</ol>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">Cuándo no salvar</div>
+    <p>A veces un cliente está perdido y la energía debe ir a otro lado. Señales: el director ya no te recibe, la relación se transfirió a un nivel más bajo, te están pidiendo cotizaciones que no van a ningún lado. En ese caso: cierra con dignidad, agradece, deja la puerta abierta. <em>"Si en algún momento la situación cambia, por favor avísame."</em> A veces regresan.</p>
+  </div>
+</div>
+
+<h2 id="metricas">Métricas que importan en posventa</h2>
+
+<p>Los buenos comerciales ya no miden solo cuotas de venta nueva. Miden la salud y el crecimiento de su cartera:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Métrica</th><th>Qué mide</th><th>Benchmark sano</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Tasa de retención lógica (Logo Retention)</strong></td>
+      <td>% de clientes que renuevan año contra año</td>
+      <td>≥ 90% en B2B servicios</td>
+    </tr>
+    <tr>
+      <td><strong>Net Revenue Retention (NRR)</strong></td>
+      <td>Crecimiento de ingreso de clientes existentes (incluye expansión y churn)</td>
+      <td>≥ 110% es excelente</td>
+    </tr>
+    <tr>
+      <td><strong>Tiempo de onboarding</strong></td>
+      <td>Días desde firma hasta primera operación exitosa</td>
+      <td>&lt; 14 días en agencia aduanal</td>
+    </tr>
+    <tr>
+      <td><strong>NPS</strong></td>
+      <td>Lealtad del cliente medida en escala 0-10</td>
+      <td>≥ +50 es muy bueno en B2B</td>
+    </tr>
+    <tr>
+      <td><strong>Tasa de expansión</strong></td>
+      <td>% de clientes que aumentan facturación año contra año</td>
+      <td>≥ 30% en cuentas medianas/grandes</td>
+    </tr>
+    <tr>
+      <td><strong>Tasa de referidos</strong></td>
+      <td>Referidos generados por cada 10 clientes activos</td>
+      <td>≥ 2 referidos/10 clientes/año</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="errores">Errores comunes en posventa</h2>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Desaparecer después de la firma</h4>
+    <p>"Ya cerré, dejé de tener visibilidad, en 6 meses no sé qué pasó."</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Ritmo predecible de check-in</h4>
+    <p>Mensual con el gerente operativo del cliente. Trimestral con el director (QBR). El cliente espera tu llamada, no se sorprende.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Solo aparecer cuando hay problema</h4>
+    <p>El cliente recibe llamada del comercial solo cuando hay quejas o cuando se acerca renovación. Te asocia con problemas.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Aparecer con valor proactivo</h4>
+    <p>"Vi una nota sobre cambio en T-MEC que les afecta", "Encontramos un ahorro adicional en sus fracciones", "Te traigo un caso de un cliente similar."</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ No cuantificar el valor entregado</h4>
+    <p>Cliente nunca sabe cuánto les hemos ahorrado, evitado, mejorado. Cuando viene el competidor más barato, no tiene argumentos para defenderte.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Reportes con cifras cada trimestre</h4>
+    <p>"Este trimestre les ahorramos $X en clasificación, evitamos Y multas, redujimos tiempos en Z%." Eso es lo que blinda contra competidores.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ No conocer al cliente más allá de tu contacto</h4>
+    <p>El día que tu contacto se va, te vas con él. Sin red interna, no hay relación.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Multi-thread dentro de la cuenta</h4>
+    <p>Mínimo 3 contactos activos en cada cuenta importante: operativo, gerencial, ejecutivo. Si uno se va, el otro mantiene la relación.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Dejar la renovación al último momento</h4>
+    <p>"El contrato vence en 2 semanas, hay que hablar." Ya perdiste posición.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Empezar la renovación 90 días antes</h4>
+    <p>Tienes tiempo para construir el caso, ajustar lo que haga falta y cerrar antes del límite, no en el límite.</p>
+  </div>
+</div>
+
+<h2 id="ejercicio">Ejercicio práctico</h2>
+
+<p>Este es el último módulo del programa. Tu ejercicio sintetiza todo lo aprendido:</p>
+
+<ol class="steps">
+  <li><strong>Adopta una cuenta real (o simulada).</strong> Tu líder te asigna 5 cuentas activas (o 5 que cerraste durante la capacitación) para gestionarlas tú durante el siguiente trimestre.</li>
+  <li><strong>Para cada cuenta, documenta:</strong> contacto principal, segundo contacto (multi-thread), cuenta del director, dolor original, valor entregado hasta hoy, oportunidades de expansión identificadas.</li>
+  <li><strong>Construye un plan de cuenta de 90 días para cada una.</strong> Hitos mensuales, objetivos de expansión, próximos QBRs, NPS planeado.</li>
+  <li><strong>Ejecuta el primer QBR de cada cuenta en las próximas 4 semanas.</strong> Estructura de 60 minutos siguiendo el formato del módulo. Documenta resultados.</li>
+  <li><strong>Identifica 1 cuenta en riesgo y aplica el proceso de save.</strong> Aunque sea hipotético en simulación: diagnostica señales, agenda reunión cara a cara, ejecuta plan.</li>
+  <li><strong>Pide tu primer referido a cliente activo.</strong> Sigue el script. Reporta resultado a tu líder.</li>
+</ol>
+
+<h3>Cierre del programa de capacitación</h3>
+
+<p>Has completado los 6 módulos. Si trabajaste los ejercicios:</p>
+
+<ul>
+  <li>Sabes adaptar tu lenguaje a empresarios, gerentes y directores (Módulo 1).</li>
+  <li>Manejas el vocabulario y conceptos técnicos del comercio exterior (Módulo 2).</li>
+  <li>Tienes una lista de 50 prospectos de calidad (Módulo 3).</li>
+  <li>Hiciste 30+ llamadas reales y conoces de memoria las 8 objeciones más comunes (Módulo 4).</li>
+  <li>Tienes un perfil de LinkedIn optimizado y un plan de presencia de 90 días (Módulo 5).</li>
+  <li>Tienes un plan de gestión de cuenta para tus primeras 5 cuentas (Módulo 6).</li>
+</ul>
+
+<p>Eso te coloca en el percentil 90 de practicantes en comercio exterior en México. <strong>El 10% restante se gana con repetición — no con más teoría.</strong> Empieza a llamar, a publicar, a visitar, a reportar. La práctica deliberada es la única que separa al comercial promedio del extraordinario.</p>
+
+<div class="callout purple">
+  <div class="icon">★</div>
+  <div>
+    <div class="callout-label">Última idea para que te lleves</div>
+    <p>El comercio exterior mexicano es una industria pequeña. Los gerentes de comex se conocen entre sí. Los directores de logística cambian de empresa pero no de industria. Lo que construyas en estos primeros años — tu reputación, tu red, tu palabra cumplida — te va a acompañar 20 años. Cada cliente que tratas con seriedad hoy puede llamarte cuando esté en otra empresa en 5 años. Cada referido que pides bien puede ser tu cliente del año. Tu carrera comercial se construye una conversación a la vez.</p>
+  </div>
+</div>
+
+<nav class="module-footer">
+  <a class="nav-link" href="modulo-5-relaciones-publicas.html">
+    <div class="nav-label">← Anterior</div>
+    <div class="nav-title">Relaciones Públicas</div>
+  </a>
+  <a class="nav-link next" href="../index.html">
+    <div class="nav-label">Volver al inicio →</div>
+    <div class="nav-title">Currículo completo</div>
+  </a>
+</nav>
+
+</article>
+</div>
+</body>
+</html>

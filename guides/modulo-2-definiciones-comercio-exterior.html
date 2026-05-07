@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacitación Comercio Exterior — Equipo Comercial</title>
+<style>
+:root {
+  --primary: #1F4E78;
+  --primary-light: #2E75B6;
+  --primary-dark: #144066;
+  --accent: #F39C12;
+  --success: #27AE60;
+  --danger: #E74C3C;
+  --bg: #F5F7FA;
+  --card: #FFFFFF;
+  --text: #2C3E50;
+  --text-light: #6B7C8E;
+  --border: #E1E8ED;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 24px 32px;
+  box-shadow: var(--shadow);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.logo { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.logo small { display: block; font-size: 12px; font-weight: 400; opacity: 0.85; letter-spacing: 0.5px; text-transform: uppercase; }
+nav { display: flex; gap: 4px; flex-wrap: wrap; }
+nav button {
+  background: rgba(255,255,255,0.1); color: white; border: none;
+  padding: 10px 18px; border-radius: 8px; cursor: pointer;
+  font-size: 14px; font-weight: 500; transition: all 0.2s;
+}
+nav button:hover { background: rgba(255,255,255,0.2); }
+nav button.active { background: white; color: var(--primary); }
+main { max-width: 1280px; margin: 0 auto; padding: 32px; }
+.section { display: none; animation: fadeIn 0.3s; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: 32px; margin-bottom: 8px; color: var(--primary); letter-spacing: -0.5px; }
+h2 { font-size: 22px; margin: 24px 0 12px; color: var(--primary); }
+h3 { font-size: 16px; color: var(--primary-dark); margin-bottom: 8px; }
+.subtitle { color: var(--text-light); font-size: 16px; margin-bottom: 32px; }
+
+/* ===== HOME ===== */
+.modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 24px; }
+.module-card {
+  background: var(--card); border-radius: 12px; padding: 24px;
+  box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s;
+  border-left: 4px solid var(--primary-light);
+}
+.module-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-left-color: var(--accent); }
+.module-icon { font-size: 32px; margin-bottom: 12px; }
+.module-card h3 { font-size: 18px; margin-bottom: 8px; }
+.module-card p { color: var(--text-light); font-size: 14px; }
+.stats-banner { background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; border-radius: 12px; padding: 32px; margin-bottom: 24px; }
+.stats-banner h2 { color: white; margin-top: 0; }
+.stats { display: flex; gap: 32px; margin-top: 16px; flex-wrap: wrap; }
+.stat-item { }
+.stat-number { font-size: 32px; font-weight: 700; line-height: 1; }
+.stat-label { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+
+/* ===== GLOSARIO ===== */
+.controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.search-box {
+  flex: 1; min-width: 240px; padding: 12px 16px;
+  border: 1px solid var(--border); border-radius: 8px; font-size: 14px;
+  background: var(--card); transition: border 0.2s;
+}
+.search-box:focus { outline: none; border-color: var(--primary-light); }
+.filter-select { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); font-size: 14px; cursor: pointer; }
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.term-card { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); border-top: 3px solid var(--primary-light); }
+.term-card h3 { color: var(--primary-dark); font-size: 15px; margin-bottom: 6px; }
+.badge { display: inline-block; background: #E8F0F8; color: var(--primary); padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px; }
+.term-card .definition { font-size: 13px; color: var(--text); margin-bottom: 10px; }
+.term-card .legal { font-size: 12px; color: var(--text-light); font-style: italic; margin-bottom: 8px; }
+.term-card .example { font-size: 12px; color: var(--text-light); padding: 8px 10px; background: #FAFBFC; border-left: 3px solid var(--accent); border-radius: 4px; }
+.no-results { text-align: center; padding: 60px; color: var(--text-light); }
+
+/* ===== FLASHCARDS ===== */
+.flashcard-container { max-width: 600px; margin: 32px auto; }
+.flashcard {
+  background: var(--card); border-radius: 16px; padding: 40px;
+  min-height: 320px; box-shadow: var(--shadow-lg); cursor: pointer;
+  position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; transition: transform 0.6s; transform-style: preserve-3d;
+}
+.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard-face { position: absolute; inset: 40px; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.flashcard-back { transform: rotateY(180deg); }
+.flashcard h2 { color: var(--primary); margin: 0; font-size: 26px; }
+.flashcard .badge { margin-bottom: 16px; }
+.flashcard .hint { position: absolute; bottom: 16px; right: 20px; font-size: 12px; color: var(--text-light); }
+.flashcard-back p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
+.flashcard-back .example { background: #FAFBFC; padding: 10px; border-left: 3px solid var(--accent); border-radius: 4px; font-size: 13px; text-align: left; width: 100%; }
+.flashcard-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 12px; }
+.btn { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: var(--card); color: var(--primary); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--bg); }
+.flashcard-counter { font-size: 14px; color: var(--text-light); }
+
+/* ===== QUIZ ===== */
+.quiz-container { max-width: 720px; margin: 0 auto; }
+.quiz-progress { background: var(--border); border-radius: 4px; height: 8px; margin-bottom: 24px; overflow: hidden; }
+.quiz-progress-bar { background: var(--primary-light); height: 100%; transition: width 0.3s; }
+.question-card { background: var(--card); border-radius: 12px; padding: 32px; box-shadow: var(--shadow); }
+.question-num { color: var(--text-light); font-size: 13px; margin-bottom: 8px; }
+.question-text { font-size: 18px; font-weight: 600; margin-bottom: 24px; color: var(--text); }
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  background: var(--bg); border: 2px solid transparent; border-radius: 8px;
+  padding: 14px 18px; cursor: pointer; font-size: 14px; transition: all 0.2s; text-align: left;
+}
+.option:hover { border-color: var(--primary-light); }
+.option.selected { border-color: var(--primary); background: #E8F0F8; }
+.option.correct { border-color: var(--success); background: #E8F8EF; }
+.option.incorrect { border-color: var(--danger); background: #FBEAE8; }
+.option.disabled { cursor: default; pointer-events: none; }
+.feedback { margin-top: 16px; padding: 14px; border-radius: 8px; font-size: 14px; }
+.feedback.correct { background: #E8F8EF; color: var(--success); border-left: 4px solid var(--success); }
+.feedback.incorrect { background: #FBEAE8; color: var(--danger); border-left: 4px solid var(--danger); }
+.quiz-result { text-align: center; padding: 48px; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); }
+.score-circle { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; }
+.score-circle .score { font-size: 48px; font-weight: 700; }
+.score-circle .of { font-size: 14px; opacity: 0.8; }
+
+/* ===== ESCENARIOS ===== */
+.scenario-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.scenario-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s; border-left: 4px solid var(--accent); }
+.scenario-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.scenario-card .client-says { font-style: italic; color: var(--text); margin-bottom: 12px; font-size: 14px; }
+.scenario-card .client-says::before { content: "💬 "; }
+.scenario-card .tag { font-size: 11px; color: var(--primary); background: #E8F0F8; padding: 3px 8px; border-radius: 8px; display: inline-block; }
+.scenario-detail { background: var(--card); border-radius: 12px; padding: 32px; box-shadow: var(--shadow); }
+.scenario-detail .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 14px; margin-bottom: 16px; padding: 0; }
+.client-block { background: #FFF8E7; border-left: 4px solid var(--accent); padding: 16px; border-radius: 6px; margin: 16px 0; }
+.client-block strong { display: block; color: #B7791F; margin-bottom: 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.3px; }
+.response-block { background: #E8F0F8; border-left: 4px solid var(--primary); padding: 16px; border-radius: 6px; margin: 16px 0; }
+.response-block strong { display: block; color: var(--primary); margin-bottom: 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.3px; }
+.response-block ol, .response-block ul { padding-left: 20px; margin-top: 8px; }
+.response-block li { margin-bottom: 8px; font-size: 14px; }
+.terms-used { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+.terms-used .badge { background: var(--primary); color: white; cursor: pointer; }
+
+/* ===== OBJECIONES ===== */
+.objection-item { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden; }
+.objection-header { padding: 18px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.objection-header:hover { background: var(--bg); }
+.objection-header .text { font-weight: 500; flex: 1; }
+.objection-header .text::before { content: "🛑 "; }
+.toggle-icon { color: var(--primary); transition: transform 0.2s; font-size: 18px; }
+.objection-item.open .toggle-icon { transform: rotate(180deg); }
+.objection-body { display: none; padding: 0 24px 24px; }
+.objection-item.open .objection-body { display: block; }
+
+footer { text-align: center; padding: 40px 20px; color: var(--text-light); font-size: 13px; }
+
+@media (max-width: 768px) {
+  header { padding: 16px; }
+  main { padding: 20px 16px; }
+  h1 { font-size: 24px; }
+  nav button { padding: 8px 12px; font-size: 13px; }
+  .flashcard { padding: 24px; min-height: 280px; }
+  .flashcard-face { inset: 24px; }
+  .flashcard h2 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">Comercio Exterior <small>Capacitación – Equipo Comercial</small></div>
+    <nav>
+      <button class="active" data-section="inicio">Inicio</button>
+      <button data-section="glosario">Glosario</button>
+      <button data-section="flashcards">Flashcards</button>
+      <button data-section="quiz">Quiz</button>
+      <button data-section="escenarios">Escenarios</button>
+      <button data-section="objeciones">Objeciones</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- INICIO -->
+<section id="inicio" class="section active">
+  <h1>Bienvenido al programa de capacitación</h1>
+  <p class="subtitle">Material práctico para que el equipo comercial domine la terminología de comercio exterior y la convierta en argumentos de venta.</p>
+
+  <div class="stats-banner">
+    <h2>Tu kit de aprendizaje</h2>
+    <p style="opacity:0.92">Diseñado para vendedores que necesitan hablar el idioma del cliente con seguridad y cerrar más operaciones.</p>
+    <div class="stats">
+      <div class="stat-item"><div class="stat-number" id="stat-terms">0</div><div class="stat-label">Términos</div></div>
+      <div class="stat-item"><div class="stat-number" id="stat-cats">0</div><div class="stat-label">Categorías</div></div>
+      <div class="stat-item"><div class="stat-number" id="stat-quiz">0</div><div class="stat-label">Preguntas de quiz</div></div>
+      <div class="stat-item"><div class="stat-number" id="stat-scen">0</div><div class="stat-label">Escenarios de venta</div></div>
+      <div class="stat-item"><div class="stat-number" id="stat-obj">0</div><div class="stat-label">Objeciones</div></div>
+    </div>
+  </div>
+
+  <h2>Cómo usar esta herramienta</h2>
+  <div class="modules-grid">
+    <div class="module-card" data-go="glosario">
+      <div class="module-icon">📚</div>
+      <h3>Glosario</h3>
+      <p>Consulta cualquier término por nombre o categoría. Es tu referencia rápida cuando estés en una llamada.</p>
+    </div>
+    <div class="module-card" data-go="flashcards">
+      <div class="module-icon">🎴</div>
+      <h3>Flashcards</h3>
+      <p>Estudia con tarjetas: ve el término, intenta recordar la definición, voltea la tarjeta y verifica.</p>
+    </div>
+    <div class="module-card" data-go="quiz">
+      <div class="module-icon">✅</div>
+      <h3>Quiz</h3>
+      <p>30 preguntas de opción múltiple para autoevaluarte. Ideal antes y después de la sesión de capacitación.</p>
+    </div>
+    <div class="module-card" data-go="escenarios">
+      <div class="module-icon">💼</div>
+      <h3>Escenarios de venta</h3>
+      <p>"El cliente dice X — tú respondes Y". Cómo traducir terminología en valor para cerrar el negocio.</p>
+    </div>
+    <div class="module-card" data-go="objeciones">
+      <div class="module-icon">🛑</div>
+      <h3>Manejo de objeciones</h3>
+      <p>Las frases que más escuchas y cómo responderlas usando el lenguaje técnico correcto.</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:40px">Recomendación de uso</h2>
+  <div style="background:var(--card); padding:24px; border-radius:12px; box-shadow:var(--shadow); border-left:4px solid var(--accent);">
+    <p style="margin-bottom:12px"><strong>Día 1:</strong> Quiz inicial (diagnóstico) → revisa tus áreas débiles en el glosario.</p>
+    <p style="margin-bottom:12px"><strong>Días 2–7:</strong> 10 minutos diarios de flashcards filtrando por categoría.</p>
+    <p style="margin-bottom:12px"><strong>Día 8:</strong> Lee los escenarios y practica responderlos en voz alta.</p>
+    <p style="margin-bottom:12px"><strong>Día 9:</strong> Estudia las objeciones y memoriza al menos 3 respuestas tipo.</p>
+    <p><strong>Día 10:</strong> Quiz final → compara con tu resultado inicial.</p>
+  </div>
+</section>
+
+<!-- GLOSARIO -->
+<section id="glosario" class="section">
+  <h1>Glosario</h1>
+  <p class="subtitle">Busca cualquier término por nombre o filtra por categoría temática.</p>
+  <div class="controls">
+    <input type="text" class="search-box" id="search" placeholder="🔍 Buscar término, definición, ejemplo...">
+    <select class="filter-select" id="cat-filter"><option value="">Todas las categorías</option></select>
+  </div>
+  <div class="term-grid" id="term-grid"></div>
+  <div class="no-results" id="no-results" style="display:none">No se encontraron términos. Prueba con otra búsqueda.</div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flashcards" class="section">
+  <h1>Flashcards</h1>
+  <p class="subtitle">Haz clic en la tarjeta para voltearla. Estudia 10–15 minutos al día.</p>
+  <div class="controls">
+    <select class="filter-select" id="fc-filter" style="flex:1"><option value="">Todas las categorías</option></select>
+    <button class="btn btn-secondary" onclick="shuffleCards()">🔀 Mezclar</button>
+  </div>
+  <div class="flashcard-container">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-face flashcard-front">
+        <span class="badge" id="fc-badge"></span>
+        <h2 id="fc-term"></h2>
+        <span class="hint">Click para ver respuesta →</span>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <p id="fc-def"></p>
+        <div class="example" id="fc-ex"></div>
+      </div>
+    </div>
+    <div class="flashcard-controls">
+      <button class="btn btn-secondary" onclick="prevCard()">← Anterior</button>
+      <span class="flashcard-counter" id="fc-counter">1 / 1</span>
+      <button class="btn btn-primary" onclick="nextCard()">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="section">
+  <h1>Quiz de evaluación</h1>
+  <p class="subtitle">30 preguntas para autoevaluarte. Al final verás tu puntuación y áreas a reforzar.</p>
+  <div class="quiz-container" id="quiz-container">
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="quiz-bar" style="width:0%"></div></div>
+    <div id="quiz-content"></div>
+  </div>
+</section>
+
+<!-- ESCENARIOS -->
+<section id="escenarios" class="section">
+  <h1>Escenarios de venta</h1>
+  <p class="subtitle">Situaciones reales que enfrentas con clientes y cómo responder usando la terminología correcta.</p>
+  <div id="scenario-list-view">
+    <div class="scenario-list" id="scenario-list"></div>
+  </div>
+  <div id="scenario-detail-view" style="display:none">
+    <div class="scenario-detail" id="scenario-detail"></div>
+  </div>
+</section>
+
+<!-- OBJECIONES -->
+<section id="objeciones" class="section">
+  <h1>Manejo de objeciones</h1>
+  <p class="subtitle">Las objeciones más comunes que escucha el equipo y cómo responderlas con autoridad técnica.</p>
+  <div id="objection-list"></div>
+</section>
+
+</main>
+
+<footer>Material de capacitación interna · Equipo Comercial · Comercio Exterior México</footer>
+
+<script>
+// ============= DATOS =============
+const TERMS = [
+  // INCOTERMS
+  ["EXW – Ex Works (En Fábrica)","Incoterms 2020","El vendedor pone la mercancía a disposición del comprador en sus instalaciones. El comprador asume todos los costos y riesgos a partir de ese punto.","Una fábrica en Monterrey vende EXW Planta Apodaca; el cliente extranjero contrata transportista y se hace cargo del cruce."],
+  ["FCA – Free Carrier","Incoterms 2020","El vendedor entrega la mercancía despachada para exportación al transportista designado por el comprador.","FCA Aeropuerto AICM al freight forwarder del comprador, ya con pedimento de exportación."],
+  ["FOB – Free On Board","Incoterms 2020","Solo marítimo. El vendedor entrega la mercancía a bordo del buque designado en puerto de embarque. El riesgo se transfiere a bordo.","FOB Manzanillo: el vendedor cubre maniobras hasta cargar el contenedor en el buque."],
+  ["CFR – Cost and Freight","Incoterms 2020","Solo marítimo. El vendedor paga costo y flete hasta puerto destino, pero el riesgo se transfiere al cargar a bordo en origen.","CFR Houston: vendedor paga flete marítimo, comprador contrata seguro."],
+  ["CIF – Cost, Insurance and Freight","Incoterms 2020","Solo marítimo. El vendedor paga costo, flete y seguro mínimo hasta puerto destino. Riesgo se transfiere al cargar a bordo.","CIF Veracruz: vendedor cubre flete y seguro; comprador asume riesgo desde origen pero con póliza."],
+  ["CPT – Carriage Paid To","Incoterms 2020","Cualquier modo. El vendedor paga flete hasta destino; el riesgo se transfiere al primer transportista.","CPT Bodega Guadalajara: vendedor paga flete terrestre hasta cliente."],
+  ["CIP – Carriage and Insurance Paid To","Incoterms 2020","Igual que CPT pero el vendedor además contrata seguro all-risk hasta destino.","CIP Almacén Querétaro: vendedor paga flete y seguro hasta destino."],
+  ["DAP – Delivered At Place","Incoterms 2020","El vendedor entrega lista para descargar en lugar de destino. El comprador realiza importación.","DAP Planta CDMX: vendedor lleva mercancía hasta planta; cliente realiza importación."],
+  ["DPU – Delivered at Place Unloaded","Incoterms 2020","Único Incoterm que obliga al vendedor a descargar en destino.","DPU CEDIS Toluca: vendedor entrega y descarga el contenedor."],
+  ["DDP – Delivered Duty Paid","Incoterms 2020","Máxima obligación: vendedor entrega en destino con TODOS los costos cubiertos, incluyendo importación, aranceles e IVA.","DDP Bodega Monterrey: vendedor extranjero asume todo, incluido pedimento."],
+
+  // DOCUMENTACIÓN
+  ["Pedimento","Documentación","Documento fiscal-aduanero que ampara la importación o exportación. Determina régimen, contribuciones y datos de la operación.","Pedimento clave A1 ampara importación definitiva de electrónicos de China."],
+  ["Factura Comercial","Documentación","Documento del vendedor con descripción, valor, condiciones e Incoterm. Soporta el valor en aduana declarado.","Factura de proveedor texano con valor FOB USD 25,000 por 100 piezas."],
+  ["Lista de Empaque (Packing List)","Documentación","Detalla el contenido físico: bultos, pesos, dimensiones, descripción y números de serie.","Packing list de contenedor con 25 pallets, 500 cajas, peso bruto 12,500 kg."],
+  ["Conocimiento de Embarque (B/L)","Documentación","Documento marítimo que acredita transporte, recibo de mercancía y título de propiedad.","B/L emitido por Maersk para embarque Shanghái–Manzanillo."],
+  ["Guía Aérea (AWB)","Documentación","Documento de transporte aéreo que ampara la carga. NO es título de propiedad.","AWB ampara embarque urgente de refacciones Frankfurt–AICM."],
+  ["Carta Porte (CFDI)","Documentación","Complemento del CFDI que ampara traslado de mercancía por territorio nacional. Incluye origen, destino y mercancía.","Transportista emite CFDI con Carta Porte para llevar mercancía importada de Nuevo Laredo a CDMX."],
+  ["Certificado de Origen","Documentación","Certifica que la mercancía cumple reglas de origen de un tratado para acceder a preferencia arancelaria.","Certificado T-MEC permite importar autopartes de EE.UU. con arancel 0%."],
+  ["COVE","Documentación","Comprobante de Valor Electrónico. Acuse que transmite al SAT los datos de la factura y documentos de valor antes del despacho.","Antes del pedimento, el agente aduanal genera COVE de la factura comercial."],
+  ["Encargo Conferido","Documentación","Acto por el cual el importador autoriza electrónicamente a un agente aduanal a realizar el despacho.","Empresa otorga encargo conferido en portal del SAT antes del primer despacho."],
+  ["DODA","Documentación","Documento de Operación para Despacho Aduanero. Sustituye al pedimento impreso en el módulo de selección automatizada.","Transportista presenta DODA con QR en aduana para activar semáforo fiscal."],
+  ["PITA","Documentación","Proyecto de Integración Tecnológica Aduanera. Sistema que automatiza el cruce con QR del DODA, RFID y cámaras, eliminando papel.","Carril PITA en Nuevo Laredo lee el QR del DODA y RFID del tractocamión automáticamente."],
+  ["Manifestación de Valor (MV)","Documentación","Documento electrónico donde el importador declara los elementos del valor en aduana e incrementables/decrementables. Obligatorio antes del despacho.","Importador transmite MV en VUCEM detallando factura, flete, seguro y comisiones."],
+  ["In Bond","Documentación","Régimen de tránsito que permite mover mercancía bajo control aduanero entre dos aduanas o a un recinto fiscalizado, sin pagar contribuciones hasta destino final.","Mercancía llega a Veracruz y se mueve in bond a la aduana del AICM para despacho final."],
+
+  // REGÍMENES
+  ["Clave A1 – Importación Definitiva","Regímenes","Mercancía que ingresa por tiempo ilimitado para permanecer en territorio nacional. Causa todas las contribuciones.","Distribuidor importa A1 mil televisores; paga IGI, IVA y DTA."],
+  ["Clave A3 – Importación Temporal","Regímenes","Importación por tiempo limitado para retornar al extranjero en el mismo estado.","Maquinaria que se importa A3 para una feria y se retorna al cierre."],
+  ["Clave IN – Temporal IMMEX","Regímenes","Importación temporal para empresas IMMEX, destinada a manufactura, transformación o reparación con retorno posterior.","Maquiladora importa IN insumos electrónicos para ensamblar y exportar a EE.UU."],
+  ["Clave RT – Retorno","Regímenes","Retorno al extranjero de mercancías importadas temporalmente bajo IMMEX u otro régimen.","IMMEX retorna RT producto terminado ensamblado en Tijuana."],
+  ["Clave F4 – Cambio de Régimen","Regímenes","Operación que convierte una importación temporal en definitiva, pagando contribuciones actualizadas.","Maquinaria importada IN se cambia a F4 para quedarse definitivamente en planta."],
+  ["Depósito Fiscal","Regímenes","Régimen para almacenar mercancía en almacenes generales autorizados, suspendiendo el pago de contribuciones.","Importador deposita autos hasta tener liquidez para extraerlos."],
+  ["Recinto Fiscalizado Estratégico","Regímenes","Inmueble autorizado donde se realizan operaciones de manejo, almacenaje, transformación y reparación con beneficios fiscales.","Empresa opera dentro de un RFE en Toluca para diferir IGI hasta su salida."],
+  ["Tránsito Internacional","Regímenes","Régimen para transportar mercancía extranjera por territorio nacional entre dos aduanas, sin pagar contribuciones.","Mercancía cruza Veracruz con destino a Guatemala bajo tránsito."],
+
+  // AUTORIDADES
+  ["SAT","Autoridades","Servicio de Administración Tributaria. Recauda contribuciones federales y emite RGCE en materia aduanera.","El SAT publica las RGCE y atiende auditorías de comercio exterior."],
+  ["ANAM","Autoridades","Agencia Nacional de Aduanas de México. Autoridad aduanera operativa creada en 2021.","Reconocimiento aduanero y semáforo fiscal son operados por la ANAM."],
+  ["Secretaría de Economía","Autoridades","Regula tratados comerciales, programas de fomento (IMMEX, PROSEC), permisos previos y NOMs comerciales.","SE emite el permiso previo para importar mercancía sujeta a regulación."],
+  ["Ley Aduanera","Autoridades","Ordenamiento federal que regula entrada y salida de mercancías, regímenes y obligaciones.","El art. 36 de la LA establece la obligación de presentar pedimento."],
+  ["RGCE","Autoridades","Reglas Generales de Comercio Exterior. Reglas anuales del SAT/ANAM con obligaciones, formatos y procedimientos.","La regla 3.1.8 RGCE establece datos mínimos de la factura comercial."],
+  ["LIGIE","Autoridades","Ley de los Impuestos Generales de Importación y Exportación. Contiene la TIGIE con fracciones y aranceles.","La LIGIE clasifica mercancías a 8 dígitos más NICO de 2 dígitos."],
+
+  // PROGRAMAS
+  ["IMMEX","Programas","Programa que permite importar temporalmente insumos, maquinaria y equipo para producir mercancía de exportación, sin pagar IGI ni IVA al ingreso.","IMMEX importa temporalmente componentes para ensamblar y exportar."],
+  ["PROSEC","Programas","Programas de Promoción Sectorial. Permiten importar insumos con arancel reducido para sectores específicos.","Industria automotriz con PROSEC importa autopartes con arancel preferencial."],
+  ["Regla 8a","Programas","Permite importar partes y componentes bajo fracción 9803 con arancel reducido cuando se usan en fabricación.","Armadora importa cientos de partes bajo Regla 8a en 9803.00.01."],
+  ["OEA","Programas","Operador Económico Autorizado. Certificación que reconoce empresas confiables con beneficios: menos reconocimientos, carriles exclusivos, despacho ágil.","Empresa OEA accede a carril exprés en aduana y reduce tiempos de cruce."],
+  ["Certificación IVA/IEPS (A, AA, AAA)","Programas","Permite a IMMEX y otras acreditar el IVA de importación temporal mediante crédito fiscal en lugar de pagarlo.","IMMEX certificada AAA aplica crédito fiscal del 100% del IVA en temporales."],
+  ["Drawback","Programas","Programa que permite recuperar el IGI pagado por insumos importados que se incorporan a mercancías exportadas.","Empresa solicita devolución del IGI pagado por materias primas que exportó."],
+
+  // CLASIFICACIÓN
+  ["Fracción Arancelaria","Clasificación","Código de 8 dígitos basado en el Sistema Armonizado que identifica la mercancía y determina arancel y regulaciones.","Una laptop se clasifica en 8471.30.01."],
+  ["NICO","Clasificación","Número de Identificación Comercial. Dos dígitos adicionales con fines estadísticos y de regulación.","Fracción 8471.30.01 con NICO 00 = computadora portátil específica."],
+  ["Sistema Armonizado (SA)","Clasificación","Nomenclatura internacional de la OMA para clasificar mercancías a 6 dígitos. Base de la TIGIE.","Los primeros 6 dígitos de la fracción son iguales en cualquier país miembro."],
+  ["Reglas Generales de Interpretación","Clasificación","Seis reglas que definen cómo clasificar correctamente cuando hay duda entre partidas.","La RGI 3-b se usa para clasificar surtidos por su carácter esencial."],
+  ["Padrón de Importadores","Clasificación","Registro obligatorio ante el SAT para poder importar a México de manera definitiva.","Empresa nueva debe inscribirse antes de su primera importación."],
+  ["Padrón Sectorial","Clasificación","Registro adicional para mercancías sensibles (alcohol, tabaco, hidrocarburos, calzado, textil).","Importador de calzado debe inscribirse en el padrón sectorial."],
+
+  // IMPUESTOS
+  ["IGI – Impuesto General de Importación","Impuestos","Arancel aplicado a la importación según fracción arancelaria y origen.","Importación de zapatos paga IGI del 25% sobre valor en aduana, salvo TLC."],
+  ["IVA en Importación","Impuestos","Impuesto al Valor Agregado del 16% (8% en franja fronteriza) que grava la importación.","Importación con valor en aduana de $1,000,000 + IGI causa IVA del 16%."],
+  ["IEPS","Impuestos","Impuesto Especial sobre Producción y Servicios. Aplica a alcohol, tabaco, refrescos, combustibles, alimentos no básicos.","Importación de cerveza causa IEPS del 26.5% además de IGI e IVA."],
+  ["DTA","Impuestos","Derecho de Trámite Aduanero. Por uso de instalaciones aduaneras, calculado sobre valor en aduana.","Importación de USD 100,000 paga DTA del 8 al millar."],
+  ["Prevalidación","Impuestos","Pago a una confederación de agentes aduanales por validación electrónica del pedimento.","Cada pedimento incluye cuota de prevalidación junto con DTA."],
+  ["Cuota Compensatoria","Impuestos","Arancel adicional para contrarrestar dumping o subvenciones.","Importación de acero chino paga cuota compensatoria del 80% por dumping."],
+  ["ISAN","Impuestos","Impuesto Sobre Automóviles Nuevos. Aplica a importación o enajenación de autos nuevos.","Importación de auto de lujo nuevo causa ISAN además de IGI e IVA."],
+
+  // VALORACIÓN
+  ["Valor en Aduana","Valoración","Base gravable para contribuciones a la importación. Valor de transacción más incrementables.","FOB + flete + seguro hasta puerto de entrada = Valor en Aduana."],
+  ["Valor de Transacción","Valoración","Precio efectivamente pagado o por pagar por la mercancía vendida para exportación a México.","Factura por USD 50,000 más comisiones forman el valor de transacción."],
+  ["Incrementables","Valoración","Conceptos que se SUMAN al valor de transacción: fletes, seguros, comisiones, regalías, embalajes hasta puerto de entrada.","Flete internacional de USD 3,000 se incrementa al valor de la factura."],
+  ["Decrementables","Valoración","Conceptos que se RESTAN si están incluidos: fletes desde puerto de entrada, montaje, intereses.","Si la factura DDP incluye flete interno mexicano, este se decrementa."],
+  ["Métodos Secundarios","Valoración","Cuando no aplica valor de transacción: mercancías idénticas, similares, precio unitario, valor reconstruido y último recurso.","Cuando hay vinculación, se usa método de mercancías similares."],
+  ["Vinculación","Valoración","Relación entre comprador y vendedor (mismo grupo) que puede afectar el precio. Hay que demostrar precio de mercado.","Filial mexicana importa de su matriz; debe acreditar precios de mercado."],
+
+  // OPERACIONES
+  ["Despacho Aduanero","Operaciones","Conjunto de actos y formalidades para entrada o salida de mercancías por las aduanas.","Inicia con el pedimento y concluye con la entrega de mercancía liberada."],
+  ["Reconocimiento Aduanero","Operaciones","Inspección física y documental cuando el semáforo fiscal marca rojo.","ANAM inspecciona contenedor y verifica cantidad, descripción y clasificación."],
+  ["Reconocimiento Previo","Operaciones","Revisión voluntaria de la mercancía por el agente aduanal antes de presentar el pedimento.","Agente revisa en patio fiscal que mercancía coincida con factura."],
+  ["Selección Automatizada (Semáforo)","Operaciones","Mecanismo aleatorio que determina si la mercancía se libera (verde) o se inspecciona (rojo).","Pedimento activa semáforo verde y la mercancía sale sin inspección."],
+  ["Glosa","Operaciones","Revisión documental posterior al despacho para verificar correcta determinación de contribuciones.","Glosa detecta error en clasificación y origina rectificación."],
+  ["PAMA","Operaciones","Procedimiento Administrativo en Materia Aduanera. Se inicia ante irregularidades, embargando precautoriamente la mercancía.","ANAM inicia PAMA por subvaluación; importador tiene 10 días para pruebas."],
+  ["Embargo Precautorio","Operaciones","Medida que retiene la mercancía durante un PAMA hasta resolver la irregularidad.","Mercancía sin documentación de origen es embargada precautoriamente."],
+  ["Rectificación de Pedimento","Operaciones","Modificación de datos del pedimento después de su presentación para corregir errores.","Importador rectifica fracción detectada en glosa y paga diferencias."],
+
+  // LOGÍSTICA
+  ["Agente Aduanal","Logística","Persona física autorizada por SAT/ANAM para promover por cuenta ajena el despacho aduanero.","Agente con patente vigente firma electrónicamente el pedimento."],
+  ["Agencia Aduanal","Logística","Persona moral integrada por agentes aduanales que presta servicios de despacho.","Agencia opera en 5 aduanas con 3 agentes y personal operativo."],
+  ["Freight Forwarder","Logística","Empresa que coordina y contrata transporte internacional, consolidación y documentación.","Forwarder consolida embarques de varios clientes y emite HBL."],
+  ["LCL","Logística","Less than Container Load. Carga consolidada que comparte espacio con otras mercancías.","Cliente con 5 m³ exporta LCL desde Manzanillo a Long Beach."],
+  ["FCL","Logística","Full Container Load. Carga que ocupa un contenedor completo de un solo embarcador.","FCL en contenedor de 40' con producto terminado a EE.UU."],
+  ["Demoras (Demurrage)","Logística","Cargo de la naviera cuando el contenedor permanece en puerto más allá del tiempo libre.","Mercancía detenida 5 días extra genera USD 150 diarios de demurrage."],
+  ["Estadías (Detention)","Logística","Cargo por retener el contenedor fuera del puerto más allá del tiempo libre.","Cliente regresa contenedor 3 días tarde y paga detention."],
+  ["Almacén Fiscal","Logística","Recinto autorizado para almacenar mercancía bajo régimen de depósito fiscal.","Distribuidora deposita autos importados y los extrae conforme los vende."],
+
+  // RRNA
+  ["NOM","RRNA","Norma Oficial Mexicana. Regulación técnica obligatoria que productos deben cumplir (etiquetado, seguridad, eficiencia).","Línea blanca debe cumplir NOM-003-SE-2018 sobre seguridad eléctrica."],
+  ["Permiso Previo","RRNA","Autorización de la SE para importar mercancías sensibles (armas, materiales radiactivos, neumáticos usados).","Importación de neumáticos usados requiere permiso previo de la SE."],
+  ["Aviso Automático","RRNA","Mecanismo de monitoreo estadístico para acero, calzado, textil. No restringe importación.","Importación de productos de acero requiere aviso automático en VUCEM."],
+  ["COFEPRIS","RRNA","Regula importación de medicamentos, alimentos, suplementos, dispositivos médicos y químicos.","Importación de suplementos requiere registro y aviso sanitario COFEPRIS."],
+  ["SENASICA","RRNA","Servicio que regula sanidad agropecuaria, acuícola y pesquera.","Importación de carne bovina requiere certificado zoosanitario SENASICA."],
+  ["SEMARNAT","RRNA","Regula importación de químicos, residuos peligrosos, fauna y flora.","Importación de sustancias químicas precursoras requiere autorización SEMARNAT."],
+  ["VUCEM","RRNA","Ventanilla Única de Comercio Exterior. Plataforma para trámites, permisos y avisos con varias dependencias.","Agencia tramita aviso automático y NOM en VUCEM antes del despacho."],
+  ["UVA","RRNA","Unidad de Verificación Aduanera. Acreditada por EMA y aprobada por SE para verificar cumplimiento de NOMs en importación.","Para liberar embarque sujeto a NOM, importador contrata una UVA que emite dictamen."],
+  ["RRNA","RRNA","Regulaciones y Restricciones No Arancelarias. Conjunto de medidas distintas al arancel: NOMs, permisos, avisos, certificados, cuotas, etiquetado.","Importación de juguetes está sujeta a RRNA: NOM-015 y NOM-050."],
+
+  // FINANCIEROS
+  ["Carta de Crédito","Financiero","Instrumento bancario donde un banco se compromete a pagar al exportador contra entrega de documentos conformes.","Importador abre L/C irrevocable a 60 días contra B/L y factura."],
+  ["Cobranza Documentaria","Financiero","Banco entrega documentos al comprador contra pago (D/P) o aceptación (D/A).","Exportador envía documentos D/P; banco entrega B/L tras pago."],
+  ["Pago Anticipado","Financiero","El importador paga antes del embarque. Mayor riesgo para el comprador.","Cliente paga 100% por adelantado para asegurar producción de pedido especial."],
+  ["Cuenta Abierta","Financiero","El exportador embarca y otorga crédito (30, 60, 90 días).","Proveedor europeo embarca con 90 días de crédito a distribuidor mexicano."],
+  ["Factoraje Internacional","Financiero","Exportador cede sus cuentas por cobrar al factor a cambio de liquidez inmediata.","Exportadora cede facturas y recibe el 80% al embarque."],
+  ["Tipo de Cambio DOF","Financiero","Tipo de cambio publicado por Banxico en el DOF, usado para conversión en pedimentos.","Pedimento del 5 mayo usa tipo de cambio publicado el 4 de mayo."],
+
+  // ORIGEN
+  ["Reglas de Origen","Origen","Criterios que determinan el país de producción de una mercancía para acceder a preferencia arancelaria.","Bajo T-MEC, vehículo debe cumplir 75% VCR para arancel preferencial."],
+  ["VCR – Valor de Contenido Regional","Origen","Porcentaje del valor atribuible a contenido producido en la región del tratado.","Componente automotriz alcanza 70% VCR cumpliendo regla T-MEC."],
+  ["De Minimis","Origen","Porcentaje permitido de materiales no originarios sin perder el origen.","Una prenda con 9% de fibra no originaria sigue siendo originaria por de minimis."],
+  ["Acumulación de Origen","Origen","Permite considerar como originarios materiales y procesos de otros países parte del tratado.","Tela tejida en Canadá y prenda en México califican como originarias."],
+  ["Verificación de Origen","Origen","Procedimiento de la autoridad para confirmar que la mercancía cumple las reglas declaradas.","SAT inicia verificación al exportador estadounidense."],
+  ["Regla Específica de Origen","Origen","Criterios particulares por fracción: salto arancelario, VCR o procesos específicos.","Producto químico requiere salto arancelario de partida según REO T-MEC."],
+];
+
+const SCENARIOS = [
+  {
+    title: "Cliente nuevo pregunta por costos",
+    tag: "Cotización",
+    client: "Quiero importar 5 contenedores de electrodomésticos de China. ¿Cuánto me va a salir todo?",
+    response: [
+      "Reconocer que la pregunta es sobre el <b>valor en aduana</b>, no solo el flete.",
+      "Pedir factura proforma para identificar la <b>fracción arancelaria</b> y calcular IGI.",
+      "Explicar que el costo se compone de: <b>IGI</b> (varía según fracción y origen), <b>IVA</b> (16%), <b>DTA</b>, <b>prevalidación</b> y honorarios.",
+      "Mencionar que algunos electrodomésticos tienen <b>cuota compensatoria</b> antidumping vs. China — verificar antes de cotizar.",
+      "Verificar si requieren <b>NOMs</b> (etiquetado, eficiencia energética) y proponer <b>UVA</b> para dictamen."
+    ],
+    terms: ["Valor en Aduana","Fracción Arancelaria","IGI","IVA en Importación","DTA","Cuota Compensatoria","NOM","UVA"]
+  },
+  {
+    title: "Cliente IMMEX con problema",
+    tag: "IMMEX",
+    client: "Mi maquinaria se quedó en aduana porque dicen que la importé como definitiva en lugar de temporal.",
+    response: [
+      "Confirmar que la operación se hizo con <b>clave A1</b> en lugar de <b>IN</b>, lo que generó pago de IGI e IVA innecesario.",
+      "Si todavía no se libera: rectificar el <b>pedimento</b> antes del despacho con clave correcta.",
+      "Si ya se liberó como definitiva: evaluar <b>cambio de régimen F4</b> hacia atrás (más complejo) o pedir devolución.",
+      "Auditar el flujo del cliente para que su agencia futura siempre identifique mercancía IMMEX antes del despacho.",
+      "Vender el valor: una agencia que conoce <b>IMMEX</b> evita errores que cuestan millones."
+    ],
+    terms: ["IMMEX","Clave IN – Temporal IMMEX","Clave A1 – Importación Definitiva","Pedimento","Rectificación de Pedimento","Clave F4 – Cambio de Régimen"]
+  },
+  {
+    title: "Cliente con semáforo rojo recurrente",
+    tag: "Operación",
+    client: "Cada vez que importo me toca semáforo rojo y se atrasa todo. ¿Por qué pasa eso?",
+    response: [
+      "Explicar que la <b>selección automatizada</b> es aleatoria, pero ciertos perfiles tienen mayor probabilidad: importador nuevo, sectores sensibles, valores atípicos.",
+      "Auditar fracciones, valor en aduana y consistencia documental — un patrón irregular activa más rojos.",
+      "Proponer certificación <b>OEA</b>: se reduce drásticamente la frecuencia de reconocimiento.",
+      "Mientras tanto: <b>reconocimiento previo</b> en patio para detectar errores antes del pedimento.",
+      "Mostrar que con OEA accede a <b>carriles exclusivos</b> y tiempos de cruce predecibles."
+    ],
+    terms: ["Selección Automatizada (Semáforo)","Reconocimiento Aduanero","OEA","Reconocimiento Previo"]
+  },
+  {
+    title: "Proveedor vende DDP",
+    tag: "Incoterms",
+    client: "Mi proveedor en EE.UU. me vende DDP a mi planta. Entonces no necesito agente aduanal, ¿verdad?",
+    response: [
+      "Aclarar que <b>DDP</b> obliga al vendedor a hacer la importación, pero igual se necesita un agente aduanal en México (la ley aduanera lo exige).",
+      "El proveedor extranjero contrata una agencia aduanal mexicana — usualmente la elige él.",
+      "Riesgo: el proveedor cotiza un costo escondiendo márgenes en logística y aduanas. El cliente no ve los pedimentos ni controla la operación.",
+      "Vender el cambio a <b>FCA o DAP</b>: cliente controla su importación, ve sus contribuciones reales y elige su agencia (la nuestra).",
+      "Beneficio adicional: si cambia a IMMEX o necesita rectificar, tiene el pedimento a su nombre."
+    ],
+    terms: ["DDP – Delivered Duty Paid","FCA – Free Carrier","DAP – Delivered At Place","Agente Aduanal","Pedimento"]
+  },
+  {
+    title: "Cliente recibió un PAMA",
+    tag: "Riesgo",
+    client: "Me llegó un PAMA, dicen que subvalué la mercancía. Tengo embargada la importación. ¿Qué hago?",
+    response: [
+      "Calmarlo: el <b>PAMA</b> tiene plazos definidos (10 días para pruebas) — actuar rápido pero con estrategia.",
+      "Revisar la <b>Manifestación de Valor</b> presentada y los soportes: factura, contrato, transferencias.",
+      "Si el valor está bien soportado: presentar pruebas (transferencias bancarias, correos de negociación, contratos) para defender el <b>valor de transacción</b>.",
+      "Si hubo error real: evaluar pago de diferencias antes de que la autoridad determine.",
+      "Aprender la lección: a partir de ahora, soportar todas las operaciones con MV detallada y documentación robusta."
+    ],
+    terms: ["PAMA","Embargo Precautorio","Manifestación de Valor (MV)","Valor de Transacción","Valor en Aduana"]
+  },
+  {
+    title: "Exportador que no aprovecha T-MEC",
+    tag: "Tratados",
+    client: "Exporto a EE.UU. pero el cliente paga aranceles allá. ¿No hay forma de que sean cero?",
+    response: [
+      "Explicar T-MEC: arancel 0% si la mercancía cumple <b>reglas de origen</b>.",
+      "Verificar si la mercancía es originaria — analizar la <b>regla específica de origen</b> de su fracción.",
+      "Si cumple: emitir <b>certificado de origen T-MEC</b> con cada exportación.",
+      "Si no cumple: revisar si puede ajustarse vía <b>VCR</b> o <b>acumulación de origen</b> con materiales canadienses/estadounidenses.",
+      "Cuantificar el ahorro al cliente: ej. 6.5% sobre exportaciones anuales = ROI inmediato."
+    ],
+    terms: ["Reglas de Origen","Regla Específica de Origen","Certificado de Origen","VCR – Valor de Contenido Regional","Acumulación de Origen"]
+  },
+  {
+    title: "Cliente cuestiona la Manifestación de Valor",
+    tag: "Documentación",
+    client: "¿Por qué tengo que llenar Manifestación de Valor si ya entrego la factura? Es duplicar trabajo.",
+    response: [
+      "Aclarar que la <b>MV</b> no es la factura: es la declaración del importador sobre cómo se conformó el valor en aduana.",
+      "Es <b>obligación legal</b> del importador (no del agente) demostrar incrementables y decrementables.",
+      "Sin MV correcta, ante una glosa o PAMA, la defensa es muy débil.",
+      "Ofrecer apoyo: nuestra agencia precarga la MV con datos del COVE y solo el cliente valida.",
+      "Posicionarse: convertir un trámite molesto en un servicio de valor."
+    ],
+    terms: ["Manifestación de Valor (MV)","Factura Comercial","Valor en Aduana","Incrementables","Decrementables","COVE","Glosa","PAMA"]
+  },
+  {
+    title: "Pequeño importador subestima OEA",
+    tag: "OEA",
+    client: "Importo 10 contenedores al año. ¿Para qué quiero OEA si nunca me han parado?",
+    response: [
+      "OEA no es solo para gigantes; hay esquemas para empresas medianas con la Modalidad Importador.",
+      "Beneficio operativo: <b>menos reconocimientos</b>, <b>carriles exclusivos</b>, despacho más rápido.",
+      "Beneficio comercial: clientes en EE.UU. valoran a proveedores con C-TPAT/OEA — abre negocio.",
+      "Beneficio fiscal indirecto: empresas OEA acceden con más facilidad a certificación <b>IVA/IEPS</b> si operan IMMEX.",
+      "Costo-beneficio: la inversión inicial se recupera con ahorros en demoras y storage del primer año."
+    ],
+    terms: ["OEA","Reconocimiento Aduanero","Selección Automatizada (Semáforo)","Certificación IVA/IEPS (A, AA, AAA)","IMMEX"]
+  },
+  {
+    title: "Cliente con NOM no cumplida",
+    tag: "RRNA",
+    client: "Mi mercancía está parada porque dicen que no cumple una NOM. ¿Qué hago?",
+    response: [
+      "Identificar qué <b>NOM</b> aplica: NOMs informativas (etiquetado) son corregibles; NOMs de seguridad requieren dictamen.",
+      "Contratar una <b>UVA</b> autorizada para que tome muestras y emita dictamen.",
+      "Si es etiquetado: trasladar la mercancía a <b>almacén fiscal</b> o RFE para reetiquetar y luego liberar.",
+      "Para futuras importaciones: validar NOMs ANTES de embarcar — incluirlo en el procedimiento estándar.",
+      "Vender el aprendizaje: nuestra agencia revisa NOMs en cotización inicial para que esto no se repita."
+    ],
+    terms: ["NOM","UVA","RRNA","Almacén Fiscal","Recinto Fiscalizado Estratégico"]
+  },
+  {
+    title: "Maquila quiere convertir mercancía temporal en definitiva",
+    tag: "IMMEX",
+    client: "Tengo maquinaria importada como temporal IMMEX hace 3 años. Quiero quedármela. ¿Se puede?",
+    response: [
+      "Sí: a través de <b>cambio de régimen con clave F4</b>.",
+      "Implica pagar <b>IGI</b>, <b>IVA</b>, <b>DTA</b> actualizados al valor declarado más recargos por el tiempo en territorio.",
+      "Calcular el costo total ANTES de hacerlo — comparar contra retornar y reimportar.",
+      "Verificar fracción y si aplica <b>PROSEC</b> o tratado para reducir IGI.",
+      "Asesorar también sobre el impacto en sus reportes de IMMEX y SE."
+    ],
+    terms: ["Clave F4 – Cambio de Régimen","Clave IN – Temporal IMMEX","IGI","IVA en Importación","DTA","PROSEC","IMMEX"]
+  }
+];
+
+const OBJECTIONS = [
+  {
+    text: "Es muy caro tu servicio comparado con otra agencia.",
+    response: "El precio no es solo honorarios; es el costo total de no operar bien. Una agencia barata que clasifica mal puede generar diferencias en glosa, recargos, multas y hasta PAMA. Nuestra estructura previene eso. Te propongo: cotizamos lo mismo que ellos, pero auditamos las últimas 5 operaciones y te muestro el ahorro real."
+  },
+  {
+    text: "Nuestra agencia actual nos sirve bien, no necesitamos cambiar.",
+    response: "Perfecto, no busco que cambies de la noche a la mañana. Te propongo abrir como segunda opción para una operación específica — por ejemplo importación temporal IMMEX o un embarque que requiera NOM. Comparas tiempos, comunicación y nivel de asesoría. Si te aporta valor, escalamos; si no, sin compromiso."
+  },
+  {
+    text: "No tenemos suficiente volumen para necesitar una agencia grande como ustedes.",
+    response: "Justo el volumen bajo es donde más se nota una mala asesoría: un error en una de 10 operaciones es 10% de tu negocio. Tenemos esquemas para empresas con pocos pedimentos al año, y al asesorarte bien desde el inicio (fracción, RRNA, MV) evitamos sorpresas que con poco volumen son más críticas."
+  },
+  {
+    text: "Mi proveedor extranjero ya tiene su agencia recomendada.",
+    response: "Cuando el proveedor elige la agencia (típico en DDP o cuando el forwarder lo amarra), tú pierdes visibilidad y control: no ves pedimentos, no controlas tiempos, no negocias honorarios. Cambia tu Incoterm a FCA o DAP y elige tú. Ese cambio se paga solo en transparencia."
+  },
+  {
+    text: "El otro agente me cobra menos DTA.",
+    response: "El DTA está en ley (Art. 49 LFD) — nadie lo cobra menos. Lo que sí varía son honorarios y servicios complementarios. Si te están cobrando menos DTA, está mal calculado y eso significa pedimentos mal hechos. Revisemos un pedimento juntos."
+  },
+  {
+    text: "OEA no me sirve, nunca me han parado.",
+    response: "Que no te hayan parado hoy no significa que no te van a parar mañana. OEA tiene tres beneficios concretos más allá del semáforo: clientes internacionales prefieren proveedores OEA/C-TPAT, accedes con más facilidad a certificación IVA/IEPS si tienes IMMEX, y reduces riesgo de embargo precautorio en PAMA. ¿Te muestro el caso de un cliente similar al tuyo?"
+  },
+  {
+    text: "Para qué necesito que ustedes lleven mi MV si yo se la doy a mi contador.",
+    response: "Tu contador maneja contabilidad fiscal; la Manifestación de Valor es un documento aduanero con elementos técnicos (incrementables, decrementables, ajustes por vinculación) que requieren conocimiento de comercio exterior. Un error en MV no es contable, es origen de glosa. Nosotros la integramos al despacho con datos del COVE — es eficiencia, no duplicar."
+  },
+  {
+    text: "IMMEX se ve muy complicado, mejor importo definitivo y ya.",
+    response: "Si exportas más del 30% de lo que produces, IMMEX te ahorra el IGI y el IVA al ingreso de insumos. Sí tiene controles (anexo 24, retornos, reportes), pero los manejamos nosotros como parte del servicio. Hagamos un cálculo rápido: si tienes 5 millones en compras al extranjero, tu ahorro anual mínimo es de 800 mil pesos solo en flujo de IVA."
+  },
+  {
+    text: "El cruce siempre está lento, no es problema de la agencia sino de la aduana.",
+    response: "Parcialmente cierto: la aduana es la aduana. Pero el 80% de los retrasos tienen origen documental: COVE mal cargado, MV incompleta, NOMs no validadas, padrón no actualizado. Una agencia proactiva trabaja la pre-validación y reduce reprocesos. Te invito a auditar tus últimos 3 cruces y te muestro qué se pudo prevenir."
+  },
+  {
+    text: "Mi sobrino estudió comercio internacional y me lleva las importaciones.",
+    response: "Excelente que tengas a alguien de confianza dentro. Pero un agente aduanal con patente es responsabilidad solidaria ante el SAT — eso protege al importador. Tu sobrino puede ser tu contraparte interna y nosotros operamos el despacho con la cobertura legal. Es el mejor de los dos mundos."
+  }
+];
+
+const QUIZ = [
+  {q:"¿Qué Incoterm obliga al vendedor a entregar la mercancía descargada en el lugar de destino?",o:["DAP","DDP","DPU","CIP"],a:2,e:"DPU es el único Incoterm que obliga al vendedor a descargar."},
+  {q:"¿Cuál es la base gravable para el cálculo de contribuciones a la importación?",o:["Valor de factura","Valor de transacción solo","Valor en aduana","FOB"],a:2,e:"El valor en aduana incluye valor de transacción más incrementables."},
+  {q:"¿Qué clave de pedimento corresponde a importación temporal IMMEX?",o:["A1","A3","IN","RT"],a:2,e:"IN es importación temporal para empresas con programa IMMEX."},
+  {q:"¿Qué documento sustituye al pedimento impreso en el cruce automatizado?",o:["COVE","DODA","Carta Porte","B/L"],a:1,e:"DODA es el Documento de Operación para Despacho Aduanero."},
+  {q:"¿Quién debe presentar la Manifestación de Valor?",o:["El agente aduanal","El forwarder","El importador","La aduana"],a:2,e:"La MV es obligación del importador, aunque el agente la apoye."},
+  {q:"¿Qué impuesto NO se causa en una importación temporal IMMEX?",o:["IGI","DTA","Prevalidación","Cuota compensatoria"],a:0,e:"IMMEX permite diferir IGI; con certificación AAA también el IVA."},
+  {q:"¿Qué significa el semáforo rojo en aduana?",o:["Despacho libre","Reconocimiento aduanero","Pago suspendido","Embargo"],a:1,e:"Semáforo rojo activa el reconocimiento aduanero (revisión física)."},
+  {q:"¿Qué autoridad opera hoy las aduanas de México?",o:["SAT","ANAM","SE","Banxico"],a:1,e:"La ANAM fue creada en 2021 y asumió las funciones operativas de aduanas."},
+  {q:"¿Qué es el COVE?",o:["Pedimento electrónico","Comprobante de Valor Electrónico","Certificado de Origen","Carta Porte"],a:1,e:"COVE transmite al SAT los datos de la factura antes del despacho."},
+  {q:"Bajo T-MEC, para que un vehículo califique como originario, ¿qué porcentaje de VCR se requiere actualmente?",o:["50%","62.5%","75%","100%"],a:2,e:"T-MEC requiere 75% de VCR para vehículos (gradual desde 2020)."},
+  {q:"¿Qué es una UVA?",o:["Unidad de Valoración Aduanera","Unidad de Verificación Aduanera","Unión de Vendedores Aduanales","Ventanilla de Verificación"],a:1,e:"UVA verifica cumplimiento de NOMs y emite dictamen."},
+  {q:"¿Qué incrementable se suma al valor de transacción?",o:["Flete interno desde puerto al destino","Montaje en destino","Flete internacional al puerto de entrada","Intereses por crédito"],a:2,e:"Fletes y seguros hasta el puerto de entrada son incrementables."},
+  {q:"¿Cuál es el régimen aduanero para mover mercancía entre dos aduanas sin pagar contribuciones?",o:["Depósito fiscal","Tránsito (in bond)","Recinto fiscalizado","Importación temporal"],a:1,e:"El tránsito (in bond) permite mover mercancía bajo control aduanero."},
+  {q:"¿Qué es el DTA?",o:["Derecho de Trato Arancelario","Derecho de Trámite Aduanero","Documento de Transferencia Aduanal","Decreto de Traslado"],a:1,e:"DTA se cobra por el uso de instalaciones aduaneras."},
+  {q:"¿Qué pasa si una mercancía no cumple la NOM aplicable?",o:["Pasa con multa","No puede liberarse hasta cumplir","Se libera con OEA","Se aplica drawback"],a:1,e:"Las NOMs son obligatorias y no pueden omitirse al despachar."},
+  {q:"¿Cuál es la principal ventaja del programa OEA?",o:["No pagar IVA","Reducción de reconocimientos y carriles exclusivos","Eliminación de IGI","Sin auditorías"],a:1,e:"OEA reduce frecuencia de reconocimiento y agiliza el despacho."},
+  {q:"¿Qué clave de pedimento se usa para cambiar de régimen temporal a definitivo?",o:["A1","F4","RT","V1"],a:1,e:"F4 convierte una importación temporal en definitiva."},
+  {q:"¿Cuántos dígitos tiene una fracción arancelaria mexicana sin contar NICO?",o:["6","8","10","12"],a:1,e:"La fracción arancelaria es de 8 dígitos; NICO añade 2 dígitos extra."},
+  {q:"¿Qué documento ampara el transporte terrestre con efecto fiscal?",o:["B/L","AWB","Carta Porte CFDI","COVE"],a:2,e:"Carta Porte es complemento del CFDI para traslado nacional."},
+  {q:"¿Qué es PAMA?",o:["Programa de Apoyo Maquilador","Procedimiento Administrativo en Materia Aduanera","Padrón Anual de Mercancías","Plan de Auditoría"],a:1,e:"PAMA es el procedimiento que la autoridad inicia ante irregularidades."},
+  {q:"¿Qué Incoterm transfiere riesgo al cargar la mercancía a bordo en origen pero el vendedor paga flete y seguro?",o:["FOB","CFR","CIF","DDP"],a:2,e:"CIF: vendedor paga costo, seguro y flete; riesgo se transfiere a bordo."},
+  {q:"¿Qué se hace si se detecta error en un pedimento ya presentado?",o:["Se ignora","Se rectifica el pedimento","Se cancela la importación","Se reimporta"],a:1,e:"Art. 89 LA permite rectificar el pedimento."},
+  {q:"¿Qué porcentaje de IVA aplica generalmente en importación?",o:["8%","11%","16%","20%"],a:2,e:"IVA general 16% (8% en franja fronteriza)."},
+  {q:"¿Qué dependencia regula importación de medicamentos y suplementos?",o:["SENASICA","SEMARNAT","COFEPRIS","SAT"],a:2,e:"COFEPRIS regula salud: medicamentos, alimentos, dispositivos médicos."},
+  {q:"¿Qué es el drawback?",o:["Reembolso de DTA","Devolución de IGI por insumos exportados","Crédito de IVA","Cuota antidumping"],a:1,e:"Drawback recupera IGI pagado por insumos que se incorporan a exportación."},
+  {q:"¿Qué tipo de cambio se usa para convertir el valor de un pedimento?",o:["Banxico promedio mensual","Tipo de cambio del DOF del día anterior","Tipo de cambio interbancario","Tipo de cambio de la factura"],a:1,e:"Pedimento usa el tipo de cambio del DOF publicado el día anterior."},
+  {q:"¿Qué documento prueba el origen para acceder a preferencia arancelaria?",o:["Factura comercial","B/L","Certificado de Origen","Lista de empaque"],a:2,e:"El certificado de origen es la prueba para aplicar preferencia de TLC."},
+  {q:"¿Qué condiciona la valoración aduanera entre partes vinculadas?",o:["Nada, se acepta el valor","Demostrar que el precio no se vio afectado","Pagar 50% más de IGI","Es prohibida"],a:1,e:"Hay que acreditar que la vinculación no afectó el precio."},
+  {q:"¿Qué contiene la LIGIE?",o:["Reglas de origen","La TIGIE con fracciones y aranceles","Reglas de valoración","Solo procedimientos"],a:1,e:"LIGIE contiene la TIGIE: tarifa de impuestos generales."},
+  {q:"¿Qué es el padrón de importadores?",o:["Lista de mercancías","Registro obligatorio para importar definitivamente","Lista de aduanas","Registro de agentes"],a:1,e:"Inscribirse al padrón es requisito para importar A1."}
+];
+
+// ============= NAVIGATION =============
+const sections = document.querySelectorAll('.section');
+const navBtns = document.querySelectorAll('nav button');
+function go(name){
+  sections.forEach(s => s.classList.toggle('active', s.id === name));
+  navBtns.forEach(b => b.classList.toggle('active', b.dataset.section === name));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+navBtns.forEach(b => b.addEventListener('click', () => go(b.dataset.section)));
+document.querySelectorAll('[data-go]').forEach(c => c.addEventListener('click', () => go(c.dataset.go)));
+
+// ============= STATS =============
+const cats = [...new Set(TERMS.map(t => t[1]))];
+document.getElementById('stat-terms').textContent = TERMS.length;
+document.getElementById('stat-cats').textContent = cats.length;
+document.getElementById('stat-quiz').textContent = QUIZ.length;
+document.getElementById('stat-scen').textContent = SCENARIOS.length;
+document.getElementById('stat-obj').textContent = OBJECTIONS.length;
+
+// ============= GLOSARIO =============
+const catFilter = document.getElementById('cat-filter');
+const fcFilter = document.getElementById('fc-filter');
+cats.forEach(c => {
+  catFilter.innerHTML += `<option value="${c}">${c}</option>`;
+  fcFilter.innerHTML += `<option value="${c}">${c}</option>`;
+});
+const grid = document.getElementById('term-grid');
+const noRes = document.getElementById('no-results');
+const search = document.getElementById('search');
+
+function renderTerms(){
+  const q = search.value.toLowerCase();
+  const cat = catFilter.value;
+  const filtered = TERMS.filter(([t,c,d,e]) => {
+    const matchCat = !cat || c === cat;
+    const matchQ = !q || (t+' '+d+' '+e).toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  noRes.style.display = filtered.length === 0 ? 'block' : 'none';
+  grid.innerHTML = filtered.map(([t,c,d,e]) => `
+    <div class="term-card">
+      <span class="badge">${c}</span>
+      <h3>${t}</h3>
+      <p class="definition">${d}</p>
+      <div class="example"><b>Ejemplo:</b> ${e}</div>
+    </div>
+  `).join('');
+}
+search.addEventListener('input', renderTerms);
+catFilter.addEventListener('change', renderTerms);
+renderTerms();
+
+// ============= FLASHCARDS =============
+let fcDeck = [...TERMS];
+let fcIdx = 0;
+function renderCard(){
+  if (fcDeck.length === 0) return;
+  const [t,c,d,e] = fcDeck[fcIdx];
+  document.getElementById('fc-term').textContent = t;
+  document.getElementById('fc-badge').textContent = c;
+  document.getElementById('fc-def').textContent = d;
+  document.getElementById('fc-ex').innerHTML = '<b>Ejemplo:</b> ' + e;
+  document.getElementById('fc-counter').textContent = `${fcIdx+1} / ${fcDeck.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function flipCard(){ document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard(){ fcIdx = (fcIdx+1) % fcDeck.length; renderCard(); }
+function prevCard(){ fcIdx = (fcIdx-1+fcDeck.length) % fcDeck.length; renderCard(); }
+function shuffleCards(){ fcDeck.sort(() => Math.random()-0.5); fcIdx = 0; renderCard(); }
+fcFilter.addEventListener('change', () => {
+  const c = fcFilter.value;
+  fcDeck = c ? TERMS.filter(t => t[1] === c) : [...TERMS];
+  fcIdx = 0; renderCard();
+});
+renderCard();
+
+// ============= QUIZ =============
+let quizState = { idx: 0, score: 0, started: false, answers: [] };
+function renderQuiz(){
+  const c = document.getElementById('quiz-content');
+  if (!quizState.started){
+    c.innerHTML = `<div class="question-card" style="text-align:center">
+      <h2 style="margin-top:0">¿Listo para evaluarte?</h2>
+      <p style="margin-bottom:24px; color:var(--text-light)">${QUIZ.length} preguntas · sin límite de tiempo · al final ves tu puntuación.</p>
+      <button class="btn btn-primary" onclick="startQuiz()">Empezar quiz →</button>
+    </div>`;
+    document.getElementById('quiz-bar').style.width = '0%';
+    return;
+  }
+  if (quizState.idx >= QUIZ.length){
+    const pct = Math.round(quizState.score / QUIZ.length * 100);
+    let msg = 'Necesitas más estudio. Revisa el glosario y vuelve a intentar.';
+    if (pct >= 90) msg = '¡Excelente! Manejas el vocabulario con seguridad.';
+    else if (pct >= 75) msg = 'Muy bien. Refuerza las áreas donde fallaste.';
+    else if (pct >= 60) msg = 'Vas por buen camino. Repite con flashcards las categorías más débiles.';
+    c.innerHTML = `<div class="quiz-result">
+      <div class="score-circle"><div class="score">${quizState.score}</div><div class="of">de ${QUIZ.length}</div></div>
+      <h2 style="margin-top:0">${pct}% de aciertos</h2>
+      <p style="color:var(--text-light); margin-bottom:24px">${msg}</p>
+      <button class="btn btn-primary" onclick="resetQuiz()">Repetir quiz</button>
+    </div>`;
+    document.getElementById('quiz-bar').style.width = '100%';
+    return;
+  }
+  const Q = QUIZ[quizState.idx];
+  c.innerHTML = `<div class="question-card">
+    <div class="question-num">Pregunta ${quizState.idx+1} de ${QUIZ.length}</div>
+    <div class="question-text">${Q.q}</div>
+    <div class="options">${Q.o.map((o,i) => `<button class="option" onclick="answerQuiz(${i})">${o}</button>`).join('')}</div>
+    <div id="feedback"></div>
+  </div>`;
+  document.getElementById('quiz-bar').style.width = (quizState.idx/QUIZ.length*100) + '%';
+}
+function startQuiz(){ quizState = { idx:0, score:0, started:true, answers:[] }; renderQuiz(); }
+function resetQuiz(){ startQuiz(); }
+function answerQuiz(i){
+  const Q = QUIZ[quizState.idx];
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((o, idx) => {
+    o.classList.add('disabled');
+    if (idx === Q.a) o.classList.add('correct');
+    if (idx === i && i !== Q.a) o.classList.add('incorrect');
+  });
+  const correct = i === Q.a;
+  if (correct) quizState.score++;
+  quizState.answers.push({q: quizState.idx, correct});
+  document.getElementById('feedback').innerHTML = `
+    <div class="feedback ${correct?'correct':'incorrect'}">
+      ${correct ? '✓ Correcto.' : '✗ Incorrecto. La respuesta era: <b>'+Q.o[Q.a]+'</b>.'}
+      <div style="margin-top:6px; font-weight:400; color:var(--text)">${Q.e}</div>
+    </div>
+    <div style="margin-top:16px; text-align:right">
+      <button class="btn btn-primary" onclick="nextQuiz()">${quizState.idx+1 >= QUIZ.length ? 'Ver resultado' : 'Siguiente →'}</button>
+    </div>
+  `;
+}
+function nextQuiz(){ quizState.idx++; renderQuiz(); }
+renderQuiz();
+
+// ============= ESCENARIOS =============
+const scList = document.getElementById('scenario-list');
+scList.innerHTML = SCENARIOS.map((s,i) => `
+  <div class="scenario-card" onclick="openScenario(${i})">
+    <span class="tag">${s.tag}</span>
+    <h3 style="margin-top:8px">${s.title}</h3>
+    <p class="client-says">"${s.client}"</p>
+  </div>
+`).join('');
+function openScenario(i){
+  const s = SCENARIOS[i];
+  document.getElementById('scenario-list-view').style.display = 'none';
+  document.getElementById('scenario-detail-view').style.display = 'block';
+  document.getElementById('scenario-detail').innerHTML = `
+    <button class="back-btn" onclick="closeScenario()">← Volver a escenarios</button>
+    <span class="badge">${s.tag}</span>
+    <h2 style="margin-top:8px">${s.title}</h2>
+    <div class="client-block"><strong>El cliente dice:</strong>"${s.client}"</div>
+    <div class="response-block"><strong>Tu respuesta debe incluir:</strong><ol>${s.response.map(r => `<li>${r}</li>`).join('')}</ol></div>
+    <h3 style="margin-top:24px">Términos que estás usando</h3>
+    <div class="terms-used">${s.terms.map(t => `<span class="badge">${t}</span>`).join('')}</div>
+  `;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function closeScenario(){
+  document.getElementById('scenario-list-view').style.display = 'block';
+  document.getElementById('scenario-detail-view').style.display = 'none';
+}
+
+// ============= OBJECIONES =============
+const objList = document.getElementById('objection-list');
+objList.innerHTML = OBJECTIONS.map((o,i) => `
+  <div class="objection-item" id="obj-${i}">
+    <div class="objection-header" onclick="toggleObj(${i})">
+      <div class="text">${o.text}</div>
+      <div class="toggle-icon">▼</div>
+    </div>
+    <div class="objection-body">
+      <h3 style="margin-top:8px">Cómo respondes</h3>
+      <p>${o.response}</p>
+    </div>
+  </div>
+`).join('');
+function toggleObj(i){ document.getElementById('obj-'+i).classList.toggle('open'); }
+
+</script>
+</body>
+</html>

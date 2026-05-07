@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Módulo 3 · Segmentación de Prospección · Integración Aduanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f7f7f5;
+  --bg-hover: #f1f1ef;
+  --bg-blue: #eff4fb;
+  --bg-green: #effaf2;
+  --bg-amber: #fdf6e3;
+  --bg-red: #fdf0ed;
+  --bg-purple: #f6f3fb;
+  --text: #1f1f1f;
+  --text-2: #37352f;
+  --text-muted: #6f6f6f;
+  --text-subtle: #9b9a97;
+  --accent: #2c5cdc;
+  --border: #ebebe9;
+  --border-strong: #d3d3cf;
+  --code-bg: #f4f4f3;
+  --green: #2f6f3a;
+  --amber: #8a5a14;
+  --red: #b13b2f;
+  --blue: #2c5cdc;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-2);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.layout { max-width: 1200px; margin: 0 auto; padding: 56px 32px 120px; display: grid; grid-template-columns: 240px 1fr; gap: 60px; }
+.sidebar { position: sticky; top: 32px; align-self: start; font-size: 0.84rem; max-height: calc(100vh - 64px); overflow-y: auto; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 0.84rem; margin-bottom: 24px; }
+.back-link:hover { color: var(--text-2); }
+.toc-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-subtle); margin-bottom: 12px; }
+.toc { list-style: none; }
+.toc a { display: block; padding: 5px 10px 5px 12px; color: var(--text-muted); text-decoration: none; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; margin-left: -2px; font-size: 0.85rem; line-height: 1.4; }
+.toc a:hover { color: var(--text-2); background: var(--bg-subtle); }
+.toc a.indent { padding-left: 26px; font-size: 0.8rem; }
+
+.content { max-width: 720px; min-width: 0; }
+.module-eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.022em; line-height: 1.1; margin-bottom: 18px; color: var(--text); }
+.lede { font-size: 1.12rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 36px; }
+.module-meta { display: flex; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 56px; flex-wrap: wrap; }
+.module-meta strong { color: var(--text-2); font-weight: 600; }
+
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.012em; margin-top: 64px; margin-bottom: 18px; color: var(--text); padding-bottom: 8px; border-bottom: 1px solid var(--border); scroll-margin-top: 24px; }
+h3 { font-size: 1.2rem; font-weight: 700; margin-top: 36px; margin-bottom: 12px; color: var(--text); scroll-margin-top: 24px; }
+h4 { font-size: 1rem; font-weight: 700; margin-top: 24px; margin-bottom: 8px; color: var(--text); }
+p { margin-bottom: 16px; }
+ul, ol { margin-bottom: 18px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--text-2); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(44,92,220,0.3); }
+a:hover { border-bottom-color: var(--accent); }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.86em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+.callout { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px 18px; border-radius: 8px; margin: 20px 0; background: var(--bg-subtle); border: 1px solid var(--border); font-size: 0.96rem; }
+.callout .icon { font-size: 1.1rem; line-height: 1.4; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.blue { background: var(--bg-blue); border-color: rgba(44,92,220,0.18); }
+.callout.green { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.callout.amber { background: var(--bg-amber); border-color: rgba(138,90,20,0.22); }
+.callout.red { background: var(--bg-red); border-color: rgba(177,59,47,0.18); }
+.callout.purple { background: var(--bg-purple); border-color: rgba(120,90,170,0.2); }
+.callout-label { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.callout.blue .callout-label { color: var(--blue); }
+.callout.green .callout-label { color: var(--green); }
+.callout.amber .callout-label { color: var(--amber); }
+.callout.red .callout-label { color: var(--red); }
+.callout.purple .callout-label { color: #6a4ba6; }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.compare-card { padding: 18px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); }
+.compare-card.bad { background: var(--bg-red); border-color: rgba(177,59,47,0.15); }
+.compare-card.good { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.compare-card h4 { margin: 0 0 10px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.compare-card.bad h4 { color: var(--red); }
+.compare-card.good h4 { color: var(--green); }
+.compare-card p { font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
+.compare-card p:last-child { margin-bottom: 0; }
+
+.tier-card { padding: 18px 22px; border: 1px solid var(--border); border-radius: 8px; margin: 12px 0; background: var(--bg); }
+.tier-card.t1 { border-left: 4px solid #2f6f3a; }
+.tier-card.t2 { border-left: 4px solid #2c5cdc; }
+.tier-card.t3 { border-left: 4px solid #8a5a14; }
+.tier-card.t4 { border-left: 4px solid #9b9a97; }
+.tier-name { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 4px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.tier-tag { font-size: 0.74rem; font-weight: 600; padding: 3px 10px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+.t1 .tier-tag { background: var(--bg-green); color: var(--green); }
+.t2 .tier-tag { background: var(--bg-blue); color: var(--blue); }
+.t3 .tier-tag { background: var(--bg-amber); color: var(--amber); }
+.t4 .tier-tag { background: var(--bg-subtle); color: var(--text-muted); }
+.tier-card p { margin: 6px 0 0; font-size: 0.93rem; }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-weight: 600; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; background: var(--bg-subtle); }
+tbody tr:hover { background: var(--bg-subtle); }
+
+.steps { counter-reset: step; padding-left: 0; list-style: none; margin: 24px 0; }
+.steps > li { counter-increment: step; position: relative; padding: 14px 18px 14px 56px; margin-bottom: 12px; background: var(--bg-subtle); border-radius: 8px; border: 1px solid var(--border); }
+.steps > li::before { content: counter(step); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--text-2); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; }
+.steps strong { display: block; margin-bottom: 4px; }
+
+.criteria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+.crit { padding: 16px 18px; background: var(--bg-subtle); border-radius: 8px; border: 1px solid var(--border); }
+.crit h4 { margin: 0 0 6px; font-size: 0.95rem; }
+.crit p { font-size: 0.88rem; color: var(--text-muted); margin: 0 0 8px; line-height: 1.5; }
+.crit .examples { font-size: 0.82rem; color: var(--text-subtle); margin-top: 4px; }
+
+.module-footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+.nav-link { display: block; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; max-width: 280px; border-bottom-width: 1px; }
+.nav-link:hover { background: var(--bg-subtle); border-color: var(--border-strong); border-bottom-color: var(--border-strong); }
+.nav-link .nav-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+.nav-link .nav-title { font-weight: 600; color: var(--text-2); font-size: 0.98rem; }
+.nav-link.next { text-align: right; margin-left: auto; }
+
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px 80px; }
+  .sidebar { position: static; max-height: none; overflow: visible; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  h1 { font-size: 2rem; }
+  .compare, .criteria-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <a class="back-link" href="../index.html">← Volver al currículo</a>
+  <div class="toc-title">En este módulo</div>
+  <ul class="toc">
+    <li><a href="#objetivo">Objetivo del módulo</a></li>
+    <li><a href="#por-que">Por qué la segmentación es lo más importante</a></li>
+    <li><a href="#icp">El ICP — Ideal Customer Profile</a></li>
+    <li><a href="#criterios">Criterios de segmentación</a></li>
+    <li><a href="#sector" class="indent">Sector / industria</a></li>
+    <li><a href="#tamano" class="indent">Tamaño y volumen</a></li>
+    <li><a href="#geografia" class="indent">Geografía y aduanas</a></li>
+    <li><a href="#regimen" class="indent">Régimen aduanero</a></li>
+    <li><a href="#origen" class="indent">Origen / destino</a></li>
+    <li><a href="#tiers">Modelo de tiers (A, B, C, D)</a></li>
+    <li><a href="#fuentes">Fuentes de datos</a></li>
+    <li><a href="#buyer">Buyer persona dentro de la cuenta</a></li>
+    <li><a href="#proceso">Proceso para construir tu lista</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#ejercicio">Ejercicio: tu lista de 50</a></li>
+  </ul>
+</aside>
+
+<article class="content">
+
+<div class="module-eyebrow">Módulo 03 · Programa de Capacitación Comercial</div>
+<h1>Segmentación de Prospección</h1>
+<p class="lede">El 80% del éxito de una llamada en frío se decide antes de marcar el número. Y se decide en la elección del prospecto. Si llamas a la empresa correcta, casi cualquier mensaje funciona. Si llamas a la incorrecta, ningún mensaje te salva.</p>
+
+<div class="module-meta">
+  <span><strong>Duración estimada:</strong> 2 horas</span>
+  <span><strong>Pre-requisito:</strong> Módulo 1 y 2</span>
+  <span><strong>Resultado:</strong> Tu primera lista de 50 prospectos calificados</span>
+</div>
+
+<h2 id="objetivo">Objetivo del módulo</h2>
+
+<p>Al terminar este módulo serás capaz de:</p>
+<ul>
+  <li><strong>Definir</strong> el Ideal Customer Profile (ICP) de Integración Aduanal con criterios concretos.</li>
+  <li><strong>Segmentar</strong> el universo de empresas mexicanas de comercio exterior usando 5 dimensiones.</li>
+  <li><strong>Clasificar</strong> a un prospecto en su tier (A, B, C, D) en menos de 3 minutos.</li>
+  <li><strong>Construir</strong> una lista de 50 prospectos calificados usando fuentes públicas y herramientas comerciales.</li>
+  <li><strong>Identificar</strong> a la persona correcta dentro de cada cuenta a quién contactar primero.</li>
+</ul>
+
+<h2 id="por-que">Por qué la segmentación es lo más importante que vas a aprender</h2>
+
+<p>Existe una métrica brutal en ventas que pocos practicantes conocen: <strong>la calidad de tu lista determina entre el 60% y el 80% del resultado de tu prospección</strong>. El script importa, la voz importa, el momento importa — pero todo eso opera sobre la base de a quién le estás llamando.</p>
+
+<p>Hay dos formas de hacer prospección. Una se llama <em>"spray and pray"</em>: agarras la primera lista que encuentres, mandas mensajes masivos, y rezas para que alguien conteste. La otra se llama <strong>prospección dirigida</strong>: identificas exactamente a quién quieres ganar como cliente, investigas, y diseñas un acercamiento específico. Los buenos comerciales hacen lo segundo.</p>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Spray and pray</h4>
+    <p>Lista de 500 empresas sacada de internet. Manda 500 correos iguales. Espera 1-2 respuestas. Conclusión: "la prospección no funciona."</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Prospección dirigida</h4>
+    <p>Lista curada de 50 empresas que cumplen 5 criterios específicos. Investiga 15 minutos cada una. Manda mensaje personalizado. Espera 8-12 respuestas. Conclusión: "la segmentación funciona."</p>
+  </div>
+</div>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Idea principal</div>
+    <p>Una lista buena de 50 vale más que una lista mala de 500. Tu trabajo no es contactar a más empresas — es contactar a las correctas.</p>
+  </div>
+</div>
+
+<h2 id="icp">El ICP — Ideal Customer Profile</h2>
+
+<p>Antes de buscar prospectos tienes que saber qué estás buscando. El ICP es el retrato de tu cliente ideal: <strong>no cualquier empresa que pueda comprar lo que vendes, sino el tipo específico de empresa para el que tu solución es claramente la mejor opción</strong>.</p>
+
+<p>El ICP de Integración Aduanal se define respondiendo cinco preguntas:</p>
+
+<ol class="steps">
+  <li><strong>¿Qué hace la empresa?</strong> Sector, modelo de negocio, productos.</li>
+  <li><strong>¿Qué tan grande es?</strong> Empleados, ventas anuales, volumen de operaciones aduaneras.</li>
+  <li><strong>¿Dónde opera?</strong> Aduanas que usa, plantas, centros de distribución.</li>
+  <li><strong>¿Cómo importa o exporta?</strong> Régimen, frecuencia, origen/destino, complejidad.</li>
+  <li><strong>¿Qué dolor probable tiene?</strong> Tiempos, errores, costos, asesoría, cumplimiento.</li>
+</ol>
+
+<p>Ejemplo de ICP bien definido para Integración Aduanal:</p>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">ICP — Importador automotriz Tier 2</div>
+    <p>Empresa proveedora de la industria automotriz (Tier 2 de OEMs como Audi, GM, Ford, Stellantis o Toyota), con operaciones en Bajío o Frontera Norte, importando partes y materias primas de Asia y Estados Unidos bajo régimen IMMEX, con un volumen mínimo de 30 pedimentos mensuales, sufriendo demoras frecuentes y errores de clasificación arancelaria con su agente actual.</p>
+  </div>
+</div>
+
+<p>Notas que ese ICP es <strong>específico</strong>. No es "empresas que importan." Es un retrato detallado. Cuando ves a una empresa, puedes preguntarte: <em>"¿Cuántos de los criterios cumple?"</em> Si cumple 4 de 5, es un prospecto excelente. Si cumple 1 de 5, no es para ti — pásalo.</p>
+
+<h2 id="criterios">Criterios de segmentación</h2>
+
+<p>Estas son las cinco dimensiones que vas a usar para segmentar el universo de empresas mexicanas de comercio exterior:</p>
+
+<h3 id="sector">1. Sector / industria</h3>
+
+<p>Cada sector importa cosas distintas, en volúmenes distintos, con regulaciones distintas. La complejidad aduanal varía dramáticamente.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Sector</th>
+      <th>Características aduanales</th>
+      <th>Ajuste con Integración Aduanal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Automotriz</strong></td>
+      <td>IMMEX, alta frecuencia, regla de origen T-MEC, partes y componentes</td>
+      <td>Excelente — pain claro, alto volumen, repetitivo</td>
+    </tr>
+    <tr>
+      <td><strong>Electrónica</strong></td>
+      <td>IMMEX, importaciones de Asia, fracciones complejas, NOM</td>
+      <td>Excelente — clasificación es dolor real</td>
+    </tr>
+    <tr>
+      <td><strong>Aeroespacial</strong></td>
+      <td>Régimen estricto, alta certificación, bajos volúmenes pero alto valor</td>
+      <td>Bueno — clientes premium, ciclos largos</td>
+    </tr>
+    <tr>
+      <td><strong>Farmacéutico / Médico</strong></td>
+      <td>COFEPRIS, regulación estricta, trazabilidad, frío</td>
+      <td>Bueno — necesitan asesoría especializada</td>
+    </tr>
+    <tr>
+      <td><strong>Agroindustria / Alimentos</strong></td>
+      <td>SENASICA, exportador grande, CO de origen</td>
+      <td>Medio — depende del tamaño</td>
+    </tr>
+    <tr>
+      <td><strong>Textil / Calzado</strong></td>
+      <td>Cuotas compensatorias, padrones sectoriales, etiquetado</td>
+      <td>Medio — bueno si hay volumen</td>
+    </tr>
+    <tr>
+      <td><strong>Retail / E-commerce</strong></td>
+      <td>Diversidad de productos, importación creciente, catálogos amplios</td>
+      <td>Bueno — sector en expansión</td>
+    </tr>
+    <tr>
+      <td><strong>Construcción / Maquinaria pesada</strong></td>
+      <td>Importaciones grandes pero esporádicas, equipo</td>
+      <td>Medio — ciclos largos, baja frecuencia</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="tamano">2. Tamaño y volumen</h3>
+
+<p>El tamaño se mide de tres formas. Las tres importan:</p>
+
+<div class="criteria-grid">
+  <div class="crit">
+    <h4>Empleados</h4>
+    <p>Indicador rápido de tamaño general.</p>
+    <div class="examples">Pequeña: &lt;100 · Mediana: 100-500 · Grande: 500+</div>
+  </div>
+  <div class="crit">
+    <h4>Ventas anuales</h4>
+    <p>Indicador de capacidad de pago y prioridad estratégica del comercio exterior.</p>
+    <div class="examples">Mediana: 100-500M MXN · Grande: 500M-2B · Enterprise: 2B+</div>
+  </div>
+  <div class="crit">
+    <h4>Pedimentos por mes</h4>
+    <p>El indicador más relevante para nosotros — define el potencial de facturación.</p>
+    <div class="examples">Bajo: &lt;10 · Medio: 10-50 · Alto: 50-200 · Muy alto: 200+</div>
+  </div>
+  <div class="crit">
+    <h4>Aduanas que usa</h4>
+    <p>Empresas con operaciones en múltiples aduanas tienden a ser más complejas y valiosas.</p>
+    <div class="examples">Una aduana · 2-3 aduanas · 4+ aduanas</div>
+  </div>
+</div>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">No siempre más grande es mejor</div>
+    <p>Las empresas Fortune 500 importadoras suelen tener procesos de compra brutalmente largos (6-18 meses), mucha burocracia interna y agentes aduanales preferidos por contrato corporativo global. A veces el sweet spot está en el mid-market: empresas con 200-500 empleados que importan, con pain real, y donde el director general te puede decidir en una reunión.</p>
+  </div>
+</div>
+
+<h3 id="geografia">3. Geografía y aduanas relevantes</h3>
+
+<p>México tiene 49 aduanas. No todas son iguales. Algunas concentran tipos específicos de operación:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Región</th><th>Aduanas principales</th><th>Tipo de operación dominante</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Frontera Norte</strong></td><td>Nuevo Laredo, Tijuana, Ciudad Juárez, Mexicali, Reynosa, Nogales</td><td>IMMEX automotriz, electrónica, manufactura — cruce terrestre con USA</td></tr>
+    <tr><td><strong>Bajío</strong></td><td>Querétaro (interior), Aguascalientes (interior), Guanajuato (interior)</td><td>Automotriz Tier 1 y 2, aeroespacial</td></tr>
+    <tr><td><strong>Pacífico</strong></td><td>Manzanillo, Lázaro Cárdenas</td><td>Importación marítima desde Asia</td></tr>
+    <tr><td><strong>Golfo</strong></td><td>Veracruz, Altamira, Tampico</td><td>Importación marítima desde Europa, granel agrícola</td></tr>
+    <tr><td><strong>Centro</strong></td><td>AICM (CDMX), Toluca</td><td>Aéreo, alta tecnología, e-commerce</td></tr>
+    <tr><td><strong>Norte</strong></td><td>Monterrey (interior)</td><td>Industrial, automotriz, aceros</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Si Integración Aduanal tiene fortaleza operativa en una región específica, los prospectos en esa región tienen una <strong>ventaja natural</strong> para nosotros: tiempos de respuesta más rápidos, mejor relación con personal de aduana local, capacidad de visita presencial.</p>
+
+<h3 id="regimen">4. Régimen aduanero</h3>
+
+<p>El régimen bajo el cual opera una empresa nos dice mucho sobre la complejidad de su operación y el valor que podemos aportar:</p>
+
+<ul>
+  <li><strong>Importación definitiva (A1):</strong> el más simple. Mercancía entra y se queda en México. Buen volumen pero menos diferenciación posible.</li>
+  <li><strong>IMMEX (Maquila):</strong> la joya de la corona del comercio exterior mexicano. Empresas que importan temporal para transformar y reexportar. Alta complejidad, mucho valor en asesoría especializada (anexos, descargos, regla 8a, virtual).</li>
+  <li><strong>Depósito fiscal:</strong> para importadores que necesitan diferir el pago de impuestos. Nicho específico.</li>
+  <li><strong>Recinto fiscalizado estratégico:</strong> régimen avanzado, pocas empresas, alto valor.</li>
+  <li><strong>Exportación definitiva (A1):</strong> exportadores que sacan producto terminado de México.</li>
+  <li><strong>Tránsito internacional:</strong> menos común, mercancía que cruza México hacia otro país.</li>
+</ul>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Insight comercial</div>
+    <p>Las empresas IMMEX son típicamente nuestros mejores clientes: la complejidad operativa los obliga a tener un agente aduanal sofisticado, y los costos de error son altos (multas SAT, pérdida de programa IMMEX). Si tu lista no tiene al menos 50% de empresas IMMEX, revisa tu segmentación.</p>
+  </div>
+</div>
+
+<h3 id="origen">5. Origen / destino de las mercancías</h3>
+
+<p>De dónde importan o a dónde exportan también filtra el tipo de cliente:</p>
+
+<ul>
+  <li><strong>Asia (China principalmente):</strong> volumen alto, fracciones complejas, alto riesgo de cuotas compensatorias y prácticas desleales. Mucho valor en asesoría.</li>
+  <li><strong>Estados Unidos:</strong> el más alto volumen de México. Ventaja T-MEC. Operaciones repetitivas, oportunidad de optimizar.</li>
+  <li><strong>Europa:</strong> normalmente productos especializados (maquinaria, química). Alta complejidad regulatoria.</li>
+  <li><strong>Latinoamérica:</strong> volumen menor, oportunidades específicas con tratados (Alianza del Pacífico, Mercosur).</li>
+</ul>
+
+<h2 id="tiers">Modelo de tiers (A, B, C, D)</h2>
+
+<p>Una vez que tengas tu lista, no la trates igual. Las empresas no son iguales, así que tu inversión de tiempo no debe ser igual. Aplica el modelo de tiers:</p>
+
+<div class="tier-card t1">
+  <div class="tier-name">Tier A — Ideal <span class="tier-tag">Cumple ICP completo</span></div>
+  <p>Empresa que cumple 4 o 5 criterios del ICP. Volumen alto, sector ajuste, geografía favorable, régimen IMMEX, origen relevante. <strong>Inversión:</strong> 60% de tu tiempo de prospección. Investigación profunda (45 min por cuenta), múltiples puntos de contacto, plan de cuenta personalizado.</p>
+</div>
+
+<div class="tier-card t2">
+  <div class="tier-name">Tier B — Bueno <span class="tier-tag">Cumple parcialmente</span></div>
+  <p>Empresa que cumple 3 criterios. Buena oportunidad pero falta algún elemento (volumen menor, sector secundario, régimen no IMMEX). <strong>Inversión:</strong> 25% de tu tiempo. Investigación estándar (15 min), un mensaje personalizado.</p>
+</div>
+
+<div class="tier-card t3">
+  <div class="tier-name">Tier C — Posible <span class="tier-tag">Match débil</span></div>
+  <p>Cumple 1-2 criterios. Vale la pena tener en radar pero no priorizar. <strong>Inversión:</strong> 10% de tu tiempo. Mensaje genérico de prospección, agregar a campañas de email automáticas.</p>
+</div>
+
+<div class="tier-card t4">
+  <div class="tier-name">Tier D — Descartar <span class="tier-tag">No cumple</span></div>
+  <p>No cumple criterios mínimos o tiene contraindicaciones (ya tiene contrato corporativo global, sector que no atendemos, tamaño insuficiente). <strong>Inversión:</strong> 5% — solo si te llegan inbound, los manejas con cortesía pero sin prospectar activamente.</p>
+</div>
+
+<h2 id="fuentes">Fuentes de datos para encontrar prospectos</h2>
+
+<p>Estas son las fuentes que vas a usar, ordenadas de más útil a menos útil para nuestro caso:</p>
+
+<h3>1. LinkedIn Sales Navigator</h3>
+<p>La herramienta más poderosa para B2B en 2026. Te permite filtrar por industria, tamaño, ubicación, antigüedad de la empresa, y combinarlo con búsquedas de personas por puesto. <strong>Cómo usarla:</strong> guarda búsquedas con tus criterios ICP, recibe alertas cuando nuevos perfiles encajan.</p>
+
+<h4>Ejemplo de búsqueda en Sales Navigator:</h4>
+<div class="callout">
+  <div class="icon">⌕</div>
+  <div>
+    <p><strong>Filtros aplicados:</strong></p>
+    <ul style="margin-bottom: 0;">
+      <li>Industria: Automotive, Electronics Manufacturing, Aerospace</li>
+      <li>Ubicación: México (Bajío, Frontera Norte)</li>
+      <li>Tamaño de empresa: 200-1000 empleados</li>
+      <li>Cargo de la persona: Director / Gerente de Logística, Comercio Exterior, Importaciones, Compras Internacionales</li>
+    </ul>
+  </div>
+</div>
+
+<h3>2. INEGI — Directorio Estadístico Nacional de Unidades Económicas (DENUE)</h3>
+<p>Base de datos pública con 5+ millones de empresas mexicanas filtrables por sector (SCIAN), tamaño, ubicación. Gratuito. <strong>Cómo usarla:</strong> exportar listas por sector + estado para construir tu universo inicial. Acceder en <code>denue.inegi.org.mx</code>.</p>
+
+<h3>3. Padrón de Importadores y Exportadores (SAT)</h3>
+<p>Aunque es información reservada, hay servicios de inteligencia comercial (Trade Data, Datamyne, Veridata) que cruzan información aduanal pública para identificar quién está importando qué. Si Integración Aduanal tiene suscripción a alguna, úsala.</p>
+
+<h3>4. Cámaras y asociaciones</h3>
+<p>Cada cámara publica directorios de socios. Son oro:</p>
+<ul>
+  <li><strong>INDEX</strong> — Consejo Nacional de la Industria Maquiladora y Manufacturera de Exportación. Lista de empresas IMMEX.</li>
+  <li><strong>CANIETI</strong> — electrónica y TI.</li>
+  <li><strong>INA</strong> — Industria Nacional de Autopartes.</li>
+  <li><strong>FEMIA</strong> — Federación Mexicana de la Industria Aeroespacial.</li>
+  <li><strong>ANIERM</strong> — Asociación Nacional de Importadores y Exportadores de la República Mexicana.</li>
+  <li><strong>CANACINTRA</strong> — directorio amplio de industria.</li>
+  <li><strong>COMCE</strong> — Consejo Empresarial Mexicano de Comercio Exterior.</li>
+  <li><strong>CAINTRA NL</strong>, <strong>CCEM</strong>, <strong>COPARMEX</strong> regionales — para empresas locales.</li>
+</ul>
+
+<h3>5. Parques industriales</h3>
+<p>Los parques industriales (FINSA, Vesta, Prologis, Vynmsa, etc.) publican listados de empresas inquilinas. Particularmente útiles en Bajío, Frontera Norte y Monterrey.</p>
+
+<h3>6. Eventos y ferias del sector</h3>
+<p>Asistencia (o solo el directorio de expositores) de FAMEX, FAMEX Aerospace, Expo Manufactura, INA Paace Automechanika, Expo Carga, ExpoTransporte ANPACT.</p>
+
+<h3>7. Inteligencia secundaria</h3>
+<ul>
+  <li><strong>Crunchbase / PitchBook</strong> — para identificar empresas que recibieron inversión recientemente (señal de crecimiento).</li>
+  <li><strong>El Financiero, Expansión, T21</strong> — noticias de expansiones, nuevas plantas, anuncios de nearshoring.</li>
+  <li><strong>Sitios web corporativos</strong> — secciones de "noticias" e "inversionistas".</li>
+</ul>
+
+<h2 id="buyer">Buyer persona dentro de la cuenta</h2>
+
+<p>Identificar la empresa es solo la mitad. Ahora necesitas saber <strong>a quién contactar dentro de esa empresa</strong>. En comercio exterior, los puestos relevantes son:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Cargo</th><th>Su rol</th><th>Cuándo es tu mejor primer contacto</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Gerente / Director de Comercio Exterior</strong></td>
+      <td>Dueño operativo del proceso aduanal</td>
+      <td>Casi siempre. Es tu punto de entrada natural.</td>
+    </tr>
+    <tr>
+      <td><strong>Gerente / Director de Logística o Supply Chain</strong></td>
+      <td>Visión más amplia que incluye aduanas</td>
+      <td>En empresas medianas donde no hay dirección de comex separada</td>
+    </tr>
+    <tr>
+      <td><strong>Gerente / Director de Importaciones / Compras Internacionales</strong></td>
+      <td>Decide proveedores extranjeros y movimientos</td>
+      <td>Cuando el dolor es de costos o tiempos</td>
+    </tr>
+    <tr>
+      <td><strong>Director de Operaciones / Director de Planta</strong></td>
+      <td>Cliente interno de los problemas de aduana</td>
+      <td>Cuando el dolor afecta la línea de producción (faltantes, paros)</td>
+    </tr>
+    <tr>
+      <td><strong>CFO / Director de Finanzas</strong></td>
+      <td>Aprueba contratos y costos</td>
+      <td>En empresas donde aduana es vista como costo a controlar</td>
+    </tr>
+    <tr>
+      <td><strong>Director General / CEO / Dueño</strong></td>
+      <td>Decisor final en empresas medianas</td>
+      <td>Empresas familiares medianas donde el dueño opera</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">Estrategia de "multi-thread"</div>
+    <p>No te quedes con un solo contacto en la cuenta. Identifica 3-4 personas con relevancia (ejemplo: Gerente Comex + Director Logística + Director Operaciones) y conecta con todos. El día que alguno se vaya o no te conteste, los otros mantienen vivo el deal. Los buenos comerciales nunca dependen de una sola persona.</p>
+  </div>
+</div>
+
+<h2 id="proceso">Proceso para construir tu lista de 50 prospectos</h2>
+
+<p>Aquí está el playbook paso a paso. Síguelo la primera vez que armes una lista. Después lo vas a iterar.</p>
+
+<ol class="steps">
+  <li><strong>Define tu ICP en una hoja.</strong> Escribe los 5 criterios con valores específicos. Si no puedes escribirlo en un párrafo claro, no estás listo para empezar.</li>
+  <li><strong>Genera tu universo inicial (200-300 empresas).</strong> Usa LinkedIn Sales Navigator + INEGI + cámaras del sector. No te preocupes por calidad todavía — solo cantidad.</li>
+  <li><strong>Filtra rápido por descarte (a 100 empresas).</strong> Elimina las que claramente no califican: tamaño insuficiente, sector incorrecto, ya son clientes nuestros, tienen relación pública con un competidor (Tradesa, AGV, Ricardo Contreras, etc.) que sea muy fuerte.</li>
+  <li><strong>Investiga rápido cada una de las 100 (5 min cada una).</strong> Visita su sitio web. ¿Tienen sección de comercio exterior? ¿Hablan de importación/exportación? ¿Tienen IMMEX visible? Anota lo más relevante.</li>
+  <li><strong>Aplica criterios ICP y clasifica en tiers (50 finales).</strong> Las 50 mejores van a tu lista activa: ~20 en Tier A, ~20 en Tier B, ~10 en Tier C.</li>
+  <li><strong>Identifica al buyer dentro de cada cuenta.</strong> LinkedIn → busca el cargo relevante. Anota nombre, título, antigüedad, y si tienen contactos en común contigo.</li>
+  <li><strong>Documenta todo en el CRM.</strong> Cada empresa con sus 5 datos clave + persona objetivo. Sin esto, la lista no existe.</li>
+  <li><strong>Define tu plan de outreach.</strong> Tier A: secuencia personalizada (LinkedIn + correo + llamada). Tier B: secuencia estándar. Tier C: campaña de email + LinkedIn.</li>
+</ol>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">No saltes el paso 7</div>
+    <p>Una lista que vive solo en tu cabeza o en un Excel suelto se evapora en dos semanas. <strong>El CRM es donde la lista existe institucionalmente.</strong> Cada lead con su tier, fuente, persona objetivo, próxima acción y fecha. Sin CRM, no hay método.</p>
+  </div>
+</div>
+
+<h2 id="errores">Errores comunes</h2>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 1: ICP demasiado amplio</h4>
+    <p>"Cualquier empresa que importe o exporte." Eso no es un ICP, eso es la guía telefónica.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>5 criterios específicos que filtren al menos al 90% del universo. Si tu ICP no es restrictivo, no es un ICP.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 2: Confundir cantidad con calidad</h4>
+    <p>"Tengo lista de 1,500 empresas." OK, ¿pero qué porcentaje cumple tu ICP? Si es menos del 30%, tu lista es ruido.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>Mejor 50 empresas Tier A que 500 Tier C. La conversión es 10-20x mayor.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 3: No actualizar la lista</h4>
+    <p>Trabajas la lista de enero hasta julio sin actualizarla. La gente cambia de puesto, las empresas crecen, abren nuevas plantas — y tú estás operando con datos viejos.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>Ritual mensual: revisa tu lista activa, depura, agrega nuevos prospectos, actualiza puestos cambiados. 2 horas al mes, multiplica tu efectividad.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 4: Atacar siempre al mismo nivel</h4>
+    <p>Solo contactar gerentes de logística. Te quedas estancado: el gerente no decide presupuesto, solo presenta.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>Multi-thread: gerente operativo (para diagnóstico), director de área (para decisión), director general (cuando aplique). Diferentes mensajes, mismo objetivo.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 5: Saltarse la investigación</h4>
+    <p>"Ya está la empresa en mi lista, los voy a llamar." Pero no sabes cuántos pedimentos hacen, qué importan, ni quién manda.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>15 minutos mínimo de investigación por cuenta Tier A antes del primer contacto. Esos 15 minutos triplican tu tasa de respuesta.</p>
+  </div>
+</div>
+
+<h2 id="ejercicio">Ejercicio: tu primera lista de 50 prospectos</h2>
+
+<p>Este ejercicio es el entregable del módulo. Te va a tomar 6-8 horas distribuidas en una semana. Lo presentas a tu líder en sesión de feedback.</p>
+
+<ol class="steps">
+  <li><strong>Día 1 (60 min): Define tu ICP en una página.</strong> Sector específico, rango de tamaño, regiones objetivo, régimen aduanal predominante, origen/destino. Discute con tu líder antes de continuar.</li>
+  <li><strong>Día 2 (3 horas): Genera universo de 200 empresas.</strong> Usa LinkedIn Sales Navigator + DENUE INEGI + un directorio de cámara relevante. Vuelca a Excel/Google Sheets con: nombre empresa, sector, tamaño aproximado, ubicación, fuente.</li>
+  <li><strong>Día 3 (2 horas): Filtra a 100, investiga rápido, asigna tiers.</strong> Visita web de cada una, marca: ¿IMMEX visible? ¿Importan? ¿Tamaño confirmado? Asigna A/B/C/D.</li>
+  <li><strong>Día 4 (2 horas): Identifica buyer en las 50 finales.</strong> LinkedIn de cada empresa → nombre y título de la persona objetivo. Si encuentras 2-3 contactos relevantes, mejor.</li>
+  <li><strong>Día 5 (1 hora): Documenta en HubSpot CRM.</strong> Crea cada cuenta con sus 5 datos clave, asocia la persona objetivo, asigna tier (etiqueta), define próxima acción.</li>
+  <li><strong>Día 5 (30 min): Sesión con tu líder.</strong> Presenta la lista, justifica 5 elecciones específicas, recibe feedback. Ajusta antes de empezar a prospectar.</li>
+</ol>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Cierre del módulo</div>
+    <p>El que tiene la mejor lista, gana. Es así de simple. Esta lista que acabas de construir va a ser la base de tu trabajo durante los próximos 90 días. La vas a refinar, depurar, expandir — pero las 50 empresas que escojas hoy, definen tu pipeline el próximo trimestre. Tómate este ejercicio en serio.</p>
+  </div>
+</div>
+
+<nav class="module-footer">
+  <a class="nav-link" href="modulo-2-definiciones-comercio-exterior.html">
+    <div class="nav-label">← Anterior</div>
+    <div class="nav-title">Definiciones de Comercio Exterior</div>
+  </a>
+  <a class="nav-link next" href="modulo-4-llamadas-prospeccion.html">
+    <div class="nav-label">Siguiente módulo →</div>
+    <div class="nav-title">Llamadas de Prospección Comercial</div>
+  </a>
+</nav>
+
+</article>
+</div>
+</body>
+</html>

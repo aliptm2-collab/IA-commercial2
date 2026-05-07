@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Módulo 5 · Relaciones Públicas (Enfoque Comercial) · Integración Aduanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff; --bg-subtle: #f7f7f5; --bg-hover: #f1f1ef;
+  --bg-blue: #eff4fb; --bg-green: #effaf2; --bg-amber: #fdf6e3; --bg-red: #fdf0ed; --bg-purple: #f6f3fb;
+  --text: #1f1f1f; --text-2: #37352f; --text-muted: #6f6f6f; --text-subtle: #9b9a97;
+  --accent: #2c5cdc; --border: #ebebe9; --border-strong: #d3d3cf; --code-bg: #f4f4f3;
+  --green: #2f6f3a; --amber: #8a5a14; --red: #b13b2f; --blue: #2c5cdc;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: var(--bg); color: var(--text-2); line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+.layout { max-width: 1200px; margin: 0 auto; padding: 56px 32px 120px; display: grid; grid-template-columns: 240px 1fr; gap: 60px; }
+.sidebar { position: sticky; top: 32px; align-self: start; font-size: 0.84rem; max-height: calc(100vh - 64px); overflow-y: auto; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 0.84rem; margin-bottom: 24px; }
+.back-link:hover { color: var(--text-2); }
+.toc-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-subtle); margin-bottom: 12px; }
+.toc { list-style: none; }
+.toc a { display: block; padding: 5px 10px 5px 12px; color: var(--text-muted); text-decoration: none; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; margin-left: -2px; font-size: 0.85rem; line-height: 1.4; }
+.toc a:hover { color: var(--text-2); background: var(--bg-subtle); }
+.toc a.indent { padding-left: 26px; font-size: 0.8rem; }
+
+.content { max-width: 720px; min-width: 0; }
+.module-eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.022em; line-height: 1.1; margin-bottom: 18px; color: var(--text); }
+.lede { font-size: 1.12rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 36px; }
+.module-meta { display: flex; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 56px; flex-wrap: wrap; }
+.module-meta strong { color: var(--text-2); font-weight: 600; }
+
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.012em; margin-top: 64px; margin-bottom: 18px; color: var(--text); padding-bottom: 8px; border-bottom: 1px solid var(--border); scroll-margin-top: 24px; }
+h3 { font-size: 1.2rem; font-weight: 700; margin-top: 36px; margin-bottom: 12px; color: var(--text); scroll-margin-top: 24px; }
+h4 { font-size: 1rem; font-weight: 700; margin-top: 24px; margin-bottom: 8px; color: var(--text); }
+p { margin-bottom: 16px; }
+ul, ol { margin-bottom: 18px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--text-2); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(44,92,220,0.3); }
+a:hover { border-bottom-color: var(--accent); }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.86em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+.callout { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px 18px; border-radius: 8px; margin: 20px 0; background: var(--bg-subtle); border: 1px solid var(--border); font-size: 0.96rem; }
+.callout .icon { font-size: 1.1rem; line-height: 1.4; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.blue { background: var(--bg-blue); border-color: rgba(44,92,220,0.18); }
+.callout.green { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.callout.amber { background: var(--bg-amber); border-color: rgba(138,90,20,0.22); }
+.callout.red { background: var(--bg-red); border-color: rgba(177,59,47,0.18); }
+.callout.purple { background: var(--bg-purple); border-color: rgba(120,90,170,0.2); }
+.callout-label { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.callout.blue .callout-label { color: var(--blue); }
+.callout.green .callout-label { color: var(--green); }
+.callout.amber .callout-label { color: var(--amber); }
+.callout.red .callout-label { color: var(--red); }
+.callout.purple .callout-label { color: #6a4ba6; }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.compare-card { padding: 18px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); }
+.compare-card.bad { background: var(--bg-red); border-color: rgba(177,59,47,0.15); }
+.compare-card.good { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.compare-card h4 { margin: 0 0 10px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.compare-card.bad h4 { color: var(--red); }
+.compare-card.good h4 { color: var(--green); }
+.compare-card p { font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
+.compare-card p:last-child { margin-bottom: 0; }
+
+.steps { counter-reset: step; padding-left: 0; list-style: none; margin: 24px 0; }
+.steps > li { counter-increment: step; position: relative; padding: 14px 18px 14px 56px; margin-bottom: 12px; background: var(--bg-subtle); border-radius: 8px; border: 1px solid var(--border); }
+.steps > li::before { content: counter(step); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--text-2); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; }
+.steps strong { display: block; margin-bottom: 4px; }
+
+.checklist { list-style: none; padding-left: 0; margin: 18px 0; }
+.checklist li { padding: 10px 14px 10px 38px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; background: var(--bg); position: relative; font-size: 0.94rem; }
+.checklist li::before { content: "□"; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--text-subtle); }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-weight: 600; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; background: var(--bg-subtle); }
+tbody tr:hover { background: var(--bg-subtle); }
+
+.script { background: var(--bg-subtle); border-left: 3px solid var(--blue); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; font-size: 0.95rem; }
+.script .speaker { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
+.script p { margin-bottom: 0; line-height: 1.55; }
+
+.event-card { padding: 18px 22px; border: 1px solid var(--border); border-radius: 10px; margin: 14px 0; background: var(--bg); }
+.event-card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; gap: 8px; }
+.event-name { font-weight: 700; font-size: 1.05rem; color: var(--text); }
+.event-tag { font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 12px; background: var(--bg-blue); color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em; }
+.event-card p { margin: 4px 0; font-size: 0.92rem; }
+.event-card .event-meta { font-size: 0.84rem; color: var(--text-muted); }
+
+.module-footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+.nav-link { display: block; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; max-width: 280px; border-bottom-width: 1px; }
+.nav-link:hover { background: var(--bg-subtle); border-color: var(--border-strong); border-bottom-color: var(--border-strong); }
+.nav-link .nav-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+.nav-link .nav-title { font-weight: 600; color: var(--text-2); font-size: 0.98rem; }
+.nav-link.next { text-align: right; margin-left: auto; }
+
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px 80px; }
+  .sidebar { position: static; max-height: none; overflow: visible; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  h1 { font-size: 2rem; }
+  .compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <a class="back-link" href="../index.html">← Volver al currículo</a>
+  <div class="toc-title">En este módulo</div>
+  <ul class="toc">
+    <li><a href="#objetivo">Objetivo del módulo</a></li>
+    <li><a href="#por-que">Por qué importa el largo plazo</a></li>
+    <li><a href="#linkedin">LinkedIn como activo comercial</a></li>
+    <li><a href="#perfil" class="indent">Optimización del perfil</a></li>
+    <li><a href="#contenido" class="indent">Estrategia de contenido</a></li>
+    <li><a href="#networking" class="indent">Networking activo</a></li>
+    <li><a href="#eventos">Eventos y ferias del sector</a></li>
+    <li><a href="#calendario" class="indent">Calendario anual</a></li>
+    <li><a href="#trabajar-evento" class="indent">Cómo trabajar un evento</a></li>
+    <li><a href="#referidos">Programa sistemático de referidos</a></li>
+    <li><a href="#alianzas">Alianzas estratégicas</a></li>
+    <li><a href="#marca-personal">Marca personal del comercial</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#ejercicio">Ejercicio práctico</a></li>
+  </ul>
+</aside>
+
+<article class="content">
+
+<div class="module-eyebrow">Módulo 05 · Programa de Capacitación Comercial</div>
+<h1>Relaciones Públicas (Enfoque Comercial)</h1>
+<p class="lede">Las llamadas en frío te dan resultados de corto plazo. Las relaciones públicas te dan resultados sostenibles. La diferencia entre un comercial junior y uno senior es que el junior trabaja la lista del mes — el senior construye una red que durante años le manda oportunidades sin que él haga nada.</p>
+
+<div class="module-meta">
+  <span><strong>Duración estimada:</strong> 2 horas</span>
+  <span><strong>Pre-requisito:</strong> Módulos 1-4</span>
+  <span><strong>Resultado:</strong> Plan personal de presencia y red de 90 días</span>
+</div>
+
+<h2 id="objetivo">Objetivo del módulo</h2>
+
+<p>Al terminar este módulo serás capaz de:</p>
+<ul>
+  <li><strong>Convertir tu perfil de LinkedIn</strong> en un activo comercial que atrae prospectos en lugar de buscarlos.</li>
+  <li><strong>Trabajar un evento del sector</strong> antes, durante y después con metodología profesional.</li>
+  <li><strong>Generar referidos</strong> de manera sistemática (no aleatoria) cada mes.</li>
+  <li><strong>Construir alianzas</strong> con cámaras, parques industriales y asociaciones.</li>
+  <li><strong>Diseñar tu marca personal</strong> dentro del comercio exterior mexicano.</li>
+</ul>
+
+<h2 id="por-que">Por qué importa el largo plazo</h2>
+
+<p>En B2B, el ciclo de venta de un servicio aduanal mediano-grande puede durar de 3 a 18 meses. Una empresa cambia de agente solo cuando hay un detonante: una multa, un cambio de directivo, una mala experiencia, una expansión. Cuando ese detonante ocurre, <strong>la pregunta no es "¿quién me marcó la semana pasada?"</strong> — es <strong>"¿quién está en mi mente como referencia confiable?"</strong></p>
+
+<p>Las relaciones públicas trabajan ese cerebro. Cuando un director de logística necesita evaluar agentes nuevos:</p>
+
+<ol>
+  <li>Primero pregunta a su red personal (referidos).</li>
+  <li>Segundo, busca en LinkedIn y revisa quién parece sólido.</li>
+  <li>Tercero, recuerda nombres que ha visto en eventos o leído en artículos.</li>
+  <li>Cuarto y último, eventualmente revisa propuestas de quien le ha llamado.</li>
+</ol>
+
+<p>Si tú solo trabajas el cuarto nivel (llamadas), estás peleando contra todos. Si trabajas los cuatro, eres la primera opción cuando alguien necesita.</p>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Idea principal</div>
+    <p>Las RR.PP. comerciales no son "trabajo extra" — son trabajo <em>diferente</em>. Plantan semillas hoy que cosechas en 6, 12 o 24 meses. El comercial que lleva 5 años haciéndolo no necesita prospectar — el mercado lo busca.</p>
+  </div>
+</div>
+
+<h2 id="linkedin">LinkedIn como activo comercial</h2>
+
+<p>LinkedIn es la red social profesional más utilizada por directivos de comercio exterior en México. Un buen perfil + buena estrategia de contenido = un canal de generación de oportunidades. Mal usado, es solo un currículum digital.</p>
+
+<h3 id="perfil">Optimización del perfil</h3>
+
+<p>Tu perfil debe pasar la prueba de los 5 segundos: si un director te encuentra y revisa tu perfil 5 segundos, ¿debe quedarle claro qué haces, a quién ayudas y por qué te debería tomar en serio? Checklist:</p>
+
+<ul class="checklist">
+  <li><strong>Foto profesional:</strong> fondo neutro, vestimenta acorde a tu sector, sonrisa moderada. NO selfies, NO fondos saturados, NO foto de hace 5 años.</li>
+  <li><strong>Banner personalizado:</strong> no dejes el banner default de LinkedIn. Usa Canva para hacer uno que mencione tu industria o propuesta de valor.</li>
+  <li><strong>Headline accionable:</strong> en lugar de "Ejecutiv@ comercial en Integración Aduanal" → "Ayudo a empresas IMMEX a reducir tiempos de despacho y multas SAT | Integración Aduanal".</li>
+  <li><strong>Acerca de (Resumen):</strong> 3 párrafos. (1) A quién ayudas. (2) Cómo. (3) Cómo contactarte. NO copies tu CV.</li>
+  <li><strong>Experiencia con resultados:</strong> incluye logros con números cuando sea posible: "Capté 15 nuevas cuentas IMMEX en 6 meses" en vez de "Responsable de prospección".</li>
+  <li><strong>URL personalizada:</strong> linkedin.com/in/tu-nombre (no la URL con números).</li>
+  <li><strong>Recomendaciones:</strong> pide al menos 5 a clientes, líderes y compañeros.</li>
+  <li><strong>Skills validadas:</strong> incluye "International Trade", "Customs Brokerage", "Logistics", "Foreign Trade", "Sales Development".</li>
+</ul>
+
+<h3 id="contenido">Estrategia de contenido</h3>
+
+<p>El error más grande de practicantes: <em>crear cuenta de LinkedIn y nunca publicar</em>. El segundo más grande: <em>publicar solo memes y "buenos días"</em>. El tercero: <em>compartir contenido corporativo sin agregar nada propio</em>.</p>
+
+<p>La estrategia que funciona: <strong>3 tipos de contenido en proporción 60/30/10</strong>.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>%</th><th>Tipo</th><th>Ejemplos en comercio exterior</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>60%</strong></td>
+      <td>Educacional / valor</td>
+      <td>Explicar una fracción complicada, comentar un cambio en T-MEC, casos prácticos anonimizados, infografías de procesos aduanales, dudas frecuentes resueltas.</td>
+    </tr>
+    <tr>
+      <td><strong>30%</strong></td>
+      <td>Personal / conexión</td>
+      <td>Lecciones aprendidas, reflexiones de tu proceso de aprendizaje como practicante, fotos de visitas a clientes (con permiso), eventos a los que asistes.</td>
+    </tr>
+    <tr>
+      <td><strong>10%</strong></td>
+      <td>Promocional / venta</td>
+      <td>Servicios, casos de éxito, llamados a contacto. Solo 1 de cada 10 publicaciones.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">Cadencia recomendada para empezar</div>
+    <p><strong>2 publicaciones por semana</strong> es el mínimo viable. <strong>3-4 por semana</strong> es lo que rinde resultados serios. Si arrancas con 5 al día, no aguantas un mes y tu credibilidad cae cuando paras. La consistencia mata el volumen.</p>
+  </div>
+</div>
+
+<h4>Plantilla de post educacional (la que más engagement genera)</h4>
+
+<div class="script">
+  <div class="speaker">Estructura</div>
+  <p><strong>Línea 1 (gancho):</strong> una afirmación contraintuitiva o una pregunta provocadora.<br/>
+  <em>"El 73% de las empresas IMMEX están pagando IVA que podrían diferir."</em></p>
+  <p><strong>Líneas 2-3 (contexto):</strong> por qué pasa eso, brevemente.<br/>
+  <em>"Suena imposible pero es real. La razón es que pocos agentes aduanales aprovechan el certificado IVA-IEPS modalidad A o AA."</em></p>
+  <p><strong>Cuerpo (3-5 puntos):</strong> aporta el valor real. Lista numerada.</p>
+  <p><strong>Cierre (call to action suave):</strong> "¿Tu empresa lo tiene? Si quieres revisarlo, escríbeme por mensaje directo."</p>
+</div>
+
+<h3 id="networking">Networking activo (no pasivo)</h3>
+
+<p>No basta con tener perfil. Hay que <strong>moverte en LinkedIn deliberadamente</strong>. Hábitos diarios de 15 minutos que generan red:</p>
+
+<ul>
+  <li><strong>Conectar 5 personas relevantes/día.</strong> No envíes solicitudes en blanco — incluye nota de 1-2 líneas explicando por qué quieres conectar.</li>
+  <li><strong>Comentar 3 posts/día de personas relevantes.</strong> Comentarios sustantivos (no "muy bueno"). Eso te hace visible para su red.</li>
+  <li><strong>Felicitar logros.</strong> LinkedIn te avisa cuando alguien cambia de puesto o cumple aniversario laboral. Mensaje genuino, no plantilla.</li>
+  <li><strong>Mensajes directos cálidos.</strong> No vendas en el primer mensaje. Pregunta, agradece, comparte.</li>
+</ul>
+
+<h2 id="eventos">Eventos y ferias del sector</h2>
+
+<p>Los eventos son la forma más eficiente de comprimir 6 meses de prospección en 2 días. En un solo expo de comercio exterior pasan 2,000-10,000 visitantes, muchos de ellos decisores. Pero hay que saber trabajarlos.</p>
+
+<h3 id="calendario">Calendario anual de eventos clave en México</h3>
+
+<p>Estos son los eventos que el equipo comercial de Integración Aduanal debería conocer al menos por nombre. Los marcados <strong>★</strong> son prioridad alta:</p>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">★ Expo Manufactura</div><span class="event-tag">Manufactura · IMMEX</span></div>
+  <div class="event-meta">Monterrey · Febrero · ~13,000 visitantes</div>
+  <p>Una de las exposiciones más grandes de manufactura industrial. Empresas IMMEX, automotriz, electrónica. Asistencia obligada para quien venda servicios aduanales.</p>
+</div>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">★ Expo Carga / Logistics Summit</div><span class="event-tag">Logística · Comex</span></div>
+  <div class="event-meta">CDMX (WTC) · Junio · ~10,000 visitantes</div>
+  <p>El evento más grande de logística y comercio exterior en LATAM. Forwarders, navieras, agentes aduanales, empresas importadoras. <em>El</em> evento del sector.</p>
+</div>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">★ INA Paace Automechanika</div><span class="event-tag">Automotriz</span></div>
+  <div class="event-meta">CDMX · Julio · Industria autopartes</div>
+  <p>El evento de la industria automotriz mexicana. Para vender a Tier 1 y Tier 2.</p>
+</div>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">★ FAMEX (Feria Aeroespacial México)</div><span class="event-tag">Aeroespacial</span></div>
+  <div class="event-meta">Santa Lucía · Bienal (años pares) · Abril</div>
+  <p>Si Integración Aduanal tiene foco en aeroespacial, este es el evento.</p>
+</div>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">ExpoTransporte ANPACT</div><span class="event-tag">Transporte</span></div>
+  <div class="event-meta">Guadalajara · Cada 2 años (impares) · Noviembre</div>
+  <p>Transporte, autotransporte de carga, complementa con servicios aduanales para flotas.</p>
+</div>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">Reuniones de cámaras locales</div><span class="event-tag">Networking</span></div>
+  <div class="event-meta">CANACINTRA, COMCE, INDEX, CAINTRA · Todo el año</div>
+  <p>Eventos mensuales de cámaras. Más pequeños que las expos pero con público hipertargeted. Imprescindibles si Integración Aduanal es socio de alguna.</p>
+</div>
+
+<div class="event-card">
+  <div class="event-card-head"><div class="event-name">Eventos sectoriales especializados</div><span class="event-tag">Vertical</span></div>
+  <div class="event-meta">Variable según sector</div>
+  <p>Expo Antad (retail), Plástimagen (plásticos), Alimentaria México (alimentos), Expo Pack (envases). Cuando el ICP es vertical, estos eventos rinden más que los generalistas.</p>
+</div>
+
+<h3 id="trabajar-evento">Cómo trabajar un evento (la metodología 3-3-3)</h3>
+
+<p>Asistir a un evento sin plan es turismo industrial. La metodología 3-3-3 estructura el trabajo en tres fases:</p>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Metodología 3-3-3</div>
+    <p><strong>3 semanas antes:</strong> preparación. <strong>3 días en sitio:</strong> ejecución. <strong>3 semanas después:</strong> seguimiento. La mayor parte del valor está en lo de antes y después, no en lo del día.</p>
+  </div>
+</div>
+
+<h4>Fase 1: 3 semanas antes (preparación)</h4>
+
+<ol class="steps">
+  <li><strong>Identifica el directorio de expositores.</strong> Casi todos los eventos lo publican. Cruza con tu lista del Módulo 3. Identifica las 30-40 empresas que vas a buscar específicamente.</li>
+  <li><strong>Identifica los conferencistas.</strong> Hablan los líderes de la industria. Conocerlos en persona vale oro.</li>
+  <li><strong>Pre-agenda reuniones.</strong> Manda mensaje en LinkedIn 2-3 semanas antes: "Voy a estar en [evento]. ¿Tienes 20 min para tomarnos un café? Estoy de [día] a [día]." Las pre-citas son la diferencia entre un buen evento y uno regular.</li>
+  <li><strong>Define tu meta del evento.</strong> "Hacer 50 contactos" no es meta. "Lograr 8 reuniones con perfiles ICP, 3 con conferencistas, y agendar 5 visitas post-evento" sí lo es.</li>
+  <li><strong>Prepara material físico.</strong> Tarjetas (sí, todavía importan), one-pagers de servicios, folder con casos.</li>
+</ol>
+
+<h4>Fase 2: 3 días en sitio (ejecución)</h4>
+
+<p>Reglas en el evento:</p>
+<ul>
+  <li><strong>Llega 15 min antes de la apertura.</strong> Cuando hay menos gente puedes hablar tranquilo con los expositores.</li>
+  <li><strong>Si Integración Aduanal tiene stand, divide tu día:</strong> mañanas en stand atendiendo, tardes recorriendo a buscar tus 30 empresas objetivo.</li>
+  <li><strong>No vendas — conecta.</strong> El elevator pitch es de 30 segundos máximo. La meta es conseguir tarjeta + agenda para post-evento, no cerrar nada ahí.</li>
+  <li><strong>Toma notas en cada tarjeta que recibas.</strong> En la parte de atrás: de qué hablaron, próximo paso. Si no, en una semana no recuerdas nada.</li>
+  <li><strong>Asiste a las conferencias clave.</strong> No solo por el contenido — por el networking informal en los pasillos.</li>
+  <li><strong>Si te invitan a la cena/cocktail oficial, vas.</strong> Es donde se cierran las relaciones reales. Una hora de cocktail vale más que un día de stand.</li>
+  <li><strong>Sube fotos y posts en tiempo real a LinkedIn.</strong> Generas presencia incluso con quien no estuvo.</li>
+</ul>
+
+<h4>Fase 3: 3 semanas después (seguimiento)</h4>
+
+<p>Aquí se gana o se pierde el evento. La regla:</p>
+
+<ul class="checklist">
+  <li><strong>Día 1-2:</strong> conecta en LinkedIn con cada persona que conociste. Mensaje personalizado mencionando el evento.</li>
+  <li><strong>Día 3-5:</strong> manda email de seguimiento individual a las 30 personas más relevantes. Recuerda algo específico que platicaron.</li>
+  <li><strong>Semana 2:</strong> agenda llamadas o video con los 8-10 prospectos calientes.</li>
+  <li><strong>Semana 3:</strong> documenta los aprendizajes del evento en CRM. Lecciones, contactos, próximas oportunidades.</li>
+</ul>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">El error más común post-evento</div>
+    <p>El comercial regresa con 80 tarjetas, las pone en su escritorio, y de ahí no se mueven. Dos semanas después no se acuerda quién es quién. <strong>Si en las primeras 48 horas no contactaste, perdiste el 60% del valor del evento.</strong></p>
+  </div>
+</div>
+
+<h2 id="referidos">Programa sistemático de referidos</h2>
+
+<p>El referido cuesta menos, cierra más rápido y vale más que el lead frío. Algunas estadísticas: el cliente referido convierte 3-5x más que un lead frío, y cierra entre 30-50% más rápido. Aún así, la mayoría de comerciales no piden referidos sistemáticamente. Lo dejan al azar.</p>
+
+<h3>Cuándo pedir referidos (los 4 momentos)</h3>
+
+<ol>
+  <li><strong>Después de un éxito específico.</strong> "Resolvimos la revisión SAT. ¿Conoces a alguien más en tu industria que pueda tener este tipo de retos?"</li>
+  <li><strong>En la renovación anual del servicio.</strong> Está reconfirmando que confía. Es el mejor momento.</li>
+  <li><strong>Después de un NPS alto / encuesta positiva.</strong> Si te puso 9-10, está listo para recomendarte.</li>
+  <li><strong>En un evento social (cena, cocktail).</strong> Bajada la guardia, es natural sugerirle "preséntame con tu colega de [otra empresa]".</li>
+</ol>
+
+<h3>Cómo pedir un referido (script)</h3>
+
+<div class="script">
+  <div class="speaker">Tú</div>
+  <p>"[Cliente], me alegra mucho que la operación esté fluyendo bien. Una pregunta: en empresas como la tuya, los gerentes de comex normalmente conocen a otros 2-3 colegas en empresas del mismo sector con retos similares. ¿Hay alguien que se te venga a la cabeza con quien creas que valdría la pena que platique? No te pido que me cierres una venta — solo una presentación si te parece."</p>
+</div>
+
+<p>Ese guion tiene tres trucos:</p>
+<ul>
+  <li>Empieza reforzando la relación ("la operación está fluyendo bien").</li>
+  <li>Normaliza la respuesta positiva ("normalmente conocen a 2-3...").</li>
+  <li>Reduce la fricción ("solo una presentación, no una venta").</li>
+</ul>
+
+<h3>Cómo cerrar el ciclo de referidos</h3>
+
+<p>Si te dan un referido, <strong>tienes que cerrar el ciclo</strong>:</p>
+
+<ol class="steps">
+  <li><strong>Agradece inmediatamente.</strong> Mensaje, llamada, lo que sea — pero antes de 24 horas.</li>
+  <li><strong>Pide la presentación.</strong> "¿Me puedes mandar un correo cc-eando a los dos para que tenga un buen pretexto?"</li>
+  <li><strong>Reporta de vuelta al referente.</strong> Después de hablar con la persona referida, regresa al referente: "Hablé con [persona], le caí bien, agendamos siguiente paso. Mil gracias por la presentación."</li>
+  <li><strong>Reciprocidad.</strong> Si puedes referir tú al referente a algo (un proveedor, un contacto, un evento), hazlo. Las relaciones son bidireccionales.</li>
+</ol>
+
+<h2 id="alianzas">Alianzas estratégicas</h2>
+
+<p>Más allá del referido individual, hay actores que pueden mandarte oportunidades sistemáticamente:</p>
+
+<ul>
+  <li><strong>Cámaras y asociaciones.</strong> CANACINTRA, INDEX, COMCE, CAINTRA. Si Integración Aduanal es socio activo (no solo está pagando la membresía), genera referidos vía comités y eventos.</li>
+  <li><strong>Parques industriales.</strong> Los parques (FINSA, Vesta, Vynmsa) tienen relación con todas sus empresas inquilinas. Una alianza formal puede traducirse en presentaciones a docenas de prospectos.</li>
+  <li><strong>Despachos de consultoría en comex.</strong> Despachos especializados (precios de transferencia, consultoría aduanal, fiscal internacional) ven prospectos antes que los agentes aduanales.</li>
+  <li><strong>Empresas complementarias no competidoras.</strong> Forwarders, navieras, transportistas, almacenes. Comparten cliente con el agente aduanal pero no compiten.</li>
+  <li><strong>Cónsules y embajadas.</strong> Las cámaras binacionales (USA-México, AlemánMex, Cámara España, Cámara China) organizan misiones comerciales con potenciales importadores.</li>
+</ul>
+
+<div class="callout purple">
+  <div class="icon">★</div>
+  <div>
+    <div class="callout-label">Alianza ≠ membresía</div>
+    <p>Pertenecer a una cámara no genera negocio. <em>Participar activamente</em> sí: ir a juntas mensuales, ofrecerte como ponente, comentar en sus publicaciones, generar contenido para sus boletines, asistir a sus eventos. La cámara devuelve lo que tú metes.</p>
+  </div>
+</div>
+
+<h2 id="marca-personal">Marca personal del comercial</h2>
+
+<p>Tu marca personal es lo que la gente dice de ti cuando no estás. Como practicante, todavía estás construyéndola — eso es ventaja, porque la moldeas desde cero.</p>
+
+<p>Tres preguntas para diseñar tu marca personal:</p>
+
+<ol>
+  <li><strong>¿Por qué quiero ser conocido?</strong> ¿"El especialista en IMMEX automotriz del Bajío"? ¿"El experto joven en clasificación arancelaria de electrónica"? Sé específico.</li>
+  <li><strong>¿Qué tema voy a dominar mejor que el promedio?</strong> Elige UN tema y profundiza. No puedes ser experto en todo. Mejor ser <em>el</em> referente en algo concreto.</li>
+  <li><strong>¿Qué voz tengo?</strong> ¿Educacional? ¿Provocativa? ¿Práctica? Mantén consistencia en LinkedIn, en presentaciones, en eventos.</li>
+</ol>
+
+<h3>Acciones para construir marca personal en 90 días</h3>
+
+<ul class="checklist">
+  <li>Publicar 2 posts/semana en LinkedIn con consistencia (24 posts en 12 semanas).</li>
+  <li>Asistir a 3 eventos del sector y publicar de cada uno.</li>
+  <li>Conectar con 200 personas relevantes en tu vertical (LinkedIn).</li>
+  <li>Escribir 1 artículo largo (1,000+ palabras) en LinkedIn sobre tu tema.</li>
+  <li>Ofrecerte como ponente para una junta de cámara local.</li>
+  <li>Aparecer en 1 podcast o videoblog del sector (los hay especializados en aduanas).</li>
+  <li>Documentar 3 casos de éxito (con permiso del cliente) y publicarlos.</li>
+</ul>
+
+<h2 id="errores">Errores comunes</h2>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Esperar a "tener tiempo" para RR.PP.</h4>
+    <p>"Cuando termine el trimestre lo hago." Nunca llega ese momento. Y la red que necesitas en el Q3 había que sembrarla en el Q1.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Bloquear 2 horas/semana fijas</h4>
+    <p>Time blocking de RR.PP.: martes 4-5 pm para LinkedIn, jueves 11-12 para llamadas a referentes. No negociable.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Publicar contenido genérico corporativo</h4>
+    <p>Compartir el post de la empresa con un "comparto" agregado. Cero personalidad, cero diferenciación.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Aportar tu opinión propia</h4>
+    <p>"Aquí lo que más me llamó la atención: [insight personal]. En mi experiencia con clientes IMMEX..."</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Pedir referidos solo cuando estás bajo</h4>
+    <p>"No estoy llenando cuota, ¿conoces a alguien?" El cliente lo huele. Suena a desesperación.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Pedir referidos en momentos altos</h4>
+    <p>Después de un éxito específico, en la renovación, en una conversación natural. Suena a reconocimiento, no a auxilio.</p>
+  </div>
+</div>
+
+<h2 id="ejercicio">Ejercicio práctico</h2>
+
+<ol class="steps">
+  <li><strong>Auditoría de tu LinkedIn (1 hora).</strong> Pásate por el checklist completo. Identifica los 3 cambios de mayor impacto. Hazlos hoy.</li>
+  <li><strong>Plan de contenido de 30 días (1 hora).</strong> Define tu vertical de especialidad. Diseña 8 títulos de posts con la estructura recomendada (60% educacional, 30% personal, 10% promocional).</li>
+  <li><strong>Lista de 20 personas para conectar (30 min).</strong> 10 prospectos potenciales de tu lista, 5 referentes de la industria, 5 personas de cámaras o asociaciones. Mensaje personalizado para cada uno.</li>
+  <li><strong>Mapa de 3 eventos del próximo año (30 min).</strong> Elige 3 eventos del calendario que vas a trabajar. Define metas específicas para cada uno (no solo "ir").</li>
+  <li><strong>Pide tu primer referido (30 min).</strong> Identifica a un cliente actual de Integración Aduanal con relación buena. Practica el script. Pide el referido en una llamada o reunión real esta semana.</li>
+  <li><strong>Únete o profundiza en una cámara (1 hora).</strong> Identifica una cámara o asociación relevante a tu vertical. Asiste a su próximo evento o participa en su grupo de LinkedIn.</li>
+</ol>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Cierre del módulo</div>
+    <p>Las relaciones públicas son el trabajo invisible que hace que el trabajo visible sea más fácil. Cuando llegues a la semana 25 con una llamada bien hecha pero el cliente ya conoce tu nombre porque ha leído tres de tus posts, vio tu foto en un evento y le hablaron bien de ti — vas a entender por qué este módulo importa tanto. La diferencia no es lo que dijiste en la llamada, es todo lo que hiciste durante seis meses para que esa llamada fuera con alguien que ya quería oírte.</p>
+  </div>
+</div>
+
+<nav class="module-footer">
+  <a class="nav-link" href="modulo-4-llamadas-prospeccion.html">
+    <div class="nav-label">← Anterior</div>
+    <div class="nav-title">Llamadas de Prospección Comercial</div>
+  </a>
+  <a class="nav-link next" href="modulo-6-posventa-comercial.html">
+    <div class="nav-label">Siguiente módulo →</div>
+    <div class="nav-title">Gestión de Posventa Comercial</div>
+  </a>
+</nav>
+
+</article>
+</div>
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Módulo 4 · Llamadas de Prospección Comercial · Integración Aduanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff; --bg-subtle: #f7f7f5; --bg-hover: #f1f1ef;
+  --bg-blue: #eff4fb; --bg-green: #effaf2; --bg-amber: #fdf6e3; --bg-red: #fdf0ed; --bg-purple: #f6f3fb;
+  --text: #1f1f1f; --text-2: #37352f; --text-muted: #6f6f6f; --text-subtle: #9b9a97;
+  --accent: #2c5cdc; --border: #ebebe9; --border-strong: #d3d3cf; --code-bg: #f4f4f3;
+  --green: #2f6f3a; --amber: #8a5a14; --red: #b13b2f; --blue: #2c5cdc;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: var(--bg); color: var(--text-2); line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+.layout { max-width: 1200px; margin: 0 auto; padding: 56px 32px 120px; display: grid; grid-template-columns: 240px 1fr; gap: 60px; }
+.sidebar { position: sticky; top: 32px; align-self: start; font-size: 0.84rem; max-height: calc(100vh - 64px); overflow-y: auto; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 0.84rem; margin-bottom: 24px; }
+.back-link:hover { color: var(--text-2); }
+.toc-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-subtle); margin-bottom: 12px; }
+.toc { list-style: none; }
+.toc a { display: block; padding: 5px 10px 5px 12px; color: var(--text-muted); text-decoration: none; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; margin-left: -2px; font-size: 0.85rem; line-height: 1.4; }
+.toc a:hover { color: var(--text-2); background: var(--bg-subtle); }
+.toc a.indent { padding-left: 26px; font-size: 0.8rem; }
+
+.content { max-width: 720px; min-width: 0; }
+.module-eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.022em; line-height: 1.1; margin-bottom: 18px; color: var(--text); }
+.lede { font-size: 1.12rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 36px; }
+.module-meta { display: flex; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 56px; flex-wrap: wrap; }
+.module-meta strong { color: var(--text-2); font-weight: 600; }
+
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.012em; margin-top: 64px; margin-bottom: 18px; color: var(--text); padding-bottom: 8px; border-bottom: 1px solid var(--border); scroll-margin-top: 24px; }
+h3 { font-size: 1.2rem; font-weight: 700; margin-top: 36px; margin-bottom: 12px; color: var(--text); scroll-margin-top: 24px; }
+h4 { font-size: 1rem; font-weight: 700; margin-top: 24px; margin-bottom: 8px; color: var(--text); }
+p { margin-bottom: 16px; }
+ul, ol { margin-bottom: 18px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--text-2); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(44,92,220,0.3); }
+a:hover { border-bottom-color: var(--accent); }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.86em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+.callout { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px 18px; border-radius: 8px; margin: 20px 0; background: var(--bg-subtle); border: 1px solid var(--border); font-size: 0.96rem; }
+.callout .icon { font-size: 1.1rem; line-height: 1.4; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.blue { background: var(--bg-blue); border-color: rgba(44,92,220,0.18); }
+.callout.green { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.callout.amber { background: var(--bg-amber); border-color: rgba(138,90,20,0.22); }
+.callout.red { background: var(--bg-red); border-color: rgba(177,59,47,0.18); }
+.callout.purple { background: var(--bg-purple); border-color: rgba(120,90,170,0.2); }
+.callout-label { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.callout.blue .callout-label { color: var(--blue); }
+.callout.green .callout-label { color: var(--green); }
+.callout.amber .callout-label { color: var(--amber); }
+.callout.red .callout-label { color: var(--red); }
+.callout.purple .callout-label { color: #6a4ba6; }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.compare-card { padding: 18px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); }
+.compare-card.bad { background: var(--bg-red); border-color: rgba(177,59,47,0.15); }
+.compare-card.good { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.compare-card h4 { margin: 0 0 10px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.compare-card.bad h4 { color: var(--red); }
+.compare-card.good h4 { color: var(--green); }
+.compare-card p { font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
+.compare-card p:last-child { margin-bottom: 0; }
+
+.script { background: var(--bg-subtle); border-left: 3px solid var(--text-subtle); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; font-size: 0.95rem; }
+.script .turn { margin-bottom: 14px; }
+.script .turn:last-child { margin-bottom: 0; }
+.script .speaker { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; }
+.script .speaker.you { color: var(--blue); }
+.script .speaker.them { color: var(--text-muted); }
+.script p { margin-bottom: 0; line-height: 1.55; }
+.script .annotation { font-size: 0.83rem; color: var(--text-muted); font-style: italic; margin-top: 4px; padding: 6px 10px; background: var(--bg); border-radius: 4px; border-left: 2px solid var(--blue); }
+
+.objection { border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 18px 0; background: var(--bg); }
+.objection-q { font-size: 1.08rem; font-weight: 600; color: var(--text); margin-bottom: 6px; display: flex; align-items: baseline; gap: 8px; }
+.objection-q::before { content: ""; color: var(--red); font-size: 1.1rem; flex-shrink: 0; }
+.objection-meaning { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.objection h5 { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin: 14px 0 6px; }
+.objection .response { background: var(--bg-blue); padding: 12px 14px; border-radius: 6px; font-size: 0.95rem; line-height: 1.55; border-left: 3px solid var(--blue); }
+.objection .principle { font-size: 0.88rem; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+
+.steps { counter-reset: step; padding-left: 0; list-style: none; margin: 24px 0; }
+.steps > li { counter-increment: step; position: relative; padding: 14px 18px 14px 56px; margin-bottom: 12px; background: var(--bg-subtle); border-radius: 8px; border: 1px solid var(--border); }
+.steps > li::before { content: counter(step); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--text-2); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; }
+.steps strong { display: block; margin-bottom: 4px; }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-weight: 600; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; background: var(--bg-subtle); }
+tbody tr:hover { background: var(--bg-subtle); }
+
+.framework { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 10px; padding: 22px 26px; margin: 24px 0; }
+.framework h4 { margin: 0 0 4px; font-size: 1.05rem; }
+.framework .fw-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.framework ol { padding-left: 22px; margin: 0; }
+.framework ol li { margin-bottom: 8px; }
+.framework ol li strong { color: var(--text); }
+
+.module-footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; }
+.nav-link { display: block; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; max-width: 280px; border-bottom-width: 1px; }
+.nav-link:hover { background: var(--bg-subtle); border-color: var(--border-strong); border-bottom-color: var(--border-strong); }
+.nav-link .nav-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+.nav-link .nav-title { font-weight: 600; color: var(--text-2); font-size: 0.98rem; }
+.nav-link.next { text-align: right; margin-left: auto; }
+
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px 80px; }
+  .sidebar { position: static; max-height: none; overflow: visible; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  h1 { font-size: 2rem; }
+  .compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <a class="back-link" href="../index.html">← Volver al currículo</a>
+  <div class="toc-title">En este módulo</div>
+  <ul class="toc">
+    <li><a href="#objetivo">Objetivo del módulo</a></li>
+    <li><a href="#mentalidad">Mentalidad correcta</a></li>
+    <li><a href="#anatomia">Anatomía de una llamada</a></li>
+    <li><a href="#apertura" class="indent">1. Apertura (30 seg)</a></li>
+    <li><a href="#permiso" class="indent">2. Permiso</a></li>
+    <li><a href="#diagnostico" class="indent">3. Diagnóstico</a></li>
+    <li><a href="#valor" class="indent">4. Valor</a></li>
+    <li><a href="#cierre" class="indent">5. Cierre con next step</a></li>
+    <li><a href="#voz">Voz, ritmo y silencios</a></li>
+    <li><a href="#objeciones">Manejo de objeciones</a></li>
+    <li><a href="#voicemail">Voicemails que funcionan</a></li>
+    <li><a href="#cadencia">Cadencia de seguimiento</a></li>
+    <li><a href="#errores">Errores de practicantes</a></li>
+    <li><a href="#ejercicio">Ejercicios y role play</a></li>
+  </ul>
+</aside>
+
+<article class="content">
+
+<div class="module-eyebrow">Módulo 04 · Programa de Capacitación Comercial</div>
+<h1>Llamadas de Prospección Comercial</h1>
+<p class="lede">La llamada en frío es la habilidad comercial más malentendida. No se trata de "venderle" a un desconocido — se trata de calificar en 90 segundos si vale la pena seguir hablando. Este módulo te enseña a marcarle a un director que no te conoce sin sonar desesperado, sin sonar robot, y sin perder los nervios cuando objetan.</p>
+
+<div class="module-meta">
+  <span><strong>Duración estimada:</strong> 2.5 horas</span>
+  <span><strong>Pre-requisito:</strong> Módulo 3 (lista de 50 prospectos)</span>
+  <span><strong>Resultado:</strong> Capacidad de hacer 30+ llamadas/día con confianza</span>
+</div>
+
+<h2 id="objetivo">Objetivo del módulo</h2>
+
+<p>Al terminar este módulo serás capaz de:</p>
+<ul>
+  <li><strong>Estructurar</strong> una llamada en frío en 5 fases claras.</li>
+  <li><strong>Abrir</strong> una conversación con un decisor en menos de 30 segundos sin que cuelgue.</li>
+  <li><strong>Calificar</strong> la oportunidad con 4 preguntas de diagnóstico.</li>
+  <li><strong>Manejar</strong> las 8 objeciones más comunes en comercio exterior con respuestas validadas.</li>
+  <li><strong>Cerrar</strong> con un próximo paso concreto en cada llamada que avance.</li>
+  <li><strong>Mantener</strong> una cadencia de 5-7 puntos de contacto sin sonar desesperado.</li>
+</ul>
+
+<h2 id="mentalidad">Mentalidad correcta antes de marcar</h2>
+
+<p>El 80% de los practicantes que empiezan a prospectar fallan no por falta de técnica — fallan por mentalidad equivocada. Si tu cabeza está mal, tu voz está mal, y la llamada está perdida antes de que conteste el cliente.</p>
+
+<p>Tres principios mentales que vas a internalizar antes de la primera marcación:</p>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Principio 1: No estás interrumpiendo, estás ofreciendo</div>
+    <p>Si tu lista está bien segmentada (Módulo 3), la persona del otro lado <em>tiene</em> dolores que tú puedes resolver. Tu llamada es una oportunidad para ellos, no una imposición. Esa convicción cambia tu voz inmediatamente.</p>
+  </div>
+</div>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Principio 2: La meta no es vender, es calificar</div>
+    <p>En 90 segundos no se vende un servicio aduanal. Se evalúa si vale la pena tener una conversación de 30 minutos. Tu objetivo único es agendar la siguiente reunión, no cerrar una venta.</p>
+  </div>
+</div>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Principio 3: La objeción no es rechazo</div>
+    <p>"No me interesa" no significa "no me interesa nunca". Significa "no me has dado una razón clara para interesarme aún". Toda objeción es información: te dice qué creen los clientes y dónde necesitas ajustar tu mensaje.</p>
+  </div>
+</div>
+
+<h3>El número que te tienes que aprender de memoria</h3>
+
+<p>Estadísticas reales de prospección B2B en LATAM:</p>
+
+<ul>
+  <li>De cada <strong>100 llamadas</strong>, ~30 conectan con la persona objetivo.</li>
+  <li>De esas <strong>30 conversaciones</strong>, ~8-10 muestran interés real.</li>
+  <li>De esas <strong>10 conversaciones interesadas</strong>, ~3-4 agendan reunión formal.</li>
+  <li>De esas <strong>4 reuniones</strong>, ~1 se convierte en oportunidad calificada.</li>
+  <li>De cada <strong>4 oportunidades</strong> calificadas, ~1 cierra (depende del producto y ciclo).</li>
+</ul>
+
+<p>Por lo tanto: <strong>cada llamada (incluyendo las que cuelgan) tiene un valor económico</strong>. Si el ticket promedio es $X y necesitas 100 llamadas para cerrar un cliente, cada llamada vale $X/100. No marcarla es regalar dinero.</p>
+
+<h2 id="anatomia">Anatomía de una llamada en frío</h2>
+
+<p>Toda llamada bien hecha tiene 5 fases. Memorízalas. No se las saltes.</p>
+
+<div class="framework">
+  <div class="fw-sub">Estructura</div>
+  <h4>Las 5 fases de una llamada de prospección</h4>
+  <ol>
+    <li><strong>Apertura</strong> (15-30 seg): te identificas, das contexto, generas curiosidad.</li>
+    <li><strong>Permiso</strong> (10 seg): pides permiso explícito para continuar.</li>
+    <li><strong>Diagnóstico</strong> (60-180 seg): preguntas que califican el dolor.</li>
+    <li><strong>Valor</strong> (30 seg): conectas su dolor con tu solución de manera específica.</li>
+    <li><strong>Cierre con next step</strong> (30 seg): pides la reunión con día/hora concreta.</li>
+  </ol>
+</div>
+
+<h3 id="apertura">1. Apertura (los primeros 30 segundos)</h3>
+
+<p>Es la parte más importante. Si no enganchas en los primeros 30 segundos, no hay segunda oportunidad. La fórmula que funciona:</p>
+
+<p><strong>Saludo → Quién eres → Por qué le llamas (con relevancia personalizada) → Pregunta de permiso</strong></p>
+
+<div class="script">
+  <div class="turn">
+    <div class="speaker you">Tú</div>
+    <p>"Buenos días, ¿hablo con [Nombre]? Soy [Tu nombre], de Integración Aduanal. Le llamo porque estuve viendo en LinkedIn que están abriendo una nueva planta en Querétaro y me llamó la atención que mencionan crecer importaciones desde Europa. Trabajamos con tres empresas del sector automotriz que tuvieron retos similares al escalar. ¿Tiene 90 segundos para que le explique por qué le marqué?"</p>
+    <div class="annotation">Por qué funciona: usa información específica (no genérica), justifica la llamada con relevancia, pide permiso explícito antes de continuar.</div>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Apertura mala</h4>
+    <p>"Buenos días, ¿hablo con el responsable de comercio exterior? Soy [nombre] de Integración Aduanal y le quería platicar sobre nuestros servicios de agencia aduanal porque creemos que podríamos ayudarles…"</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Apertura buena</h4>
+    <p>"Buenos días [Nombre]. Habla [tu nombre] de Integración Aduanal. Le marco porque vi que importan electrónica desde Asia y abrieron operación en Tijuana. ¿Tiene un minuto para que le explique exactamente por qué le marqué?"</p>
+  </div>
+</div>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">Evita estas frases en la apertura</div>
+    <ul style="margin: 0; padding-left: 20px;">
+      <li>"¿Cómo está usted hoy?" → suena a vendedor de seguros.</li>
+      <li>"Le voy a robar 5 minutos" → ya estás pidiendo perdón, no estás aportando valor.</li>
+      <li>"No sé si soy claro pero…" → comunicas inseguridad antes de empezar.</li>
+      <li>"Solo le quería contar de nuestros servicios…" → contar no es vender.</li>
+    </ul>
+  </div>
+</div>
+
+<h3 id="permiso">2. Permiso explícito</h3>
+
+<p>Después de la apertura, pides permiso. Esto hace dos cosas: respeta su tiempo, y obliga a que conscientemente decida continuar.</p>
+
+<p>Frases de permiso que funcionan:</p>
+<ul>
+  <li>"¿Tiene 90 segundos para que le diga exactamente por qué le marqué?"</li>
+  <li>"Sé que no me esperaba mi llamada — ¿prefiere que le platique ahora o le agendamos 10 minutos para mañana?"</li>
+  <li>"¿Le agarré en mal momento?"</li>
+</ul>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">El truco psicológico del "¿le agarré en mal momento?"</div>
+    <p>Esta pregunta es contraintuitiva pero brutal. La gente está acostumbrada a vendedores que dicen "¿es buen momento?" — todos contestan "no". Si en cambio preguntas "¿le agarré en mal momento?", muchos contestan "no, no, dime", porque psicológicamente es más fácil decir <em>no</em> a lo negativo.</p>
+  </div>
+</div>
+
+<h3 id="diagnostico">3. Diagnóstico — las 4 preguntas que califican</h3>
+
+<p>Si te dieron permiso, ahora viene la parte importante: <strong>no presentas tu servicio. Calificas el dolor.</strong> Cuatro preguntas, en orden:</p>
+
+<div class="framework">
+  <div class="fw-sub">Las 4 preguntas de diagnóstico</div>
+  <ol>
+    <li><strong>Situación actual:</strong> "¿Hoy con qué agente aduanal trabajan?" o "¿Cómo manejan hoy sus operaciones de importación?"</li>
+    <li><strong>Problema operativo:</strong> "¿Qué tan frecuentemente tienen demoras o problemas en aduana? ¿Qué tipo de problemas?"</li>
+    <li><strong>Impacto del problema:</strong> "Cuando hay una demora, ¿qué impacto tiene en su línea de producción / su cliente final?"</li>
+    <li><strong>Apertura a evaluar:</strong> "¿Cuándo fue la última vez que evaluaron alternativas en este servicio?"</li>
+  </ol>
+</div>
+
+<p>El secreto: <strong>preguntas abiertas, escucha activa, no interrumpas.</strong> El cliente debe hablar 70% del tiempo de esta fase. Tú anotas, asientes, profundizas con preguntas de seguimiento.</p>
+
+<div class="script">
+  <div class="turn">
+    <div class="speaker you">Tú</div>
+    <p>"¿Qué tan frecuente es que tengan demoras en sus pedimentos de Asia?"</p>
+  </div>
+  <div class="turn">
+    <div class="speaker them">Prospecto</div>
+    <p>"Pues, una o dos veces al mes pasa algo, pero ya estamos acostumbrados."</p>
+  </div>
+  <div class="turn">
+    <div class="speaker you">Tú (sigue indagando)</div>
+    <p>"Entiendo. Cuando pasa, ¿de qué se trata normalmente? ¿Clasificación, NOM, documentación?"</p>
+  </div>
+  <div class="turn">
+    <div class="speaker them">Prospecto</div>
+    <p>"Más bien temas de clasificación. Hemos tenido tres revisiones de SAT este año por discrepancias."</p>
+    <div class="annotation">Esa respuesta es oro. Tres revisiones SAT = dolor real, cuantificable, con consecuencia legal/financiera. Ahí ya tienes la base de tu propuesta.</div>
+  </div>
+</div>
+
+<h3 id="valor">4. Valor — conecta su dolor con tu solución</h3>
+
+<p>Ahora que sabes su dolor específico, conectas. La fórmula:</p>
+
+<p><strong>"Lo que mencionas de [dolor específico] es exactamente lo que resolvimos para [cliente similar]. En su caso pasaron de [estado anterior] a [resultado]. ¿Tiene sentido que platiquemos cómo lo logramos?"</strong></p>
+
+<div class="script">
+  <div class="turn">
+    <div class="speaker you">Tú</div>
+    <p>"Lo que me cuenta de las revisiones SAT por clasificación es justo el tipo de problema que resolvimos para una empresa de electrónica en Tijuana similar a ustedes. Pasaron de tres revisiones al año a cero, y recuperaron $230 mil pesos en multas que evitaron. La diferencia fue tener un equipo de clasificación arancelaria especializado en sus fracciones. ¿Tiene sentido que dediquemos 30 minutos para ver si en su operación tendría el mismo impacto?"</p>
+  </div>
+</div>
+
+<h3 id="cierre">5. Cierre con next step concreto</h3>
+
+<p>Esta es la parte donde la mayoría falla. Llegan al final, le caen bien al cliente, y cierran con: <em>"Le mando información"</em>. Eso no es un cierre. Es un funeral.</p>
+
+<p>Un cierre de verdad pide <strong>una reunión específica con día y hora</strong>:</p>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Cierre débil</h4>
+    <p>"Le mando información por correo y le marco la próxima semana."</p>
+    <p>Resultado: la información se pierde en su bandeja. Tú no marcas. Oportunidad muerta.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cierre fuerte</h4>
+    <p>"¿Le funciona el martes a las 10 am o prefiere el jueves a las 4 pm? Solo necesitamos 30 minutos por video, va su equipo de operación si quiere."</p>
+    <p>Resultado: cita agendada en calendario al colgar.</p>
+  </div>
+</div>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">El cierre de doble alternativa</div>
+    <p>Siempre da dos opciones, no una. "¿Martes o jueves?" "¿Mañana o tarde?" El cerebro humano se enfoca en elegir entre las opciones presentadas y olvida la opción de "ninguna". Es manipulación suave, ética, y funciona.</p>
+  </div>
+</div>
+
+<h2 id="voz">Voz, ritmo y silencios</h2>
+
+<p>Cómo dices las cosas pesa más que qué dices. Reglas básicas:</p>
+
+<ul>
+  <li><strong>Voz baja, no aguda.</strong> La gente confía en voces graves. Si tu voz natural es aguda, baja medio tono y proyecta desde el diafragma. Practica grabándote.</li>
+  <li><strong>Velocidad media-baja.</strong> Hablar rápido = sospechoso. Hablar despacio = confiado. ~140-160 palabras por minuto es el rango profesional.</li>
+  <li><strong>Pausa después de preguntas.</strong> Cuando preguntas, te callas. No llenes el silencio. El cliente tiene que sentir el peso de la pregunta. Practica aguantar 5 segundos sin hablar después de preguntar.</li>
+  <li><strong>Sonríe al hablar.</strong> Suena cliché — funciona. La sonrisa cambia la resonancia de tu voz. El cliente la percibe.</li>
+  <li><strong>De pie si puedes.</strong> Hablar parado mejora la respiración, la voz proyecta más, suenas con más energía.</li>
+</ul>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">Errores comunes de voz en practicantes</div>
+    <ul style="margin: 0; padding-left: 20px;">
+      <li>Subir el tono al final de las afirmaciones (suena a inseguridad).</li>
+      <li>Decir "ehhh", "este…", "o sea" — palabras muletilla.</li>
+      <li>Pedir disculpas reflexivamente: "perdón por interrumpir", "una disculpa por la llamada".</li>
+      <li>Hablar de prisa cuando el cliente hace una objeción (suena defensivo).</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="objeciones">Manejo de las 8 objeciones más comunes en comercio exterior</h2>
+
+<p>Vas a oír las mismas objeciones miles de veces. La diferencia entre el practicante novato y el comercial efectivo es que el segundo tiene una respuesta preparada para cada una. Estudia estas hasta sabértelas de memoria.</p>
+
+<div class="objection">
+  <div class="objection-q">"Ya tenemos agente aduanal."</div>
+  <div class="objection-meaning">Significado real: "Tengo a alguien que me funciona, ¿qué me ofreces tú diferente?" — no es un no, es una pregunta.</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Por supuesto, todas las empresas que importan tienen un agente — no llamaría a una empresa que no lo tuviera. La razón por la que le llamo es que muchos de nuestros clientes también ya tenían un agente y nos contrataron como segunda opinión sobre clasificación arancelaria de sus fracciones nuevas. ¿Cuántos pedimentos al mes manejan hoy? Eso me ayuda a evaluar si vale la pena hablar."</div>
+  <p class="principle">Principio: nunca atacas al competidor, redefines tu rol como complementario o de "second opinion".</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"No me interesa."</div>
+  <div class="objection-meaning">Significado real: "No me has dicho nada que me dé una razón para interesarme."</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Entiendo, todavía no le he dado razón para que le interese. Solo permítame 60 segundos para que pueda decidir. La razón específica por la que llamo es [insight personalizado]. Después de eso, si me dice que no le interesa, le agradezco el tiempo y no le vuelvo a marcar. ¿Le parece justo?"</div>
+  <p class="principle">Principio: aceptas la objeción, no peleas, y pides un permiso acotado. La frase "¿le parece justo?" es muy difícil de rechazar.</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"Mándame info por correo."</div>
+  <div class="objection-meaning">Significado real: "Quiero terminar esta llamada, ya no quiero hablar contigo." Es la objeción más frecuente y la más mortal — porque accedes y desapareces en su bandeja.</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Con mucho gusto le mando información — pero antes de mandar algo genérico, ¿me regala 90 segundos para entender qué les serviría más recibir? Si les interesa más temas de clasificación arancelaria, le mando casos de eso. Si les interesa más diferimiento de IVA, le mando otro. ¿Qué les serviría más?"</div>
+  <p class="principle">Principio: no aceptas la salida fácil. Pides 90 segundos más y rediriges la conversación a calificar dolor.</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"No tengo tiempo / No es buen momento."</div>
+  <div class="objection-meaning">Significado real: a veces es verdad (buena señal — están ocupados, probablemente operativos), a veces es educadamente "no quiero hablar".</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Entendido, no le quito tiempo. ¿Le marco mejor mañana en la mañana o prefiere el jueves? Yo me adapto a su agenda — ¿qué hora del día es mejor para usted normalmente?"</div>
+  <p class="principle">Principio: no insistes ahora, agendas la siguiente. Compromiso pequeño, fácil de aceptar.</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"Ya nos llamaron de Integración Aduanal antes."</div>
+  <div class="objection-meaning">Significado real: alguien del equipo ya intentó. Puede ser bueno (ya hay relación) o malo (mala experiencia).</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Ah, perfecto. ¿Recuerda con quién hablaron y qué fue lo que les ofrecieron? Para no hacerle perder tiempo repitiendo lo mismo y poder llegar con algo distinto si fuera el caso."</div>
+  <p class="principle">Principio: te informas antes de seguir. Si fue mala experiencia, vas a tener que reconstruir. Si fue buena, capitalizas.</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"Trabajamos por contrato corporativo / No podemos cambiar."</div>
+  <div class="objection-meaning">Significado real: "Tengo limitaciones reales, no soy yo quien decide." Pero también: "Déjame en paz."</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Entiendo, los contratos corporativos son comunes. Pregunto: ¿el contrato corporativo cubre el 100% de sus operaciones o tienen flexibilidad para fracciones especializadas o aduanas específicas? Muchos de nuestros clientes tienen contrato global pero usan agentes locales para operaciones de complejidad — vale la pena revisar si aplica a ustedes."</div>
+  <p class="principle">Principio: identificas el resquicio. Casi nunca el contrato corporativo cubre el 100% — hay aduanas, fracciones o regímenes específicos donde sí pueden contratar local.</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"El que decide es otro / Tienes que hablar con [nombre]."</div>
+  <div class="objection-meaning">Significado real: bueno, te están dando información. Aprovéchala.</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Perfecto, agradezco la transparencia. Antes de marcarle a [nombre], me ayudaría mucho conocer su perspectiva — usted es el que vive el día a día, ¿qué temas considera que vale la pena que le toque a [nombre]? Si me ayuda a entender, llego mejor preparado y le ahorra a usted que tenga que hacer la introducción."</div>
+  <p class="principle">Principio: lo conviertes en aliado interno. Sale ganando contigo (le ahorras trabajo) y tú obtienes inteligencia + warm intro.</p>
+</div>
+
+<div class="objection">
+  <div class="objection-q">"Estamos contentos con nuestro proveedor actual."</div>
+  <div class="objection-meaning">Significado real: a veces es verdad, a veces complacencia. Vale la pena explorar.</div>
+  <h5>Respuesta</h5>
+  <div class="response">"Me da mucho gusto saberlo, eso habla bien del proveedor. Una pregunta: ¿qué tendría que pasar para que ustedes consideraran evaluar otra opción en algún momento? No estoy buscando que cambien hoy — solo entender qué los haría abrir esa puerta. Así sé si vale la pena que platiquemos en otro momento o no."</div>
+  <p class="principle">Principio: no peleas con su felicidad — la respetas. Pero pides la condición de cambio. Esa información es oro: te dice cuándo regresar.</p>
+</div>
+
+<h2 id="voicemail">Voicemails que sí funcionan</h2>
+
+<p>El 80% de tus llamadas van a caer en buzón. Tu voicemail es una microllamada — tiene que ser corto, claro y dejar huella. Reglas:</p>
+
+<ul>
+  <li>Máximo 25 segundos.</li>
+  <li>Di tu nombre dos veces (al inicio y al final, deletreado si es complicado).</li>
+  <li>Da una razón <em>específica</em> de la llamada (no "le quería platicar de…").</li>
+  <li>Deja teléfono claramente, dos veces.</li>
+  <li>Cierra con un compromiso de seguimiento ("le marco mañana a las 10").</li>
+</ul>
+
+<div class="script">
+  <div class="turn">
+    <div class="speaker you">Voicemail efectivo</div>
+    <p>"Buenos días [Nombre], habla [tu nombre] de Integración Aduanal — [tu nombre]. Le marco específicamente porque vi que abrieron una nueva planta en Querétaro y mencionaron crecer importaciones de Europa. Trabajamos con tres empresas del sector que tuvieron retos similares al escalar. No le quito tiempo — le marco mañana a las 10. Si quiere adelantarme algo, mi número es 55-1234-5678, repito 55-1234-5678. Saludos. [Tu nombre], Integración Aduanal."</p>
+  </div>
+</div>
+
+<h2 id="cadencia">Cadencia de seguimiento (cuando no contestan)</h2>
+
+<p>El 60% de las ventas requieren 5 o más contactos. La mayoría de practicantes paran en el 2do o 3ro. Esta es la cadencia que vas a seguir para los Tier A:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Día</th><th>Canal</th><th>Acción</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Día 1</td><td>LinkedIn</td><td>Solicitud de conexión personalizada (sin pitch).</td></tr>
+    <tr><td>Día 2</td><td>Llamada</td><td>Primera llamada de prospección.</td></tr>
+    <tr><td>Día 3</td><td>Email</td><td>Si no contestó: email corto, valor específico, sin pedir reunión.</td></tr>
+    <tr><td>Día 6</td><td>Llamada</td><td>Segunda llamada, mensaje de voz si no contesta.</td></tr>
+    <tr><td>Día 8</td><td>LinkedIn</td><td>Mensaje en LinkedIn aportando un caso o noticia relevante.</td></tr>
+    <tr><td>Día 12</td><td>Email</td><td>Email con caso de cliente del mismo sector.</td></tr>
+    <tr><td>Día 15</td><td>Llamada</td><td>Tercera llamada.</td></tr>
+    <tr><td>Día 21</td><td>Email</td><td>Email de "ruptura": "asumo que el momento no es el ideal, ¿prefieres que retomemos en X meses?"</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout purple">
+  <div class="icon">★</div>
+  <div>
+    <div class="callout-label">La regla de los 7 toques</div>
+    <p>Una persona necesita ver tu nombre/marca al menos 7 veces antes de empezar a tomarte en serio. Si paras al 3er toque, estás regalándole el cliente al competidor que sí llega al 7º. La constancia gana.</p>
+  </div>
+</div>
+
+<h2 id="errores">Errores comunes de practicantes</h2>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Hablar mucho, preguntar poco</h4>
+    <p>El practicante nervioso quiere "soltar todo el pitch" porque siente que tiene que justificar la llamada. Resultado: monólogo, cliente desconectado.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Preguntar mucho, hablar poco</h4>
+    <p>Tú hablas el 30%, el cliente el 70%. Cada cosa que dice te da información para personalizar tu siguiente pregunta o respuesta.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Aceptar el "mándame info" sin pelear</h4>
+    <p>"OK, perfecto, le mando." Y se acabó la oportunidad. El correo nunca se lee.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Calificar antes de mandar</h4>
+    <p>"Antes de mandar genérico, ¿qué les serviría más recibir?" Si no quiere contestar eso, tampoco va a leer tu correo.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Cerrar con vaguedad</h4>
+    <p>"Le marco la próxima semana" / "Le mando un correo" / "Mantengámonos en contacto."</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cerrar con compromiso bilateral</h4>
+    <p>"Quedamos: martes a las 10 am, video por Teams, yo le mando la invitación al colgar. ¿Confirmamos?"</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Enojo con la objeción</h4>
+    <p>El cliente objeta y la voz del practicante cambia: más rápida, más alta, defensiva. Suena a vendedor desesperado.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Calma con la objeción</h4>
+    <p>Tono igual o más bajo. Pausa de 1-2 segundos antes de responder. Reconoces la objeción ("entiendo / tiene sentido / me imagino"), después contestas.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ No registrar la llamada</h4>
+    <p>Cuelgas, te vas a la siguiente. Una semana después no te acuerdas de qué dijo el cliente y con quién hablaste.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ CRM dentro de 5 minutos</h4>
+    <p>Cuelgas → 5 minutos en HubSpot. Quién, qué dijo, qué objetó, próxima acción, fecha. Sin excepciones.</p>
+  </div>
+</div>
+
+<h2 id="ejercicio">Ejercicios y role play</h2>
+
+<p>Esto es el módulo más práctico de todos. La técnica solo se interioriza practicando — leer no basta.</p>
+
+<h3>Ejercicio 1: Escribe tu apertura personalizada (30 min)</h3>
+
+<p>Toma tu lista del Módulo 3. Escribe la apertura específica para 5 cuentas Tier A. Cada apertura debe tener:</p>
+<ol>
+  <li>Saludo + tu nombre + empresa</li>
+  <li>Razón específica de la llamada (algo que viste en su empresa, en LinkedIn o en noticias)</li>
+  <li>Conexión con un caso de cliente similar</li>
+  <li>Pregunta de permiso</li>
+</ol>
+<p>Compártelas con tu líder antes de marcar.</p>
+
+<h3>Ejercicio 2: Memoriza las 8 objeciones (60 min)</h3>
+
+<p>Las 8 objeciones de este módulo deben estar memorizadas. No leídas — memorizadas. Practica con un compañero o frente al espejo. Cuando te la den en una llamada real, no debes pensar la respuesta — debes ya tenerla en la punta de la lengua.</p>
+
+<h3>Ejercicio 3: Role play en triadas (90 min)</h3>
+
+<p>Ejercicio en equipo de tres personas. Roles: <strong>vendedor</strong>, <strong>cliente</strong>, <strong>observador</strong>. Rotan después de cada round.</p>
+
+<ol class="steps">
+  <li><strong>Round 1 — Apertura:</strong> el vendedor abre la llamada con un cliente Tier A real. El cliente puede dar permiso o usar una de las 8 objeciones. El observador toma notas. Duración: 90 seg + 5 min de feedback.</li>
+  <li><strong>Round 2 — Diagnóstico:</strong> el vendedor entra directo a las 4 preguntas de diagnóstico. El cliente actúa con dolor real. Duración: 5 min + 5 min de feedback.</li>
+  <li><strong>Round 3 — Manejo de objeción:</strong> el cliente lanza una de las 8 objeciones aleatoria. El vendedor responde. Duración: 3 min + 5 min de feedback.</li>
+  <li><strong>Round 4 — Cierre:</strong> el vendedor practica el cierre de doble alternativa. El cliente da resistencia suave. Duración: 3 min + 5 min de feedback.</li>
+</ol>
+
+<h3>Ejercicio 4: Tus primeras 30 llamadas reales (1 semana)</h3>
+
+<p>Después del role play, llamas en serio. Meta: <strong>30 llamadas a tu lista Tier A en una semana</strong>. Por cada llamada documentas:</p>
+
+<ul>
+  <li>¿Conectaste con la persona correcta? Sí/No</li>
+  <li>Si sí, ¿qué objeción dieron?</li>
+  <li>¿Cómo respondiste?</li>
+  <li>¿Cuál fue el próximo paso acordado?</li>
+  <li>¿Qué aprendiste?</li>
+</ul>
+
+<p>Sesión de revisión semanal con tu líder: él/ella escucha 3-5 grabaciones (con permiso del cliente o internas de práctica) y te da feedback específico.</p>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Cierre del módulo</div>
+    <p>La llamada en frío no es un don. Es una habilidad que se construye con repetición. Los grandes comerciales no son los más carismáticos — son los más metódicos. Si haces 30 llamadas reales después de este módulo, vas a estar en el percentil 90 de practicantes en tu primer mes. La técnica sin práctica no sirve. La práctica sin técnica te quema. Combina ambas.</p>
+  </div>
+</div>
+
+<nav class="module-footer">
+  <a class="nav-link" href="modulo-3-segmentacion-prospeccion.html">
+    <div class="nav-label">← Anterior</div>
+    <div class="nav-title">Segmentación de Prospección</div>
+  </a>
+  <a class="nav-link next" href="modulo-5-relaciones-publicas.html">
+    <div class="nav-label">Siguiente módulo →</div>
+    <div class="nav-title">Relaciones Públicas</div>
+  </a>
+</nav>
+
+</article>
+</div>
+</body>
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Módulo 1 · Gestión de Relaciones con Directivos · Integración Aduanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f7f7f5;
+  --bg-hover: #f1f1ef;
+  --bg-blue: #eff4fb;
+  --bg-green: #effaf2;
+  --bg-amber: #fdf6e3;
+  --bg-red: #fdf0ed;
+  --bg-purple: #f6f3fb;
+  --text: #1f1f1f;
+  --text-2: #37352f;
+  --text-muted: #6f6f6f;
+  --text-subtle: #9b9a97;
+  --accent: #2c5cdc;
+  --border: #ebebe9;
+  --border-strong: #d3d3cf;
+  --code-bg: #f4f4f3;
+  --green: #2f6f3a;
+  --amber: #8a5a14;
+  --red: #b13b2f;
+  --blue: #2c5cdc;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-2);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 32px 120px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 60px;
+}
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 32px;
+  align-self: start;
+  font-size: 0.84rem;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.84rem;
+  margin-bottom: 24px;
+}
+.back-link:hover { color: var(--text-2); }
+.toc-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-subtle); margin-bottom: 12px; }
+.toc { list-style: none; }
+.toc li { margin: 0; }
+.toc a {
+  display: block;
+  padding: 5px 10px 5px 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  border-radius: 0 4px 4px 0;
+  margin-left: -2px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.toc a:hover { color: var(--text-2); background: var(--bg-subtle); }
+.toc a.indent { padding-left: 26px; font-size: 0.8rem; }
+
+/* Content */
+.content { max-width: 720px; min-width: 0; }
+.module-eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.022em; line-height: 1.1; margin-bottom: 18px; color: var(--text); }
+.lede { font-size: 1.12rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 36px; }
+.module-meta { display: flex; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 56px; flex-wrap: wrap; }
+.module-meta strong { color: var(--text-2); font-weight: 600; }
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  margin-top: 64px;
+  margin-bottom: 18px;
+  color: var(--text);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+h3 { font-size: 1.2rem; font-weight: 700; margin-top: 36px; margin-bottom: 12px; color: var(--text); scroll-margin-top: 24px; }
+h4 { font-size: 1rem; font-weight: 700; margin-top: 24px; margin-bottom: 8px; color: var(--text); }
+p { margin-bottom: 16px; }
+ul, ol { margin-bottom: 18px; padding-left: 24px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--text-2); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(44,92,220,0.3); }
+a:hover { border-bottom-color: var(--accent); }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.86em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+/* Callouts */
+.callout {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 8px;
+  margin: 20px 0;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-size: 0.96rem;
+}
+.callout .icon { font-size: 1.1rem; line-height: 1.4; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.blue { background: var(--bg-blue); border-color: rgba(44,92,220,0.18); }
+.callout.green { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.callout.amber { background: var(--bg-amber); border-color: rgba(138,90,20,0.22); }
+.callout.red { background: var(--bg-red); border-color: rgba(177,59,47,0.18); }
+.callout.purple { background: var(--bg-purple); border-color: rgba(120,90,170,0.2); }
+.callout-label { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.callout.blue .callout-label { color: var(--blue); }
+.callout.green .callout-label { color: var(--green); }
+.callout.amber .callout-label { color: var(--amber); }
+.callout.red .callout-label { color: var(--red); }
+.callout.purple .callout-label { color: #6a4ba6; }
+
+/* Comparison: Right vs Wrong */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 24px 0;
+}
+.compare-card {
+  padding: 18px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+.compare-card.bad { background: var(--bg-red); border-color: rgba(177,59,47,0.15); }
+.compare-card.good { background: var(--bg-green); border-color: rgba(47,111,58,0.18); }
+.compare-card h4 { margin: 0 0 10px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.compare-card.bad h4 { color: var(--red); }
+.compare-card.good h4 { color: var(--green); }
+.compare-card p { font-size: 0.92rem; margin-bottom: 8px; line-height: 1.5; }
+.compare-card p:last-child { margin-bottom: 0; }
+
+/* Persona cards */
+.persona {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin: 24px 0;
+  background: var(--bg);
+}
+.persona-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+.persona-name { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.persona-tag { font-size: 0.78rem; color: var(--text-muted); padding: 3px 10px; background: var(--bg-subtle); border-radius: 12px; font-weight: 500; }
+.persona-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 12px;
+}
+.persona-cell h5 { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 8px; }
+.persona-cell ul { padding-left: 18px; margin: 0; }
+.persona-cell li { font-size: 0.92rem; margin-bottom: 4px; }
+
+/* Script box */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--text-subtle);
+  padding: 16px 20px;
+  border-radius: 0 6px 6px 0;
+  margin: 18px 0;
+  font-size: 0.95rem;
+}
+.script .speaker { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
+.script p { margin-bottom: 10px; line-height: 1.55; }
+.script p:last-child { margin-bottom: 0; }
+.script.sales { border-left-color: var(--blue); }
+.script.client { border-left-color: var(--text-subtle); background: var(--bg); border: 1px solid var(--border); border-left: 3px solid var(--text-subtle); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 18px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-weight: 600; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; background: var(--bg-subtle); }
+tbody tr:hover { background: var(--bg-subtle); }
+
+/* Steps */
+.steps { counter-reset: step; padding-left: 0; list-style: none; margin: 24px 0; }
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 18px 14px 56px;
+  margin-bottom: 12px;
+  background: var(--bg-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--text-2);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.steps strong { display: block; margin-bottom: 4px; }
+
+/* Email template */
+.email {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 18px 0;
+  font-size: 0.92rem;
+  background: var(--bg);
+}
+.email-head { padding: 12px 16px; background: var(--bg-subtle); border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+.email-head div { display: flex; gap: 6px; margin-bottom: 4px; }
+.email-head div:last-child { margin-bottom: 0; }
+.email-head .label { color: var(--text-muted); font-weight: 500; min-width: 60px; }
+.email-body { padding: 16px 20px; line-height: 1.6; }
+.email-body p { margin-bottom: 10px; }
+
+/* Footer nav */
+.module-footer {
+  margin-top: 96px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nav-link {
+  display: block;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  flex: 0 0 auto;
+  max-width: 280px;
+  border-bottom-width: 1px;
+}
+.nav-link:hover { background: var(--bg-subtle); border-color: var(--border-strong); border-bottom-color: var(--border-strong); }
+.nav-link .nav-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+.nav-link .nav-title { font-weight: 600; color: var(--text-2); font-size: 0.98rem; }
+.nav-link.next { text-align: right; margin-left: auto; }
+
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px 80px; }
+  .sidebar { position: static; max-height: none; overflow: visible; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  h1 { font-size: 2rem; }
+  .persona-grid { grid-template-columns: 1fr; }
+  .compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <a class="back-link" href="../index.html">← Volver al currículo</a>
+  <div class="toc-title">En este módulo</div>
+  <ul class="toc">
+    <li><a href="#objetivo">Objetivo y resultado esperado</a></li>
+    <li><a href="#por-que">Por qué importa</a></li>
+    <li><a href="#perfiles">Los tres perfiles directivos</a></li>
+    <li><a href="#empresario" class="indent">El Empresario</a></li>
+    <li><a href="#gerente" class="indent">El Gerente</a></li>
+    <li><a href="#director" class="indent">El Director</a></li>
+    <li><a href="#diagnostico" class="indent">Cómo identificar el perfil</a></li>
+    <li><a href="#agenda">Programación de agenda</a></li>
+    <li><a href="#timeblocking">Time blocking</a></li>
+    <li><a href="#preparacion">Preparación de reuniones</a></li>
+    <li><a href="#seguimiento">Seguimiento y control</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#herramientas">Herramientas</a></li>
+    <li><a href="#ejercicio">Ejercicio práctico</a></li>
+  </ul>
+</aside>
+
+<article class="content">
+
+<div class="module-eyebrow">Módulo 01 · Programa de Capacitación Comercial</div>
+<h1>Gestión de Relaciones con Directivos</h1>
+<p class="lede">El primer error de un practicante en ventas no es no cerrar tratos. Es tratar a un director como si fuera un gerente. Este módulo te enseña a reconocer con quién estás hablando, cómo hablarle, y cómo organizar tu tiempo para que las relaciones que construyas se conviertan en oportunidades.</p>
+
+<div class="module-meta">
+  <span><strong>Duración estimada:</strong> 90 min</span>
+  <span><strong>Pre-requisito:</strong> Ninguno</span>
+  <span><strong>Resultado:</strong> Capacidad de adaptar tu comunicación al perfil del interlocutor</span>
+</div>
+
+<h2 id="objetivo">Objetivo y resultado esperado</h2>
+
+<p>Al terminar este módulo serás capaz de:</p>
+<ul>
+  <li><strong>Reconocer</strong> rápidamente si la persona frente a ti piensa como empresario, como gerente o como director.</li>
+  <li><strong>Adaptar</strong> tu lenguaje, tu propuesta y tu nivel de detalle al perfil del interlocutor.</li>
+  <li><strong>Organizar</strong> tu semana en bloques de tiempo que prioricen actividades de alto valor comercial.</li>
+  <li><strong>Dar seguimiento estructurado</strong> a cada reunión para que ninguna oportunidad muera por desorganización.</li>
+</ul>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Idea principal</div>
+    <p>El cliente no compra lo que tú quieres venderle. Compra lo que <em>él</em> entiende como valor. Y lo que él entiende como valor depende de su rol. Tu trabajo no es repetir tu pitch — es traducir tu pitch al idioma del perfil que tienes enfrente.</p>
+  </div>
+</div>
+
+<h2 id="por-que">Por qué importa</h2>
+
+<p>En comercio exterior tratas con tres tipos de personas que toman decisiones, y cada una tiene un cerebro distinto. El dueño de una empresa importadora que arrancó hace 15 años no piensa igual que el gerente de logística que contrataron hace dos. Y ninguno de los dos piensa como el director de operaciones de un corporativo trasnacional.</p>
+
+<p>El practicante que no entiende esto comete tres errores predecibles:</p>
+
+<ol>
+  <li>Le habla a un <strong>empresario</strong> con el detalle operativo de un gerente. Resultado: el empresario se aburre y no le contesta el siguiente correo.</li>
+  <li>Le habla a un <strong>gerente</strong> con la visión de un empresario. Resultado: el gerente piensa que estás "vendiéndole humo" y no te puede aterrizar la propuesta.</li>
+  <li>Le habla a un <strong>director</strong> sin sustento. Resultado: el director te etiqueta como junior y nunca más te abre la puerta.</li>
+</ol>
+
+<p>Una buena venta empieza por un buen diagnóstico. Y el diagnóstico de perfil pasa antes que el diagnóstico de necesidad.</p>
+
+<h2 id="perfiles">Los tres perfiles directivos</h2>
+
+<p>Vas a memorizar estos tres perfiles. No como teoría — como herramienta diaria de campo.</p>
+
+<h3 id="empresario">1. El Empresario</h3>
+
+<p class="lede" style="font-size: 1rem; margin-bottom: 18px;">Es el dueño. Levantó la empresa, arriesgó su patrimonio y todavía vive con el cuchillo entre los dientes. Decide rápido y se aburre con detalles operativos.</p>
+
+<div class="persona">
+  <div class="persona-head">
+    <div class="persona-name">Empresario</div>
+    <span class="persona-tag">Visión + oportunidad</span>
+  </div>
+  <p><strong>Objetivo del perfil:</strong> crecer la empresa, multiplicar utilidades, controlar el riesgo. Piensa en dinero, mercado y posición competitiva.</p>
+
+  <div class="persona-grid">
+    <div class="persona-cell">
+      <h5>Cómo es</h5>
+      <ul>
+        <li>Visionario, intuitivo</li>
+        <li>Tolera el riesgo, decide rápido</li>
+        <li>Flexible, no estructurado</li>
+        <li>Creativo, ve oportunidades donde otros ven problemas</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Cómo se comunica</h5>
+      <ul>
+        <li>Habla de ideas, crecimiento, negocio</li>
+        <li>Cambia de tema rápido</li>
+        <li>No entra en detalle técnico — lo aburre</li>
+        <li>Usa anécdotas y ejemplos</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Comportamientos típicos</h5>
+      <ul>
+        <li>Decide sin tener toda la información</li>
+        <li>Pregunta "¿qué gano?" antes que "¿cómo funciona?"</li>
+        <li>Se distrae si la conversación se pone operativa</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Qué les molesta</h5>
+      <ul>
+        <li>Gente que solo espera instrucciones</li>
+        <li>Falta de iniciativa</li>
+        <li>Mentalidad limitada</li>
+        <li>Reuniones sin propósito de negocio</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h4>Cómo adaptarte cuando estás frente a un empresario</h4>
+
+<ul>
+  <li><strong>Llega con propuestas, no con preguntas abiertas.</strong> Un empresario espera que tú hagas el trabajo de pensar.</li>
+  <li><strong>Habla en términos de dinero, crecimiento y oportunidad.</strong> No le digas "optimizamos sus tiempos de despacho" — dile "le ahorramos $180,000 USD al año en demoras y le abrimos capacidad para crecer sus importaciones un 30% sin contratar más gente."</li>
+  <li><strong>Sé flexible.</strong> Puede cambiar de opinión a mitad de reunión. No te enganches con la propuesta original — sigue la conversación.</li>
+  <li><strong>Trae historias, no slides.</strong> "Otro cliente importador como ustedes, en automotriz, hizo X y le pasó Y."</li>
+</ul>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Cómo NO hablarle</h4>
+    <p>"Buenos días, Don Eduardo. Le agendé esta reunión para presentarle nuestra propuesta de servicios de agencia aduanal. En la primera diapositiva tenemos la historia de Integración Aduanal, fundada en..."</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo SÍ hablarle</h4>
+    <p>"Don Eduardo, gracias por el tiempo. Tengo cinco minutos de hipótesis antes de mostrarle nada: creo que están dejando entre 1.5% y 3% de su margen en demoras de aduana porque su agente actual no está clasificando bien sus fracciones nuevas. ¿Tiene sentido empezar por ahí?"</p>
+  </div>
+</div>
+
+<h3 id="gerente">2. El Gerente</h3>
+
+<p class="lede" style="font-size: 1rem; margin-bottom: 18px;">Es el ejecutor. Le pagan por que las cosas salgan a tiempo, sin errores y dentro de presupuesto. Vive con la presión de cumplir KPIs.</p>
+
+<div class="persona">
+  <div class="persona-head">
+    <div class="persona-name">Gerente</div>
+    <span class="persona-tag">Operación + cumplimiento</span>
+  </div>
+  <p><strong>Objetivo del perfil:</strong> que su área funcione, que sus indicadores estén en verde, que no le caiga ningún problema encima.</p>
+
+  <div class="persona-grid">
+    <div class="persona-cell">
+      <h5>Cómo es</h5>
+      <ul>
+        <li>Estructurado, ordenado, metódico</li>
+        <li>Práctico, directo, enfocado a tareas</li>
+        <li>Analítico, pero táctico (no estratégico profundo)</li>
+        <li>Busca control y claridad</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Cómo se comunica</h5>
+      <ul>
+        <li>Concreto, va al grano</li>
+        <li>Hace preguntas específicas</li>
+        <li>Evita rodeos y filosofía</li>
+        <li>Pide cifras, fechas, responsables</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Comportamientos típicos</h5>
+      <ul>
+        <li>Pide detalles operativos</li>
+        <li>Cuestiona tiempos, procesos, responsables</li>
+        <li>Es exigente con seguimiento</li>
+        <li>Llega a la reunión con su lista</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Qué les molesta</h5>
+      <ul>
+        <li>Desorganización</li>
+        <li>Falta de respuesta</li>
+        <li>Errores operativos</li>
+        <li>Promesas sin sustento</li>
+        <li>Que les hagan repetir información</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h4>Cómo adaptarte cuando estás frente a un gerente</h4>
+
+<ul>
+  <li><strong>Lleva listas, reportes, estatus.</strong> Un Excel compartido con plazos y responsables vale más que un PowerPoint emocionante.</li>
+  <li><strong>Anticípate a sus dudas.</strong> Si le mandas una propuesta, incluye preguntas frecuentes ya respondidas. Si le agendas una junta, mándale la agenda 24 horas antes.</li>
+  <li><strong>Habla en términos de proceso y ejecución.</strong> "Tu equipo se ahorra 4 horas diarias", "El SLA pasa de 72 a 36 horas", "Hay un solo punto de contacto."</li>
+  <li><strong>Sé puntual y reporta sin que te lo pidan.</strong> El gerente recuerda al proveedor que le hace la vida fácil.</li>
+</ul>
+
+<h3 id="director">3. El Director</h3>
+
+<p class="lede" style="font-size: 1rem; margin-bottom: 18px;">Es el estratega. Decide en función de impacto organizacional, no de tareas individuales. Habla poco y observa mucho. Si no traes sustento, no traes nada.</p>
+
+<div class="persona">
+  <div class="persona-head">
+    <div class="persona-name">Director</div>
+    <span class="persona-tag">Estrategia + impacto</span>
+  </div>
+  <p><strong>Objetivo del perfil:</strong> alcanzar resultados de largo plazo, alinear áreas, gestionar riesgos. Su tiempo es escaso y su criterio alto.</p>
+
+  <div class="persona-grid">
+    <div class="persona-cell">
+      <h5>Cómo es</h5>
+      <ul>
+        <li>Estratégico, analítico profundo</li>
+        <li>Reservado, observa antes de hablar</li>
+        <li>Exigente, alto nivel de criterio</li>
+        <li>Orientado a resultados de largo plazo</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Cómo se comunica</h5>
+      <ul>
+        <li>Formal, estructurado</li>
+        <li>Preguntas de impacto: riesgo, control, cumplimiento</li>
+        <li>Escucha mucho, habla poco</li>
+        <li>Pide opciones, no recomendaciones únicas</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Comportamientos típicos</h5>
+      <ul>
+        <li>Evalúa antes de confiar</li>
+        <li>Cuestiona el "por qué" y el "qué impacto"</li>
+        <li>No toma decisiones impulsivas</li>
+        <li>Te puede escuchar 20 minutos sin decir una palabra</li>
+      </ul>
+    </div>
+    <div class="persona-cell">
+      <h5>Qué les molesta</h5>
+      <ul>
+        <li>Improvisación</li>
+        <li>Falta de sustento (datos, casos, fuentes)</li>
+        <li>Información incompleta</li>
+        <li>Que les hagan perder tiempo</li>
+        <li>Decir "yo creo" sin respaldo</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h4>Cómo adaptarte cuando estás frente a un director</h4>
+
+<ul>
+  <li><strong>Resume y ve al punto.</strong> La regla es: <em>"Si tuvieras 60 segundos, ¿qué le dirías?"</em> Eso es lo primero. Después si te abre la conversación, profundizas.</li>
+  <li><strong>Presenta opciones, no una sola.</strong> Idealmente tres: opción conservadora, opción media, opción ambiciosa. El director quiere elegir, no que le impongan.</li>
+  <li><strong>Habla en términos de riesgo, impacto y estrategia.</strong> "Esto reduce su exposición a multas del SAT en X%", "Esto les da capacidad para entrar al T-MEC con condiciones preferenciales en Y meses."</li>
+  <li><strong>Trae datos, no opiniones.</strong> Estudios sectoriales, casos de competidores, benchmarks de industria. "El 73% de los importadores en automotriz que..."</li>
+</ul>
+
+<div class="callout amber">
+  <div class="icon">⚠</div>
+  <div>
+    <div class="callout-label">Cuidado</div>
+    <p>El director te va a probar. Te va a hacer una pregunta cuya respuesta él ya sabe, solo para ver si tú dices la verdad o intentas improvisar. <strong>Si no sabes algo, dilo.</strong> "No tengo el dato exacto, se lo confirmo en 24 horas" siempre es mejor respuesta que inventar.</p>
+  </div>
+</div>
+
+<h3 id="diagnostico">Cómo identificar el perfil en los primeros 5 minutos</h3>
+
+<p>No siempre vas a saber con quién hablas antes de la reunión. Estas son las señales que te ayudan a diagnosticar en tiempo real:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Señal</th>
+      <th>Empresario</th>
+      <th>Gerente</th>
+      <th>Director</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Primera pregunta que hace</td>
+      <td>"¿Qué hacen ustedes?" / "¿Cómo nos ayudan a crecer?"</td>
+      <td>"¿Cómo funciona el proceso?" / "¿En cuánto tiempo?"</td>
+      <td>"¿Cuál es el impacto?" / "¿Qué ROI han visto otros clientes?"</td>
+    </tr>
+    <tr>
+      <td>Cómo te recibe</td>
+      <td>Conversador, te tutea pronto, abre con anécdota</td>
+      <td>Va al grano, agenda en mano</td>
+      <td>Formal, observa, deja que tú abras</td>
+    </tr>
+    <tr>
+      <td>De qué habla cuando se desvía</td>
+      <td>Mercado, competencia, planes de crecimiento</td>
+      <td>Problemas operativos del día</td>
+      <td>Estrategia corporativa, regulación</td>
+    </tr>
+    <tr>
+      <td>Cómo cierra la reunión</td>
+      <td>"Mándame info, lo platico con mi equipo"</td>
+      <td>"¿Cuáles son los siguientes pasos?"</td>
+      <td>"Voy a evaluarlo internamente, te aviso"</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">Regla de oro</div>
+    <p>Si te toca reunión con varios perfiles al mismo tiempo, <strong>ajusta el lenguaje al de mayor jerarquía</strong> (normalmente el director) pero <strong>responde las preguntas operativas del gerente con detalle</strong> cuando las haga. Estás vendiendo a un comité, no a una persona.</p>
+  </div>
+</div>
+
+<h2 id="agenda">Programación de agenda</h2>
+
+<p>El tiempo es tu único recurso real. Cada hora la inviertes en una de cuatro cosas:</p>
+
+<ol>
+  <li><strong>Prospección:</strong> generar nuevas oportunidades (LinkedIn, llamadas en frío, eventos).</li>
+  <li><strong>Reuniones:</strong> conversaciones con prospectos y clientes existentes.</li>
+  <li><strong>Seguimiento:</strong> mover oportunidades por el pipeline (correos, llamadas de seguimiento, propuestas).</li>
+  <li><strong>Operativo:</strong> reportes, CRM, juntas internas, administrativo.</li>
+</ol>
+
+<p>El error de un practicante es repartir el día por estado de ánimo. Empieza con buena energía, hace prospección hasta que se cansa, contesta correos a media mañana, "atiende lo urgente", y a las 5 pm se da cuenta de que no hizo lo importante.</p>
+
+<h3 id="timeblocking">Time blocking: el día comercial ideal</h3>
+
+<p>Time blocking es asignar bloques fijos del día a una sola actividad. La regla es <strong>no mezclar</strong>: en el bloque de prospección, prospectas. No abres correo, no contestas WhatsApp del trabajo, no entras a juntas internas.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Hora</th>
+      <th>Bloque</th>
+      <th>Actividad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>8:30 – 9:00</td><td>Arranque</td><td>Revisión de pendientes, agenda del día, correos urgentes</td></tr>
+    <tr><td>9:00 – 11:00</td><td>Prospección</td><td>LinkedIn, llamadas en frío, búsqueda de contactos en INEGI/registros</td></tr>
+    <tr><td>11:00 – 14:00</td><td>Reuniones</td><td>Citas presenciales, llamadas con prospectos, demos</td></tr>
+    <tr><td>14:00 – 15:00</td><td>Comida</td><td>Sin pantallas si es posible</td></tr>
+    <tr><td>15:00 – 17:00</td><td>Seguimiento</td><td>Correos de seguimiento, propuestas, alimentar CRM, planear día siguiente</td></tr>
+    <tr><td>17:00 – 18:00</td><td>Operativo</td><td>Reportes, juntas internas, marketing, administrativo</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Regla práctica</div>
+    <p>Las primeras dos horas son sagradas para prospección. Es cuando tu cerebro está fresco y, casualmente, también es cuando los gerentes y directores están menos saturados. Después de las 11:00 a.m. todo el mundo ya está apagando incendios.</p>
+  </div>
+</div>
+
+<h3 id="preparacion">Preparación de reuniones (la regla 80/20)</h3>
+
+<p>Una reunión bien preparada vale por tres mal preparadas. Tu objetivo: <strong>llegar sabiendo más sobre la empresa que la persona promedio que les ha vendido algo este mes</strong>.</p>
+
+<p>Antes de cada cita con un directivo, en máximo 20 minutos:</p>
+
+<ol class="steps">
+  <li><strong>Investiga la empresa.</strong> Web, LinkedIn de la empresa, últimos posts. ¿Qué venden? ¿En qué países? ¿Importan, exportan o ambos? ¿Han crecido? ¿Tienen noticias recientes (expansión, premios, nuevas plantas)?</li>
+  <li><strong>Investiga a la persona.</strong> LinkedIn personal. ¿Cuánto lleva en la empresa? ¿De dónde viene? ¿Tienen contactos en común? ¿Ha publicado algo recientemente?</li>
+  <li><strong>Hipotetiza el dolor.</strong> Si son automotrices Tier 2 importando de China, su dolor probablemente es plazos de despacho, regla de origen T-MEC, y diferimiento de IVA. Llega con 2-3 hipótesis específicas.</li>
+  <li><strong>Define el objetivo de la reunión.</strong> No vas "a presentarles". Vas a <em>algo concreto</em>: validar si tienen el dolor X, conseguir acceso a la persona Y, agendar una visita técnica.</li>
+  <li><strong>Define el siguiente paso.</strong> Antes de entrar, ya sabes qué le vas a pedir al final. Sin <em>next step</em> definido, la reunión muere.</li>
+</ol>
+
+<h2 id="seguimiento">Seguimiento y control</h2>
+
+<p>Un dato que vas a oír mucho en este programa: <strong>el 80% de las ventas en B2B se cierran después del 5to contacto. El 90% de los vendedores se rinden antes del 4to.</strong> El seguimiento no es opcional. Es el trabajo.</p>
+
+<h3>Después de cada reunión: el ritual de 30 minutos</h3>
+
+<p>Ningún practicante sale de una reunión y se va directo a la siguiente. Antes de hacer nada más, dedicas 30 minutos a:</p>
+
+<ol class="steps">
+  <li><strong>Documentar en el CRM.</strong> Quién estaba, qué se discutió, qué objeciones surgieron, qué información se ofreció enviar, próximo paso acordado.</li>
+  <li><strong>Enviar correo de resumen.</strong> En las próximas 2-4 horas, mandas un correo profesional que recapitula lo platicado, confirma siguientes pasos y reitera la fecha del próximo contacto. Esto se llama "email de cierre" y vale oro.</li>
+  <li><strong>Agendar el siguiente contacto.</strong> En tu calendario, ya. Si quedaron de hablar "la próxima semana", ponlo el martes a las 10 am, no lo dejes en el limbo.</li>
+  <li><strong>Definir pendientes con dueño.</strong> Si quedaste de mandar info, ya tienes una tarea con fecha. Si el cliente quedó de mandarte algo, le mandas el correo recordando "para que tengas claro qué necesitamos".</li>
+</ol>
+
+<h4>Plantilla del email de cierre</h4>
+
+<div class="email">
+  <div class="email-head">
+    <div><span class="label">De:</span><span>tu.nombre@integracionaduanal.com</span></div>
+    <div><span class="label">Para:</span><span>directivo@empresa.com</span></div>
+    <div><span class="label">Asunto:</span><span>Seguimiento a nuestra conversación · [Tema específico]</span></div>
+  </div>
+  <div class="email-body">
+    <p>Hola [Nombre],</p>
+    <p>Gracias por el tiempo de hoy. Te dejo el resumen de lo que platicamos para que ambos estemos en la misma página:</p>
+    <p><strong>Lo que entendí de tu situación:</strong><br/>
+    [2-3 puntos clave del dolor o contexto que mencionó]</p>
+    <p><strong>Lo que les podemos aportar:</strong><br/>
+    [2-3 puntos específicos, no genéricos]</p>
+    <p><strong>Próximos pasos:</strong></p>
+    <ul>
+      <li>De mi lado: [acción concreta] — [fecha]</li>
+      <li>De tu lado: [acción concreta] — [fecha]</li>
+      <li>Próxima reunión propuesta: [día y hora]</li>
+    </ul>
+    <p>Cualquier duda antes de eso, aquí estoy.</p>
+    <p>Saludos,<br/>[Tu nombre]</p>
+  </div>
+</div>
+
+<h3>Cadencia de seguimiento (cuando el cliente se queda en silencio)</h3>
+
+<p>Después de la primera reunión, si el prospecto no contesta, no significa que no esté interesado. Significa que tiene 200 cosas urgentes y la tuya no está en el top 5. Tu trabajo es mantenerte presente sin volverte molesto.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Día</th><th>Acción</th><th>Tono</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Día 0</td><td>Reunión / contacto inicial</td><td>—</td></tr>
+    <tr><td>Día 1</td><td>Email de cierre con resumen y próximos pasos</td><td>Profesional</td></tr>
+    <tr><td>Día 4</td><td>Si no contestó: email corto recordando los próximos pasos</td><td>Cordial</td></tr>
+    <tr><td>Día 8</td><td>Llamada o WhatsApp directo (no email)</td><td>Cercano</td></tr>
+    <tr><td>Día 14</td><td>Email aportando algo de valor: caso, estudio, noticia relevante a su industria</td><td>Útil, no insistente</td></tr>
+    <tr><td>Día 21</td><td>Email de "ruptura": "asumo que el momento no es el ideal, ¿prefieres que retomemos en X meses?"</td><td>Honesto</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout green">
+  <div class="icon">✓</div>
+  <div>
+    <div class="callout-label">Por qué funciona</div>
+    <p>El email de "ruptura" del día 21 es contraintuitivo pero efectivo. Genera respuestas de gente que estaba a punto de contestarte y necesitaba un empujón, y libera tu cabeza de prospectos que nunca van a comprar. Cierra ciclos.</p>
+  </div>
+</div>
+
+<h2 id="errores">Errores comunes (y cómo evitarlos)</h2>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 1: No agendar el siguiente paso</h4>
+    <p>"Yo te marco la próxima semana" es la frase que mata más oportunidades en comercio exterior.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>Antes de salir de la reunión: "¿Qué te parece si bloqueamos directamente el martes 14 a las 10 am? Te mando la invitación al salir." Y la mandas en serio.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 2: Saturar la agenda sin estrategia</h4>
+    <p>Tener 8 reuniones en un día se siente productivo. Casi siempre es lo contrario: ninguna recibe la preparación que merece.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>Máximo 3-4 reuniones de calidad por día. Cada una con 20 minutos de preparación previa y 30 minutos de cierre/CRM posteriores.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 3: Priorizar lo urgente sobre lo importante</h4>
+    <p>Contestar correos toda la mañana porque "no me han contestado el del lunes" mientras la prospección queda para el final del día (cuando ya estás cansado).</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>Bloque de prospección a primera hora, intocable. Los correos esperan hasta tu bloque de seguimiento por la tarde.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 4: No preparar reuniones</h4>
+    <p>Llegar a la reunión con un directivo sin saber qué hace su empresa, qué importan, o quién es la persona.</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>20 minutos de research mínimo antes de toda reunión con directivo. Sin excepciones. Si no tuviste 20 minutos, no tienes derecho a estar en esa reunión.</p>
+  </div>
+</div>
+
+<div class="compare">
+  <div class="compare-card bad">
+    <h4>✗ Error 5: No respetar horarios</h4>
+    <p>Empezar tarde, terminar tarde, alargar la conversación porque "está fluyendo".</p>
+  </div>
+  <div class="compare-card good">
+    <h4>✓ Cómo corregir</h4>
+    <p>30-45 minutos máximo, salvo que el cliente extienda. A los 5 minutos antes del fin pactado: "Sé que tenemos cinco minutos, ¿quieres que cerremos con próximos pasos?"</p>
+  </div>
+</div>
+
+<h2 id="herramientas">Herramientas que vas a usar</h2>
+
+<ul>
+  <li><strong>Google Calendar / Outlook</strong> — para time blocking, citas, recordatorios.</li>
+  <li><strong>HubSpot CRM</strong> — para registrar todas tus interacciones, oportunidades y pipeline. <em>No es opcional.</em> Toda llamada, correo, reunión y nota va al CRM dentro de las 24 horas.</li>
+  <li><strong>LinkedIn Sales Navigator</strong> — para investigación de cuentas y prospección dirigida.</li>
+  <li><strong>Notion</strong> — para tu planeación semanal personal y notas de reuniones.</li>
+  <li><strong>Excel / Google Sheets</strong> — para listas de prospección, tracking de objetivos y reportes semanales.</li>
+</ul>
+
+<div class="callout purple">
+  <div class="icon">★</div>
+  <div>
+    <div class="callout-label">Cultura del CRM</div>
+    <p>El CRM es la memoria del equipo comercial. Un prospecto que no está en el CRM <strong>no existe</strong>. Una conversación que no está en el CRM <strong>nunca pasó</strong>. Esto suena rígido y lo es a propósito: porque el día que tú no estés (vacaciones, otro rol, otro empleo), tu reemplazo tiene que poder retomar la relación. Y el cliente lo nota.</p>
+  </div>
+</div>
+
+<h2 id="ejercicio">Ejercicio práctico</h2>
+
+<p>Antes de pasar al Módulo 2, completa este ejercicio. Te va a tomar 60 minutos y vale más que toda la teoría que acabas de leer.</p>
+
+<ol class="steps">
+  <li><strong>Identifica un cliente actual de Integración Aduanal</strong> (pídele uno a tu líder). Investiga durante 20 minutos: qué hacen, qué importan, quiénes son los tres directivos clave (en LinkedIn).</li>
+  <li><strong>Clasifica a cada uno</strong> de los tres directivos según el perfil que mejor le acomode (empresario, gerente o director). Justifica con dos señales que viste.</li>
+  <li><strong>Redacta tres versiones del mismo mensaje de LinkedIn</strong>: una para el empresario, otra para el gerente, otra para el director. Misma propuesta, distinto enfoque, distinto lenguaje. Máximo 80 palabras cada uno.</li>
+  <li><strong>Diseña tu semana ideal</strong> en Google Calendar usando time blocking. Compártela con tu líder al final del módulo para feedback.</li>
+  <li><strong>Para la próxima reunión interna del equipo comercial</strong>, prepara un email de cierre antes de que empiece (de algo que sepas que se va a discutir). Pruébate a ti mismo que ya sabes hacerlo.</li>
+</ol>
+
+<div class="callout blue">
+  <div class="icon">→</div>
+  <div>
+    <div class="callout-label">Cierre del módulo</div>
+    <p>Si dominas este módulo, ya estás haciendo el 30% del trabajo de un buen comercial. El otro 70% es saber a quién contactar (Módulo 3), cómo abrirles la puerta (Módulo 4), cómo construir presencia en el mercado (Módulo 5) y cómo retener y crecer cuentas (Módulo 6). Pero todo eso descansa sobre la capacidad de hablarle a cada quien en su idioma.</p>
+  </div>
+</div>
+
+<nav class="module-footer">
+  <a class="nav-link" href="../index.html">
+    <div class="nav-label">← Volver</div>
+    <div class="nav-title">Currículo completo</div>
+  </a>
+  <a class="nav-link next" href="modulo-2-definiciones-comercio-exterior.html">
+    <div class="nav-label">Siguiente módulo →</div>
+    <div class="nav-title">Definiciones de Comercio Exterior</div>
+  </a>
+</nav>
+
+</article>
+</div>
+</body>
+</html>
