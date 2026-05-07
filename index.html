@@ -3,143 +3,279 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Capacitaciones · Integración Aduanal</title>
-  <meta name="description" content="Materiales de capacitación de Integración Aduanal." />
+  <title>Programa de Capacitación · Equipo Comercial · Integración Aduanal</title>
+  <meta name="description" content="Programa de capacitación profesional para el equipo comercial de Integración Aduanal." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #0a2540;
-      --navy-deep: #061a30;
-      --burgundy: #931030;
-      --burgundy-light: #c0394d;
-      --cream: #f7f3ed;
-      --gray-100: #f4f6f8;
-      --gray-200: #e6ebf0;
-      --gray-500: #7d8997;
-      --gray-700: #3d4754;
+      --bg: #ffffff;
+      --bg-subtle: #f7f7f5;
+      --bg-hover: #f1f1ef;
+      --text: #1f1f1f;
+      --text-2: #37352f;
+      --text-muted: #6f6f6f;
+      --text-subtle: #9b9a97;
+      --accent: #2563eb;
+      --border: #ebebe9;
+      --border-strong: #d3d3cf;
+      --pill-green: #2f6f3a;
+      --pill-green-bg: #ecf5ee;
+      --pill-amber: #8a5a14;
+      --pill-amber-bg: #fbf3e3;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      background: var(--cream);
-      color: var(--navy);
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
-      min-height: 100vh;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    .container {
-      max-width: 880px;
+    .page {
+      max-width: 820px;
       margin: 0 auto;
-      padding: 5rem 2rem;
+      padding: 80px 32px 120px;
     }
-    header { margin-bottom: 4rem; }
-    .brand-mark {
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      color: var(--burgundy);
-      margin-bottom: 2rem;
+    .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 18px;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-      color: var(--navy);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 22px;
+      color: var(--text-2);
     }
-    .subtitle { color: var(--gray-700); font-size: 1.15rem; max-width: 600px; }
-    .guides { display: grid; gap: 1.25rem; }
-    .guide {
-      display: block;
-      padding: 1.75rem 2rem;
-      background: #ffffff;
-      border: 1px solid var(--gray-200);
-      border-radius: 14px;
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      line-height: 1.55;
+    }
+    .meta-row {
+      display: flex;
+      gap: 28px;
+      margin-top: 40px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .meta-row strong { color: var(--text-2); font-weight: 600; }
+
+    .section {
+      margin-top: 72px;
+    }
+    h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .modules { display: flex; flex-direction: column; gap: 2px; }
+    .module {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 18px 16px;
+      border-radius: 6px;
       text-decoration: none;
       color: inherit;
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
+      transition: background 0.12s ease;
+      border: 1px solid transparent;
     }
-    .guide::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 4px;
-      background: var(--burgundy);
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 0.25s ease;
+    .module:hover {
+      background: var(--bg-hover);
     }
-    .guide:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(10, 37, 64, 0.10);
-      border-color: transparent;
+    .module.disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
     }
-    .guide:hover::before { transform: scaleY(1); }
-    .guide-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
+    .module.disabled:hover { background: transparent; }
+    .module-num {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-subtle);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .module-body { min-width: 0; }
+    .module-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 3px;
+    }
+    .module-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
       text-transform: uppercase;
-      color: var(--burgundy);
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
     }
-    .guide-title {
-      font-weight: 700;
-      font-size: 1.4rem;
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.01em;
+    .pill.green { color: var(--pill-green); background: var(--pill-green-bg); }
+    .pill.amber { color: var(--pill-amber); background: var(--pill-amber-bg); }
+
+    .extras-section { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .extras-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .extra {
+      display: block;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.15s ease;
     }
-    .guide-desc { color: var(--gray-700); font-size: 0.98rem; }
+    .extra:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-subtle);
+    }
+    .extra-title { font-weight: 600; color: var(--text-2); margin-bottom: 4px; font-size: 0.98rem; }
+    .extra-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
     footer {
-      margin-top: 5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--gray-200);
-      color: var(--gray-500);
-      font-size: 0.875rem;
-      text-align: center;
+      margin-top: 96px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-subtle);
+      font-size: 0.82rem;
     }
-    @media (max-width: 600px) {
-      .container { padding: 3rem 1.25rem; }
-      h1 { font-size: 1.85rem; }
-      .guide { padding: 1.5rem; }
+
+    @media (max-width: 640px) {
+      .page { padding: 56px 20px 80px; }
+      h1 { font-size: 2.1rem; }
+      .module { grid-template-columns: 40px 1fr; gap: 14px; padding: 16px 8px; }
+      .module .pill { grid-column: 2; justify-self: start; margin-top: 4px; }
+      .extras-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <main class="page">
     <header>
-      <div class="brand-mark">INTEGRACIÓN ADUANAL</div>
-      <h1>Capacitaciones</h1>
-      <p class="subtitle">Material de capacitación profesional para el equipo de Integración Aduanal.</p>
+      <div class="eyebrow">Integración Aduanal · Capacitación Interna</div>
+      <h1>Programa de Capacitación<br/>Equipo Comercial</h1>
+      <p class="subtitle">Seis módulos diseñados para transformar a un practicante recién egresado en un profesional comercial efectivo dentro del comercio exterior.</p>
+
+      <div class="meta-row">
+        <span><strong>Audiencia:</strong> Practicantes (egresados de Comercio Exterior)</span>
+        <span><strong>Formato:</strong> Autoestudio + sesiones presenciales</span>
+        <span><strong>Duración total:</strong> ~12 horas</span>
+      </div>
     </header>
 
-    <main class="guides">
-      <a class="guide" href="guides/capacitacion-comercio-exterior.html">
-        <div class="guide-eyebrow">Curso · Equipo Comercial</div>
-        <div class="guide-title">Capacitación Comercio Exterior</div>
-        <div class="guide-desc">Programa de capacitación con glosario, flashcards y quiz de evaluación para el equipo comercial.</div>
-      </a>
+    <section class="section">
+      <h2>Currículo</h2>
+      <p class="section-desc">Avanza en orden. Cada módulo se construye sobre el anterior.</p>
 
-      <a class="guide" href="guides/atencion-a-clientes.html">
-        <div class="guide-eyebrow">Curso</div>
-        <div class="guide-title">Atención a Clientes</div>
-        <div class="guide-desc">Capacitación profesional sobre atención al cliente: empatía, comunicación clara y manejo de situaciones bajo presión.</div>
-      </a>
+      <div class="modules">
 
-      <a class="guide" href="guides/arbol-decisiones-sdr-aduanas.html">
-        <div class="guide-eyebrow">Guía</div>
-        <div class="guide-title">Árbol de Decisiones SDR · Aduanas</div>
-        <div class="guide-desc">Árbol de decisiones para el proceso SDR en operaciones aduanales.</div>
-      </a>
-    </main>
+        <a class="module" href="guides/modulo-1-gestion-relaciones-directivos.html">
+          <div class="module-num">01</div>
+          <div class="module-body">
+            <div class="module-title">Gestión de Relaciones con Directivos</div>
+            <div class="module-desc">Perfiles empresario / gerente / director, programación de agenda, time-blocking y seguimiento.</div>
+          </div>
+          <span class="pill green">Disponible</span>
+        </a>
+
+        <a class="module" href="guides/modulo-2-definiciones-comercio-exterior.html">
+          <div class="module-num">02</div>
+          <div class="module-body">
+            <div class="module-title">Definiciones de Comercio Exterior</div>
+            <div class="module-desc">Glosario, conceptos clave, flashcards y quiz de evaluación.</div>
+          </div>
+          <span class="pill green">Disponible</span>
+        </a>
+
+        <a class="module" href="guides/modulo-3-segmentacion-prospeccion.html">
+          <div class="module-num">03</div>
+          <div class="module-body">
+            <div class="module-title">Segmentación de Prospección</div>
+            <div class="module-desc">ICP, criterios de segmentación, fuentes de datos, ejercicio para construir tu primera lista de 50 prospectos.</div>
+          </div>
+          <span class="pill green">Disponible</span>
+        </a>
+
+        <a class="module" href="guides/modulo-4-llamadas-prospeccion.html">
+          <div class="module-num">04</div>
+          <div class="module-body">
+            <div class="module-title">Llamadas de Prospección Comercial</div>
+            <div class="module-desc">Estructura de llamadas, scripts, manejo de objeciones, voz y cadencia de seguimiento.</div>
+          </div>
+          <span class="pill green">Disponible</span>
+        </a>
+
+        <a class="module" href="guides/modulo-5-relaciones-publicas.html">
+          <div class="module-num">05</div>
+          <div class="module-body">
+            <div class="module-title">Relaciones Públicas (Enfoque Comercial)</div>
+            <div class="module-desc">LinkedIn, eventos del sector, generación de referidos y construcción de marca personal.</div>
+          </div>
+          <span class="pill green">Disponible</span>
+        </a>
+
+        <a class="module" href="guides/modulo-6-posventa-comercial.html">
+          <div class="module-num">06</div>
+          <div class="module-body">
+            <div class="module-title">Gestión de Posventa Comercial</div>
+            <div class="module-desc">Onboarding 90 días, señales de expansión, conversación de renovación y referidos.</div>
+          </div>
+          <span class="pill green">Disponible</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="extras-section">
+      <h2>Material adicional</h2>
+      <p class="section-desc">Recursos complementarios para el equipo, no parte del currículo de practicantes.</p>
+
+      <div class="extras-grid">
+        <a class="extra" href="extras/atencion-a-clientes.html">
+          <div class="extra-title">Atención a Clientes</div>
+          <div class="extra-desc">Capacitación enfocada en empatía, comunicación y manejo de situaciones bajo presión.</div>
+        </a>
+        <a class="extra" href="extras/arbol-decisiones-sdr-aduanas.html">
+          <div class="extra-title">Árbol de Decisiones SDR · Aduanas</div>
+          <div class="extra-desc">Guía interactiva del proceso SDR para operaciones aduanales.</div>
+        </a>
+      </div>
+    </section>
 
     <footer>
-      <p>&copy; Integración Aduanal · Capacitación interna</p>
+      <p>&copy; Integración Aduanal · Capacitación interna. Última actualización: mayo 2026.</p>
     </footer>
-  </div>
+  </main>
 </body>
 </html>
